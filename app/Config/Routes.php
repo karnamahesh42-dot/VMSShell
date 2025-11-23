@@ -10,17 +10,19 @@ $routes->get('/home', 'Dashboard::index');
 
 $routes->get('/login', 'Login::index');
 $routes->get('/logout', 'Login::logout');
+$routes->post('/login', 'Login::checkLogin');
 
 $routes->get('/user', 'User::index');
+$routes->post('/user/create', 'User::create');
 
 $routes->get('/visitorequest', 'VisitorRequest::index'); // add User Form
 $routes->get('/visitorlistdata', 'VisitorRequest::visitorData'); //to get The visiter Reuest List Data 
 $routes->get('/visitorequestlist', 'VisitorRequest::visitorDataListView'); // //to get The visiter Reuest View
-
 $routes->post('/visitorequest/create','VisitorRequest::submit');
+$routes->post('/approvalprocess', 'VisitorRequest::approvalProcess');//To Approval Process 
 
-$routes->post('/user/create', 'User::create');
-$routes->post('/login', 'Login::checkLogin');
+
+
 
 
 // $routes->get('/', 'VisitorController::create');

@@ -8,7 +8,7 @@
     <div class="app-content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6"><h3 class="mb-0">Request Visitor Access</h3></div>
+                <div class="col-sm-6"><h3 class="mb-0">Visitor Request</h3></div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
@@ -24,11 +24,11 @@
         <div class="container-fluid">
 
             <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Request Visitor Access</h3>
+                            <h3 class="card-title">Visitor Request</h3>
                         </div>
                             <?php if (session()->getFlashdata('success')): ?>
                             <div class="alert alert-danger">
@@ -117,19 +117,10 @@
                                 </div>
                                 </div>
 
-                                <!-- Expected From -->
                                 <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Expected From</label>
+                                <label class="col-sm-3 col-form-label">Description</label>
                                 <div class="col-sm-9">
-                                <input type="time" name="expected_from" class="form-control" placeholder="Start time">
-                                </div>
-                                </div>
-
-                                <!-- Expected To -->
-                                <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Expected To</label>
-                                <div class="col-sm-9">
-                                <input type="time" name="expected_to" class="form-control" placeholder="End time">
+                                <textarea name="description" class="form-control" rows="3" placeholder="Enter short description about the visit (optional)"></textarea>
                                 </div>
                                 </div>
  

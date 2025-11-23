@@ -70,7 +70,7 @@
 
 <div class="login-card">
     
-    <div class="project-title">Smart VMS Portal</div>
+    <div class="project-title">VMS Portal</div>
     <hr>
     <div class="login-title">Access Your Account</div>
 

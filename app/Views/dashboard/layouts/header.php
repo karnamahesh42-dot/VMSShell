@@ -80,6 +80,17 @@ $session = session();
         .form-group {
             margin: 15px 0px;
         }
+
+      .col-form-label{
+        font-weight: bold !important;
+        }
+        .card-title {
+          font-weight: bold !important;
+          font-size: 1.5rem;
+        }
+      .form-group {
+        margin: 10px 0px; !important;
+       }
     </style>
   </head>
   <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
