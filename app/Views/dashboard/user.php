@@ -45,7 +45,7 @@
                         <div class="col-sm-10">
                             <select name="company_name" class="form-control" required>
                                 <option value="">Select Company</option>
-                                <option value="UKML">UKML</option>
+                                <option value="UKMPL">UKMPL</option>
                                 <option value="DHPL">DHPL</option>
                                 <option value="ETPL">ETPL</option>
                             </select>

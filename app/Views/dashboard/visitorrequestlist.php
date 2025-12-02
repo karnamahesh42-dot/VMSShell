@@ -73,7 +73,7 @@
                             <div class="" >
                             <!-- <input type="button" name="add" class="form-control float-right" placeholder="Search"> -->
                              <a href="<?= base_url('group_visito_request') ?>" class="btn btn-warning mx-1"> <i class="fa-solid fa-users"></i> Group Request</a>
-                            <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mx-1"> New Request</a>
+                            <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mx-1"> <i class="fa-solid fa-user"></i> New Request</a>
                             </div>
                         </div>
                         </div>
@@ -360,7 +360,5 @@ $(document).on("click", ".viewBtn", function () {
     });
 });
 
-
-send-email
 </script>
 

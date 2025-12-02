@@ -204,8 +204,8 @@ public function approvalProcess()
         // ✔ Generate QR ONLY on approval
         if ($status === 'approved') {
 
-            $qrText   = "Visitor ID : $v_code";
-            $fileName = "visitor_" . $id . "_qr.png";
+            $qrText   = $v_code;
+            $fileName = "visitor_" . $v_code . "_qr.png";
             $qrPath   = $this->generateQR($qrText, $fileName);
 
             $visitorModel->update($id, ["qr_code" => $fileName]);
@@ -238,77 +238,45 @@ public function approvalProcess()
 }
 
 
-//     public function approvalProcess()
-//     {
-//             $id = $this->request->getPost('id');
-//             $status = $this->request->getPost('status');
-//             $v_code = $this->request->getPost('v_code');
-//             $visitorModel = new \App\Models\VisitorRequestModel();
-//             $logModel     = new \App\Models\VisitorLogModel();
-//             $vRequestdataById = $visitorModel->find($id);
-//             $oldStatus = $vRequestdataById['status'];
-        
-//             // Update Status
-//             $update = $visitorModel->update($id, [
-//                 'status' => $status
-//             ]);
-
-//             // Insert log
-//             $logModel->insert([
-//                 'visitor_request_id' => $id,
-//                 'action_type'        => $status === 'approved' ? 'approved' : 'rejected',
-//                 'old_status'         => $oldStatus,
-//                 'new_status'         => $status,
-//                 'remarks'            => '',
-//                 'performed_by'       => session()->get('user_id'),
-//             ]);      
-        
-
-//             if($status === 'approved'){
-//                 // Generate QR Code
-//                 // $qrText = "Visitor ID: $id \nName: ".$v['visitor_name']."\nPhone: ".$v['visitor_phone'];
-//                 $qrText = "Visitor ID : $v_code";
-//                 $fileName = "visitor_".$id."_qr.png";
-//                 $qrPath = $this->generateQR($qrText, $fileName);
-//                 // Save QR path to database
-//                 $visitorModel->update($id, [
-//                 "qr_code" => $fileName
-//                 ]);
-//             }
-                
-// $name    = $this->request->getPost('name');
-// // $email   = 'karnamahesh42@gmail.com';
-// $email   =  $this->request->getPost('email');
-// $phone   = $this->request->getPost('phone');
-// $purpose = $this->request->getPost('purpose');
-// $vid     = $this->request->getPost('vid');
-// $v_code     = $this->request->getPost('v_code');
-
-
-
-//             if ($update) {
-//                 return $this->response->setJSON(["status" => "success"]);
-//             } else {
-//                 return $this->response->setJSON(["status" => "error"]);
-//             }
-
-//     }
-
     public function visitorDataListView()
     {
              return view('dashboard/visitorrequestlist');
     } 
 
+    // public function visitorData()
+    // {
+    //         // if ($this->request->isAJAX()) {
+
+    //             $visitorModel = new \App\Models\VisitorRequestModel();
+    //             $data = $visitorModel->orderBy('id', 'DESC')->findAll();
+    //             return $this->response->setJSON($data); 
+            
+    //         // }
+    // }
+
     public function visitorData()
     {
-            // if ($this->request->isAJAX()) {
+        $visitorModel = new \App\Models\VisitorRequestModel();
 
-                $visitorModel = new \App\Models\VisitorRequestModel();
-                $data = $visitorModel->orderBy('id', 'DESC')->findAll();
-                return $this->response->setJSON($data); 
-            
-            // }
+        $role_id = session()->get('role_id');
+        $user_id = session()->get('user_id');
+
+        if ($role_id == 3) {
+            // Show only visitors created by this user
+            $data = $visitorModel
+                ->where('created_by', $user_id)
+                ->orderBy('id', 'DESC')
+                ->findAll();
+        } else {
+            // Show all visitors
+            $data = $visitorModel
+                ->orderBy('id', 'DESC')
+                ->findAll();
+        }
+
+        return $this->response->setJSON($data);
     }
+
             
     // Save QR Code Image in path Folder
     public function generateQR($text, $fileName)

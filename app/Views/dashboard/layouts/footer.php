@@ -1,7 +1,7 @@
  <!--begin::Footer-->
       <footer class="app-footer">
         <!--begin::To the end-->
-        <div class="float-end d-none d-sm-inline">Anything you want</div>
+        <!-- <div class="float-end d-none d-sm-inline">Anything you want</div> -->
         <!--end::To the end-->
         <!--begin::Copyright-->
         <strong>
@@ -19,6 +19,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.min.js"></script>
+    
 
 
     <script

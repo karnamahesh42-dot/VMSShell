@@ -18,7 +18,7 @@ public function sendMail()
         $v_code     = $this->request->getPost('v_code');
 
         // QR file path
-        $qrFileName = "visitor_{$vid}_qr.png";
+        $qrFileName = "visitor_{$v_code}_qr.png";
         $qrFullPath = FCPATH . "public/uploads/qr_codes/" . $qrFileName;
 
         // Convert image to Base64

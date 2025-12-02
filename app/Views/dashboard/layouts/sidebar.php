@@ -31,7 +31,7 @@
               data-accordion="false"
               id="navigation" >
               
-            <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){?>
+            <?php if($_SESSION['role_id'] == '1'){?>
               <li class="nav-item">
                 <a href="<?= base_url('userlist') ?>" class="nav-link">
                   <i class="nav-icon bi bi-circle-fill text-warning"></i>
@@ -40,19 +40,23 @@
               </li>
             <?php }?>
 
+
+            <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '3'){ ?>
               <li class="nav-item">
                 <a href="<?= base_url('visitorequestlist') ?>" class="nav-link">
                   <i class="nav-icon bi bi-circle-fill text-warning"></i> 
                   <p>Visitor request</p>
                 </a>
               </li>
-
+            <?php } ?>
+            
+            <?php if($_SESSION['role_id'] == '6'){ ?>
                <li class="nav-item">
                 <a href="<?= base_url('reference') ?>" class="nav-link">
                   <i class="nav-icon bi bi-circle-fill text-warning"></i> 
                   <p>Reference</p>
                 </a>
-              </li>
+               </li>
 
                 <li class="nav-item">
                 <a href="<?= base_url('reference_visitor_request') ?>" class="nav-link">
@@ -60,21 +64,27 @@
                   <p>Reference Visitor request</p>
                 </a>
               </li>
-               <?php if($_SESSION['role_id'] == '4'){?>
+
+            <?php } ?>
+                   
+               <?php if($_SESSION['role_id'] == '4' || $_SESSION['role_id'] == '1' ){?>
                 <li class="nav-item">
                 <a href="<?= base_url('security_authorization') ?>" class="nav-link">
                   <i class="nav-icon bi bi-circle-fill text-warning"></i> 
                   <p>Security Authorization</p>
                 </a>
-              </li>
+                </li>
+              <?php } ?>
 
-                <li class="nav-item">
+              <?php if($_SESSION['role_id'] == '4' || $_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2' ){?>
+                  <li class="nav-item">
                   <a href="<?= base_url('authorized_visitors_list') ?>" class="nav-link">
                     <i class="nav-icon bi bi-circle-fill text-warning"></i> 
-                    <p>Authorized Visitor List</p>
+                    <p>Security Authorized Visitor List</p>
                   </a>
-              </li>
-             <?php } ?>
+                  </li>
+              <?php } ?>
+
             </ul>
             <!--end::Sidebar Menu-->
           </nav>

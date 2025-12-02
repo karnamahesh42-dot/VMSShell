@@ -40,7 +40,8 @@
 
           <div class="form-group">
             <label>Company</label>
-            <input type="text" id="edit_company" name="company_name" class="form-control">
+            <input type="text" id="edit_company" name="company_name" class="form-control" readonly>
+
           </div>
 
           <div class="form-group">
@@ -51,6 +52,12 @@
               <?php endforeach; ?>
             </select>
           </div>
+         
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="name" name="name" class="form-control">
+          </div>
+
 
           <div class="form-group">
             <label>Email</label>
@@ -102,6 +109,7 @@
                                             <th>#</th>
                                             <th>Company</th>
                                             <th>Department</th>
+                                            <th>Name</th>
                                             <th>Username</th>
                                             <th>Role</th>
                                             <th>Actions</th>
@@ -113,8 +121,10 @@
                                             <?php $i = 1; foreach ($users as $user): ?>
                                                 <tr>
                                                     <td><?= $i++ ?></td>
+                                                    
                                                     <td><?= $user['company_name'] ?></td>
                                                     <td><?= $user['department_name'] ?></td>
+                                                    <td><?= $user['name'] ?></td>
                                                     <td><?= $user['username'] ?></td>
                                                     <td><?= $user['role_name'] ?></td>
                                                     
@@ -164,7 +174,7 @@ $(document).on("click", ".editUserBtn", function () {
             $("#edit_department").val(res.department_id);
             $("#edit_email").val(res.email);
             $("#edit_empcode").val(res.employee_code);
-
+            $("#name").val(res.name);
             $("#editUserModal").modal("show");
         }
     });

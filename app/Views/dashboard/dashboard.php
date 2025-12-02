@@ -59,7 +59,7 @@
 
 /* Footer link animation */
 .hover-link {
-  color: #fff !important;
+  color: #0d6efd !important;
   font-weight: 600;
   transition: padding-left 0.3s ease;
 }
@@ -97,44 +97,44 @@
             <div class="row">
 
                <!-- /.col-md-6 -->
-              
-<div class="col-lg-3 col-6 col-md-2 mb-2">
-  <div class="dashboard-box bg-warning animated-box p-3">
-    <div class="inner">
-      <h3 class="box-title">
-        <i class="fa-solid fa-user icon-left"></i> User
-      </h3>
-      <p class="box-subtitle">User Overview</p>
+  <?php if($_SESSION['role_id'] == '1'){ ?>
+    <div class="col-lg-3 col-6 col-md-2 mb-2">
+      <div class="dashboard-box bg-warning animated-box p-3">
+        <div class="inner">
+          <h3 class="box-title">
+            User
+          </h3>
+          <p class="box-subtitle">User Overview</p>
+        </div>
+        <div class="icon icon-bg">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <a href="<?= base_url('userlist') ?>" class="small-box-footer hover-link" style="text-align: center;">
+          More info  <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
     </div>
-    <div class="icon icon-bg">
-      <i class="fa-solid fa-user"></i>
-    </div>
-    <a href="<?= base_url('userlist') ?>" class="small-box-footer hover-link" style="text-align: center;">
-      More info <i class="fas fa-arrow-circle-right"></i>
-    </a>
-  </div>
-</div>
+    <?php } ?>
               <!-- /.col-md-6 -->
-
-               <!-- /.col-md-6 -->
-<div class="col-lg-3 col-6 col-md-2 mb-2">
-  <div class="dashboard-box bg-warning animated-box p-3">
-    <div class="inner">
-      <h3 class="box-title">
-        <i class="fa-solid fa-person"></i>  Visitor Request
-      </h3>
-      <p class="box-subtitle"> Visitor Request Form</p>
+ <?php if($_SESSION['role_id'] !== '4' ){?>
+  <!-- /.col-md-6 -->
+  <div class="col-lg-3 col-6 col-md-2 mb-2">
+    <div class="dashboard-box bg-warning animated-box p-3">
+      <div class="inner">
+        <h3 class="box-title">
+          Visitor Request
+        </h3>
+        <p class="box-subtitle"> Visitor Request Form</p>
+      </div>
+      <div class="icon icon-bg">
+        <i class="fa-brands fa-wpforms"></i>
+      </div>
+      <a href="<?= base_url('visitorequest') ?>" class="small-box-footer hover-link" style="text-align: center;">
+        More info  <i class="fas fa-arrow-circle-right"></i>
+      </a>
     </div>
-    <div class="icon icon-bg">
-      <i class="fa-brands fa-wpforms"></i>
-    </div>
-    <a href="<?= base_url('visitorequest') ?>" class="small-box-footer hover-link" style="text-align: center;">
-      More info <i class="fas fa-arrow-circle-right"></i>
-    </a>
   </div>
-</div>
-
-              <!-- /.col-md-6 -->
+    <!-- /.col-md-6 -->
 
                   <!-- /.col-md-6 -->
 
@@ -142,7 +142,7 @@
             <div class="dashboard-box bg-warning animated-box p-3">
               <div class="inner">
                 <h6 class="box-title">
-                 <i class="fa-solid fa-people-group"></i> Group Request
+                 Group Request
                 </h6>
                 <p class="box-subtitle"> Group Request Form</p>
               </div>
@@ -150,11 +150,53 @@
                <i class="fa-brands fa-wpforms"></i>
               </div>
               <a href="<?= base_url('group_visito_request') ?>" class="small-box-footer hover-link" style="text-align: center;">
-                More info <i class="fas fa-arrow-circle-right"></i>
+                More info  <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
           </div>
               <!-- /.col-md-6 -->
+  <?php } ?>
+
+        <?php if($_SESSION['role_id'] == '4' || $_SESSION['role_id'] == '1' ){?>
+            <div class="col-lg-3 col-6 col-md-2 mb-2">
+              <div class="dashboard-box bg-warning animated-box p-3">
+                <div class="inner">
+                  <h3 class="box-title">
+                    Security Authorization
+                  </h3>
+                  <p class="box-subtitle">Security Authorization</p>
+                </div>
+                <div class="icon icon-bg">
+                 <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <a href="<?= base_url('security_authorization') ?>" class="small-box-footer hover-link" style="text-align: center;">
+                  More info  <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+          <?php } ?>
+
+          <?php if($_SESSION['role_id'] == '4' || $_SESSION['role_id'] == '1' ){?>
+                <div class="col-lg-3 col-6 col-md-2 mb-2">
+                  <div class="dashboard-box bg-warning animated-box p-3">
+                    <div class="inner">
+                      <h3 class="box-title">
+                        Security Authorized List
+                      </h3>
+                      <p class="box-subtitle">Security Authorized Visitor List</p>
+                    </div>
+                    <div class="icon icon-bg">
+                     <i class="fa-solid fa-table-list"></i>
+                    </div>
+                    <a href="<?= base_url('authorized_visitors_list') ?>" class="small-box-footer hover-link" style="text-align: center;">
+                      More info  <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                  </div>
+                </div>
+            <?php } ?>
+
+
+
             </div>
             <!--end::Row-->
           </div>

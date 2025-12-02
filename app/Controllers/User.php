@@ -33,6 +33,7 @@ class User extends BaseController
             'username'       => $this->request->getPost('username'),
             'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
             'role_id'        => $this->request->getPost('role_id'),
+            'hash_key'       => "HASHKEY123",
             'active'         => 1,
             'created_by'     => session()->get('user_id')
         ];
@@ -52,18 +53,47 @@ class User extends BaseController
         ]);
     }
     
+    // public function userListData()
+    // {
+
+    //     $deptModel = new DepartmentModel();
+    //     $userModel = new UserModel();
+
+    //     $data['users'] = $userModel
+    //         ->select('users.*, departments.department_name, roles.role_name')
+    //         ->join('departments', 'departments.id = users.department_id')
+    //         ->join('roles', 'roles.id = users.role_id')
+    //         ->findAll();
+    //     $data['departments'] = $deptModel->findAll();
+    //     return view('dashboard/userlist', $data);
+
+        
+    // }
+
+
     public function userListData()
     {
-
+        $session = session();
         $deptModel = new DepartmentModel();
         $userModel = new UserModel();
 
-        $data['users'] = $userModel
+        $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
+        $userDept = $session->get('department_id');    // Logged user's department
+
+        // Base Query
+        $userModel
             ->select('users.*, departments.department_name, roles.role_name')
             ->join('departments', 'departments.id = users.department_id')
-            ->join('roles', 'roles.id = users.role_id')
-            ->findAll();
+            ->join('roles', 'roles.id = users.role_id');
+
+        // Apply filter ONLY if role is 2
+        if ($userRole == 2) {
+            $userModel->where('users.department_id', $userDept);
+        }
+
+        $data['users'] = $userModel->findAll();
         $data['departments'] = $deptModel->findAll();
+
         return view('dashboard/userlist', $data);
     }
 
@@ -77,6 +107,7 @@ class User extends BaseController
             'department_id' => $this->request->getPost('department_id'),
             'email'         => $this->request->getPost('email'),
             'employee_code' => $this->request->getPost('employee_code'),
+            'name' => $this->request->getPost('name'),
         ];
 
         (new UserModel())->update($id, $data);

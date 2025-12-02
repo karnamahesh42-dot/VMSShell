@@ -25,36 +25,44 @@
     <div class="app-content">
         <div class="container-fluid">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
 
-                    <!-- Search Box -->
-               <div class="card shadow-sm border-0 mt-4">
-    <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">
-            <i class="fas fa-qrcode"></i> Visitor Access Verification
-        </h5>
-    </div>
+            <!-- Search Box -->
+                <div class="card shadow-sm border-0 mt-4">
+                    <div class="card-header bg-primary text-white d-flex align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-qrcode"></i> Visitor Access Verification
+                        </h5>
 
-    <div class="card-body">
-       <div class="row">
-          <label class="fw-bold">Scan / Enter V-Code</label>
-             <div class="col-9 col-md-9 col-sm-9">
-            <input type="text" id="vcodeInput" class="form-control form-control-lg" placeholder="Example: V00001 or Scan QR">
-            </div>
-           <div class="col-3 col-md-3 col-sm-3">
-              <a href="#"  class="btn btn-primary" id="searchBtn">   <i class="fas fa-search"></i> Verify</a>
-           </div>
-          
-            <small class="text-muted mt-2">
-                <label><b>Note :</b></label>
-                Security can manually enter the V-Code or scan it using a gate QR scanner device.
-            </small>
-        </div>
+                        <button id="toggleAutoScan" class="btn btn-light btn-sm ms-auto">
+                            <i class="fas fa-check-circle"></i> Auto Scan: ON
+                        </button>
+                    </div>
 
-    </div>
-</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <label class="fw-bold">Scan / Enter V-Code</label>
 
+                            <div class="col-9 col-md-9 col-sm-9">
+                                <input type="text" id="vcodeInput" class="form-control form-control-lg"
+                                    placeholder="Example: V00001 or Scan QR">
+                            </div>
+
+                            <div class="col-3 col-md-3 col-sm-3">
+                                <a href="#" class="btn btn-primary" id="searchBtn">
+                                    <i class="fas fa-search"></i> Verify
+                                </a>
+                            </div>
+
+                            <small class="text-muted mt-2">
+                                <label><b>Note :</b></label>
+                                Security can manually enter the V-Code or scan it using a gate QR scanner.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+         <!-- Search Box End -->
 
                     <!-- Visitor Details Card Start -->
 
@@ -143,7 +151,47 @@
 
 <!-- JS -->
 <script>
+
+
+$(document).ready(function () {
+
+    let autoScan = true; // default ON
+
+    // Focus input on load
+    setTimeout(() => $("#vcodeInput").focus(), 300);
+
+    // Auto Scan Toggle Button
+    $("#toggleAutoScan").click(function () {
+        autoScan = !autoScan;
+
+        if (autoScan) {
+            $(this).html('<i class="fas fa-check-circle"></i> Auto Scan: ON');
+            $(this).removeClass("btn-danger").addClass("btn-light");
+        } else {
+            $(this).html('<i class="fas fa-times-circle"></i> Auto Scan: OFF');
+            $(this).removeClass("btn-light").addClass("btn-danger");
+        }
+      setTimeout(() => $("#vcodeInput").focus(), 300);
+    });
+
+    // Auto verify when autoScan is true
+    $("#vcodeInput").on("input", function () {
+        if (!autoScan) return;  // ignore when OFF
+
+        let code = $(this).val().trim();
+
+        if (code.length === 7) {   // V000008 (7 chars)
+            $("#searchBtn").click();
+        }
+    });
+});
+
+
+// -----------------------------------------------------
+//  MANUAL + AUTO VERIFY FUNCTION (ALREADY TRIGGERED BY AUTO SCAN)
+// -----------------------------------------------------
 $("#searchBtn").on('click', function () {
+
     let vcode = $("#vcodeInput").val().trim();
 
     if (vcode === "") {
@@ -167,30 +215,25 @@ $("#searchBtn").on('click', function () {
                 return;
             }
 
-            // SHOW CARD
+            // Show the card
             $("#visitorDetails").removeClass("d-none");
 
-            // Fill Data
+            // Fill visitor data
             $("#visitorRequestId").val(res.visitor.id);
             $("#vName").text(res.visitor.visitor_name);
             $("#vPhone").text(res.visitor.visitor_phone);
             $("#vEmail").text(res.visitor.visitor_email);
             $("#vPurpose").text(res.visitor.purpose);
-            $("#vTime").text(res.visitor.visit_time);
-            $("#vGroupCode").text(res.visitor.group_code);
 
-            $("#vIdProofNo").text(res.visitor.proof_id_number);
-            $("#vIdProofType").text(res.visitor.proof_id_type);
+            $("#vGroupCode").text(res.visitor.group_code);
             $("#vVehicleNo").text(res.visitor.vehicle_no);
             $("#vExpVisitTime").text(res.visitor.visit_time);
             $("#vExpVisitDate").text(res.visitor.visit_date);
+            $("#vIdProofNo").text(res.visitor.proof_id_number);
+            $("#vIdProofType").text(res.visitor.proof_id_type);
             $("#vDescription").text(res.visitor.description);
-            
-            // Extra fields based on your JSON
-            $("#vCompany").text(res.visitor.group_code ?? "-"); // or company if exists
-            $("#vMeetPerson").text(res.visitor.host_user_id ?? "-");
 
-            // STATUS BADGE
+            // Status Badge
             let badge = $("#vStatus");
             badge.removeClass("bg-secondary bg-warning bg-success text-dark");
 
@@ -204,31 +247,37 @@ $("#searchBtn").on('click', function () {
                 badge.text("Completed").addClass("bg-success");
             }
 
-            // ENTRY/EXIT BUTTON LOGIC
+            // Show / Hide Buttons Manually
             $("#allowEntryBtn").addClass("d-none");
             $("#markExitBtn").addClass("d-none");
 
             if (res.visitor.securityCheckStatus == 0) {
-                $("#allowEntryBtn").removeClass("d-none");  // Show entry button
+                $("#allowEntryBtn").removeClass("d-none");
             }
-
             if (res.visitor.securityCheckStatus == 1) {
-                $("#markExitBtn").removeClass("d-none");    // Show exit button
+                $("#markExitBtn").removeClass("d-none");
             }
 
-            // Hide both if completed
-            if (res.visitor.securityCheckStatus == 2) {
-                $("#allowEntryBtn").addClass("d-none");
-                $("#markExitBtn").addClass("d-none");
+            // -------------------------------------
+            // AUTO APPROVAL (AUTO CHECK-IN)
+            // -------------------------------------
+            if (res.visitor.securityCheckStatus == 0) {
+                console.log("Auto approving entry...");
+                $("#allowEntryBtn").click();
             }
+        
+            $("#vcodeInput").val('');
+
         }
     });
 });
 
 
-
-// Allow Entry
+// -----------------------------------------------------
+//  ALLOW ENTRY (CHECK-IN)
+// -----------------------------------------------------
 $("#allowEntryBtn").on('click', function () {
+
     $.ajax({
         url: "<?= base_url('/security/checkin') ?>",
         type: "POST",
@@ -237,29 +286,36 @@ $("#allowEntryBtn").on('click', function () {
             v_code: $("#vcodeInput").val()
         },
         success: function (res) {
+
             if (res.status === "exists") {
                 Swal.fire("Already Inside", "Visitor already checked in.", "info");
                 return;
             }
+
             Swal.fire("Success", "Visitor entry recorded.", "success");
         }
     });
 });
 
-
-// Mark Exit
+// -----------------------------------------------------
+//  MARK EXIT
+// -----------------------------------------------------
 $("#markExitBtn").on('click', function () {
+
     $.ajax({
         url: "<?= base_url('/security/checkout') ?>",
         type: "POST",
         data: { visitor_request_id: $("#visitorRequestId").val() },
         success: function (res) {
+
             if (res.status === "no_entry") {
                 Swal.fire("No Entry", "Visitor has no entry record.", "warning");
                 return;
             }
+
             Swal.fire("Recorded", "Visitor exit recorded.", "success");
         }
     });
 });
+
 </script>

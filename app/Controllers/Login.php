@@ -25,6 +25,7 @@ class Login extends BaseController
                 'user_id'    => $user->id,
                 'username'   =>  $user->username,
                 'role_id'    => $user->role_id,
+                'department_id'    => $user->department_id,
                 'isLoggedIn' => true,
             ]);
 
