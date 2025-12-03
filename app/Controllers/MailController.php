@@ -5,75 +5,94 @@ use CodeIgniter\Controller;
 
 class MailController extends Controller
 {
+    public function sendMail()
+    {
+        try {
+            // ------------------------------
+            // Get POST Data
+            // ------------------------------
+             // $email   = $this->request->getPost("email");  // use actual visitor email
+            $email   = 'karnamahesh42@gmail.com';  // use actual visitor email
+            $name    = $this->request->getPost("name");
+            $phone   = $this->request->getPost("phone");
+            $purpose = $this->request->getPost("purpose");
+            $v_code  = $this->request->getPost("v_code");
+            $qr_path  = $this->request->getPost("qr_path");
 
-public function sendMail()
-{       
-    
-        $name    = $this->request->getPost('name');
-        // $email   = 'karnamahesh42@gmail.com';
-        $email   =  $this->request->getPost('email');
-        $phone   = $this->request->getPost('phone');
-        $purpose = $this->request->getPost('purpose');
-        $vid     = $this->request->getPost('vid');
-        $v_code     = $this->request->getPost('v_code');
+            // ------------------------------
+            // Build QR Image Path
+            // ------------------------------
+            $qrFile = FCPATH . 'public/uploads/qr_codes/'.$qr_path;
+           
+            if (!file_exists($qrFile)) {
+                return $this->response->setJSON([
+                    "status"  => "error",
+                    "message" => "QR File Missing",
+                    "path"    => $qrFile
+                ]);
+            }
 
-        // QR file path
-        $qrFileName = "visitor_{$v_code}_qr.png";
-        $qrFullPath = FCPATH . "public/uploads/qr_codes/" . $qrFileName;
+            // ------------------------------
+            // Base64 for HTML Template
+            // ------------------------------
+            // $qrBase64 = base64_encode(file_get_contents($qrFile));
+            // $qrDataURI = "data:image/png;base64," . $qrBase64;
 
-        // Convert image to Base64
-        $qrData = base64_encode(file_get_contents($qrFullPath));
-        $qrBase64 = 'data:image/png;base64,' . $qrData; 
+            // ------------------------------
+            // Template Data
+            // ------------------------------
+            $data = [
+                "name"     => $name,
+                "phone"    => $phone,
+                "purpose"  => $purpose,
+                "v_code"   => $v_code,
+                // "qrBase64" => $qrDataURI,
+                "qr_url"   => base_url('public/uploads/qr_codes/'.$qr_path)
+            ];
 
+            // ------------------------------
+            // Load Email Service (Auto Reads .env)
+            // ------------------------------
+            $emailService = \Config\Services::email();
 
-        if (!file_exists($qrFullPath)) {
+            $emailService->setTo($email);
+           
+            // From Address (correct .env keys)
+            $emailService->setFrom(
+                env('app.email.fromEmail'),
+                env('app.email.fromName')
+            );
+
+            $emailService->setSubject("Your Visitor QR Code");
+
+            // Load the HTML template
+            $emailService->setMessage(
+                view("emails/visitor_mail_template", $data)
+            );
+
+            // Set QR Attachement 
+             $emailService->attach($qrFile);
+            // ------------------------------
+            // Send Email
+            // ------------------------------
+            if ($emailService->send()) {
+                return $this->response->setJSON([
+                    "status" => "success",
+                    "message" => "Mail Sent Successfully!"
+                ]);
+            }
+
             return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'QR file not found',
-                'path' => $qrFullPath
+                "status" => "error",
+                "debug"  => $emailService->printDebugger()
+            ]);
+
+        } catch (\Exception $e) {
+
+            return $this->response->setJSON([
+                "status" => "error",
+                "message" => $e->getMessage()
             ]);
         }
-
-        // Email service
-        $emailService = \Config\Services::email();
-
-        $fromEmail = env('app.email.fromEmail');
-        $fromName  = env('app.email.fromName');
-
-        $emailService->setFrom($fromEmail, $fromName);
-        $emailService->setTo($email);
-        $emailService->setSubject("Your Visitor QR Code");
-
-        // 📌 Embed QR using CID
-        $qrCid = $emailService->setAttachmentCID($qrFullPath);
-
-        // Load template
-        $message = view('emails/visitor_mail_template', [
-            'name'    => $name,
-            'phone'   => $phone,
-            'purpose' => $purpose,
-            'vid'     => $vid,
-            'qrBase64' => $qrBase64,
-            'v_code'  => $v_code,
-            'qr_path'  => "public/uploads/qr_codes/" . $qrFileName
-        ]);
-
-        $emailService->setMessage($message);
-        $emailService->attach($qrFullPath);  // example: QR code attachment
-
-        if ($emailService->send()) {
-            return $this->response->setJSON(['status' => 'success']);
-        }
-
-        return $this->response->setJSON([
-            'status' => 'error',
-            'debug' => $emailService->printDebugger(['headers', 'subject'])
-        ]);
     }
-
 }
-
-
-
-
-

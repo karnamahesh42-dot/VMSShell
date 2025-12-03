@@ -90,18 +90,19 @@ public function checkIn()
     $visitorModel = new \App\Models\VisitorRequestModel();
 
     $visitorId = $this->request->getPost('visitor_request_id');
+    $v_code = $this->request->getPost('v_code');
 
     // Check if already checked-in
     $existing = $log->where('visitor_request_id', $visitorId)->first();
 
     if ($existing && $existing['check_in_time']) {
-        return $this->response->setJSON(['status' => 'exists']);
+        return $this->response->setJSON(['status' => 'exists', 'check_point' => 0]);
     }
 
     // Insert log entry
     $log->insert([
         'visitor_request_id' => $visitorId,
-        'v_code'             => $this->request->getPost('v_code'),
+        'v_code'             => $v_code,
         'check_in_time'      => date('Y-m-d H:i:s'),
         'verified_by'        => session()->get('user_id'),
     ]);
@@ -110,7 +111,7 @@ public function checkIn()
         'securityCheckStatus' => 1
     ]);
 
-    return $this->response->setJSON(['status' => 'success']);
+    return $this->response->setJSON(['status' => 'success', 'check_point' => 1]);
 }
 
 

@@ -181,6 +181,8 @@ public function approvalProcess()
         $id     = $this->request->getPost('id');
         $status = $this->request->getPost('status');
         $v_code = $this->request->getPost('v_code');
+        $comment = $this->request->getPost('comment');
+
 
         $visitorModel = new \App\Models\VisitorRequestModel();
         $logModel     = new \App\Models\VisitorLogModel();
@@ -188,71 +190,58 @@ public function approvalProcess()
         $visitor = $visitorModel->find($id);
         $oldStatus = $visitor['status'];
 
-        // Update visitor status
-        $update = $visitorModel->update($id, ['status' => $status]);
-
-        // Insert log
+        // Insert VisitorLog Details
         $logModel->insert([
             'visitor_request_id' => $id,
             'action_type'        => ($status === 'approved') ? 'approved' : 'rejected',
             'old_status'         => $oldStatus,
             'new_status'         => $status,
-            'remarks'            => '',
+            'remarks'            => $comment,
             'performed_by'       => session()->get('user_id'),
         ]);
 
         // ✔ Generate QR ONLY on approval
         if ($status === 'approved') {
 
-            $qrText   = $v_code;
-            $fileName = "visitor_" . $v_code . "_qr.png";
-            $qrPath   = $this->generateQR($qrText, $fileName);
-
-            $visitorModel->update($id, ["qr_code" => $fileName]);
+            $fileName = "visitor_" . $v_code . "_qr.png"; // Creating File Name 
+            $this->generateQR($v_code, $fileName); // Gentarate QR Image  
+            $visitorModel->update($id, ['qr_code' => $fileName,'status'  => $status ]);
 
             // ------------------------------------------
             //  ✔ SEND EMAIL AFTER QR IS GENERATED
             // ------------------------------------------
-
-            // Prepare POST data
-            $postData = [
+              $postData = [
                 'name'    => $visitor['visitor_name'],
                 'email'   => $visitor['visitor_email'],
                 'phone'   => $visitor['visitor_phone'],
                 'purpose' => $visitor['purpose'],
                 'vid'     => $id,
-                'v_code'  => $v_code
+                'v_code'  => $v_code,
+                'qr_path' => $fileName
             ];
-
-            // Call mail controller internally
-            $mailResponse = service('curlrequest')->post(
+            // ---------------------------------------------
+            //  Non-blocking email send (REST call)
+            // ---------------------------------------------
+            // Send email WITHOUT stopping HTTP response
+            service('curlrequest')->post(
                 base_url('send-email'),
                 ['form_params' => $postData]
             );
-
-            // Log or check mail status (optional)
-            $mailStatus = json_decode($mailResponse->getBody(), true);
         }
+        
+      return $this->response->setJSON([
+            "status" => "success",
+            "message" => "Action completed successfully!"
+        ]);
 
-        return $this->response->setJSON(["status" => "success","mailResponse" => $mailStatus]);
 }
 
 
     public function visitorDataListView()
     {
-             return view('dashboard/visitorrequestlist');
+         return view('dashboard/visitorrequestlist');
     } 
 
-    // public function visitorData()
-    // {
-    //         // if ($this->request->isAJAX()) {
-
-    //             $visitorModel = new \App\Models\VisitorRequestModel();
-    //             $data = $visitorModel->orderBy('id', 'DESC')->findAll();
-    //             return $this->response->setJSON($data); 
-            
-    //         // }
-    // }
 
     public function visitorData()
     {

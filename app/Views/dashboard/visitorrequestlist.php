@@ -47,7 +47,9 @@
                             <tr><th>ID Number</th> <td id="v_id_number"></td></tr>
                             <tr><th>Visit Date</th> <td id="v_date"></td></tr>
                             <tr><th>Description</th> <td id="v_desc"></td></tr>
-                            <tr><th>QR Code</th> <td><img id="v_qr" src="" width="150"></td></tr>
+                            <tr><th>QR Code</th> <td><img id="v_qr" src="" width="150"></td> 
+                            <input type="hidden" id="qr_path" value="">
+                        </tr>
                             <tr><th>V-Code</th> <td id="v_code"></td></tr>
                             
                             <tr id="action_row"><th>Actions</th> <th id='buttonContainer'></th></tr>
@@ -84,6 +86,7 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th>#</th>
+                                             <th>V-Code</th>
                                             <th>Visitor</th>
                                             <th>Visit Date</th>
                                             <th>Purpose</th>
@@ -113,140 +116,6 @@
 <?= $this->include('/dashboard/layouts/footer') ?>
 
 <script>
-// Handle Approve / Reject buttons
-$(document).on("click", ".approvalBtn", function () {
-    let id = $(this).data("id");
-    let status = $(this).data("status");
-    let vcode = $(this).data("vcode")
-
-    approval(id, status,vcode);
-});
-
-
-// Resend QR To Mail Function 
-function resendqr() {
-
-     // 1️⃣ Show loader
-    Swal.fire({
-        title: 'Processing...',
-        text: 'Please wait',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-
-    let name = $("#v_name").text();
-    let email = $("#v_email").text();
-    let phone = $("#v_phone").text();
-    let purpose = $("#v_purpose").text();
-    let vid =$('#v_id').val(); // << QR Image URL or Base64
-    let v_code =$('#v_code').text(); // V_Code
-
-    $.ajax({
-        url: "<?= base_url('send-email') ?>",
-        type: "POST",
-        data: {
-            name: name,
-            email: email,
-            phone: phone,
-            purpose: purpose,
-            vid: vid,
-            v_code: v_code
-        },
-        dataType: "json",
-        success: function(data) {
-            if (data.status === "success") {
-
-                 // 2️⃣ Close loader
-            Swal.close();
-
-                Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    icon: 'success',
-                    title: 'Mail Sent Successfully',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            } else {
-
-          // 2️⃣ Close loader
-            Swal.close();
-            
-                Swal.fire("Error", "Mail Not Sent", "error");
-            }
-        }
-    });
-}
-
-
-function approval(id, status, vcode) {
-
-    // 1️⃣ Show loader
-    Swal.fire({
-        title: 'Processing...',
-        text: 'Please wait',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-
-    $.ajax({
-        url: "<?= base_url('/approvalprocess') ?>",
-        type: "POST",
-        data: { id: id, status: status, v_code: vcode },
-        dataType: "json",
-
-        success: function (res) {
-
-            // 2️⃣ Close loader
-            Swal.close();
-
-            // 3️⃣ Show result popup
-            if (res.status === "success") {
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Action Completed Successfully!',
-                    showConfirmButton: false,
-                    timer: 1800
-                });
-
-                // 4️⃣ Refresh visitor list
-                loadVisitorList();
-
-            } else {
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Update Failed!',
-                    text: res.message ?? "Please try again",
-                    confirmButtonColor: '#d33'
-                });
-            }
-        },
-
-        error: function () {
-
-            Swal.close();
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Server Error!',
-                text: 'Something went wrong.',
-                confirmButtonColor: '#d33'
-            });
-        }
-    });
-}
-
-
-
-
 
 $(document).ready(function() {
     loadVisitorList();
@@ -276,8 +145,8 @@ function loadVisitorList() {
                 let actions = "";
                 if (item.status === "pending") {
                     actions = `
-                        <button class="btn btn-success btn-sm approvalBtn mx-1" data-id="${item.id}" data-status="approved"><i class="fa-solid fa-check"></i></button>
-                        <button class="btn btn-danger btn-sm approvalBtn mx-1" data-id="${item.id}" data-status="rejected"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success btn-sm approvalBtn mx-1" onclick = approvalProcess(${item.id},'approved','${item.v_code}','') ><i class="fa-solid fa-check"></i></button>
+                        <button class="btn btn-danger btn-sm approvalBtn mx-1" onclick = rejectComment(${item.id},'rejected','${item.v_code}','') ><i class="fa-solid fa-xmark"></i></button>
                     `;
                 } else {
                     actions = `<span class="text-muted">--</span>`;
@@ -286,6 +155,7 @@ function loadVisitorList() {
                 rows += `
                     <tr>
                         <td>${i++}</td>
+                        <td>${item.v_code}</td>
                         <td>${item.visitor_name}</td>
                         <td>${item.visit_date}</td>
                         <td>${item.purpose}</td>
@@ -311,8 +181,8 @@ function loadVisitorList() {
 
 
 $(document).on("click", ".viewBtn", function () {
-    let id = $(this).data("id");
 
+    let id = $(this).data("id");
     $.ajax({
         url: "<?= base_url('getvisitorrequestdata/') ?>" + id,
         type: "GET",
@@ -328,8 +198,9 @@ $(document).on("click", ".viewBtn", function () {
             $("#v_desc").text(data.description);
             $("#v_id").val(data.id);
             $("#v_code").text(data.v_code);
-
-           
+            $("#qr_path").val(data.qr_code);
+          
+            
             <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){ ?>
               $("#action_row").show();
            <?php }else{?>
@@ -345,11 +216,9 @@ $(document).on("click", ".viewBtn", function () {
             let buttons = '- -'
             if(data.status == 'pending'){
                 $("#re-sendButton ").hide();
-               buttons = `<button class="btn btn-success btn-sm approvalBtn"
-                data-id="${data.id}" data-vcode = "${data.v_code}" data-status="approved">Approve</button>
-
-                <button class="btn btn-danger btn-sm approvalBtn"
-                data-id="${data.id}" data-vcode = "${data.v_code}" data-status="rejected">Reject</button>`;
+               buttons = `
+                <button class="btn btn-success btn-sm approvalBtn" onclick = approvalProcess(${data.id},'approved','${data.v_code}','') >Approve</button>
+                <button class="btn btn-danger btn-sm approvalBtn" onclick = rejectComment(${data.id},'rejected','${data.v_code}','') >Reject</button>`;
             }else{
                  $("#re-sendButton ").show();
             }
@@ -359,6 +228,125 @@ $(document).on("click", ".viewBtn", function () {
         }
     });
 });
+
+
+
+
+
+// Resend QR To Mail Function 
+function resendqr() {
+    let name = $("#v_name").text();
+    let email = $("#v_email").text();
+    let phone = $("#v_phone").text();
+    let purpose = $("#v_purpose").text();
+    let vid = $('#v_id').val(); // << QR Image URL or Base64
+    let v_code = $('#v_code').text(); // V_Code
+    let qr_path = $('#qr_path').val(); // rq_path
+    
+    $.ajax({
+        url: "<?= base_url('send-email') ?>",
+        type: "POST",
+        data: {
+            name: name,
+            email: email,
+            phone: phone,
+            purpose: purpose,
+            vid: vid,
+            v_code: v_code,
+            qr_path: qr_path
+        },
+        dataType: "json",
+        success: function(data) {
+        }
+    });
+
+    Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'success',
+        title: 'Mail Sent Successfully',
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
+
+
+
+function rejectComment(id, status, vcode, comment) {
+    Swal.fire({
+        title: "Reject Visitor Request",
+        input: "text",
+        inputLabel: "Enter rejection comment",
+        inputPlaceholder: "Write your comment...",
+        showCancelButton: true,
+        confirmButtonText: "Submit",
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            let comment = result.value; // user comment
+            // Call your approval process with comment
+            approvalProcess(id, status, vcode, comment);
+        }
+    });
+}
+
+
+
+function approvalProcess(id, status, vcode, comment) {
+
+    // 1️⃣ Show loader
+    Swal.fire({
+        title: 'Processing...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    $.ajax({
+        url: "<?= base_url('/approvalprocess') ?>",
+        type: "POST",
+        data: { id: id, status: status, v_code: vcode, comment : comment},
+        dataType: "json",
+
+        success: function (res) {
+            // 2️⃣ Close loader
+            Swal.close();
+            // 3️⃣ Show result popup
+            if (res.status === "success") {
+             Swal.fire({
+                    icon: 'success',
+                    title: 'Action Completed Successfully!',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                // 4️⃣ Refresh visitor list
+
+                
+                loadVisitorList();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed!',
+                    text: res.message ?? "Please try again",
+                    confirmButtonColor: '#d33'
+                });
+            }
+        },
+
+        error: function () {
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error!',
+                text: 'Something went wrong.',
+                confirmButtonColor: '#d33'
+            });
+        }
+    });
+}
 
 </script>
 

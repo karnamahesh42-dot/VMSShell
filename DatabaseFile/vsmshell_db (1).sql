@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2025 at 12:32 PM
+-- Generation Time: Dec 03, 2025 at 12:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -136,7 +136,12 @@ INSERT INTO `security_gate_logs` (`id`, `visitor_request_id`, `v_code`, `check_i
 (4, 2, 'V000002', '2025-12-01 11:19:33', '2025-12-01 11:21:37', 5, '2025-12-01 11:19:33'),
 (5, 3, 'V000003', '2025-12-01 11:44:51', NULL, 5, '2025-12-01 11:44:51'),
 (6, 5, 'V000005', '2025-12-01 16:05:56', '2025-12-01 16:11:00', 13, '2025-12-01 16:05:56'),
-(7, 6, 'V000006', '2025-12-01 16:07:15', NULL, 13, '2025-12-01 16:07:15');
+(7, 6, 'V000006', '2025-12-01 16:07:15', NULL, 13, '2025-12-01 16:07:15'),
+(8, 7, 'V000007', '2025-12-02 11:17:01', NULL, 13, '2025-12-02 11:17:01'),
+(11, 8, 'V000008', '2025-12-02 12:27:59', NULL, 13, '2025-12-02 12:27:59'),
+(13, 10, 'V000010', '2025-12-02 15:06:32', NULL, 13, '2025-12-02 15:06:32'),
+(26, 11, 'V000011', '2025-12-03 10:59:15', NULL, 13, '2025-12-03 10:59:15'),
+(27, 9, 'V000009', '2025-12-03 11:36:26', NULL, 13, '2025-12-03 11:36:26');
 
 -- --------------------------------------------------------
 
@@ -165,16 +170,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `company_name`, `department_id`, `username`, `password`, `role_id`, `active`, `hash_key`, `created_at`, `created_by`, `email`, `employee_code`) VALUES
-(1, NULL, 'UKMPL', 1, 'superadmin', '274d015c638f62ba24b19ca23c9c9503', 1, 1, 'HASHKEY123', '2025-11-20 09:28:43', NULL, '', ''),
-(5, NULL, 'UKMPL', 1, 'admin', '457b2f73cbdf3cc57b92efc0aa80cb99', 2, 1, 'HASHKEY123', '2025-11-21 05:54:24', 1, 'mahesh@gmail.com', '123456'),
-(6, NULL, 'UKMPL', 3, 'user2', 'e27f4a867eaceaa81eca368d175a7716', 3, 1, 'HASHKEY123', '2025-11-21 22:15:08', 1, '', ''),
-(7, NULL, 'UKMPL', 3, 'admin2', 'bde72de2ac7798197faa307a4df2db69', 2, 1, 'HASHKEY123', '2025-11-22 05:56:17', 1, '', ''),
-(8, NULL, 'UKML', 1, 'user', 'd8847b1ec55e603141803c54ac610489', 3, 1, 'HASHKEY123', '2025-11-24 00:22:13', 1, '', ''),
-(9, NULL, 'UKML', 2, 'userlog', 'df15e08a109a1ca36c6129c4033dff9a', 3, 1, 'HASHKEY123', '2025-11-24 03:40:59', 1, '', ''),
-(10, NULL, 'UKML', 4, 'hod', 'c0da0e7607981099b9874324911d646b', 2, 1, 'HASHKEY123', '2025-11-27 23:56:49', 5, '', ''),
-(11, NULL, 'UKML', 2, 'FINANCEHOD', 'e27f4a867eaceaa81eca368d175a7716', 2, 1, 'HASHKEY123', '2025-11-30 09:57:12', 5, 'maheshkarna42@gmail.com', '2523011'),
-(12, NULL, 'UKML', 3, 'hrhod', 'f271d1efdfba760f7145d4436f845b8e', 2, 1, NULL, '2025-11-30 15:37:58', 5, 'test@gmail.com', '123456'),
-(13, 'khan', 'UKML', 5, 'security', '7f56499c9bcb7018d17adba024f12b36', 4, 1, NULL, '2025-12-01 10:32:56', 5, 'khan@gmail.com', '89595875');
+(1, 'mahesh', 'UKMPL', 1, 'superadmin', '274d015c638f62ba24b19ca23c9c9503', 1, 1, 'HASHKEY123', '2025-11-20 09:28:43', NULL, 'maheshkarna42@gmail.com', '2523011'),
+(5, 'Sreenivas', 'UKMPL', 1, 'itadmin', '7f26dfeae2ef1319cc069e939ce87693', 2, 1, 'HASHKEY123', '2025-11-21 05:54:24', 1, 'ukmledp@ramojifilmcity.com', '12345678'),
+(6, 'Prakash', 'UKMPL', 3, 'user2', 'e27f4a867eaceaa81eca368d175a7716', 3, 1, 'HASHKEY123', '2025-11-21 22:15:08', 1, 'prakash@gmail.com', '789654159'),
+(7, 'Prasad ', 'UKMPL', 3, 'hrhod', 'f271d1efdfba760f7145d4436f845b8e', 2, 1, 'HASHKEY123', '2025-11-22 05:56:17', 1, 'prasad@gmail.com', '951357456'),
+(8, 'Sury kumar', 'UKMPL', 1, 'ituser', '8e3f128f3e5075f40cd8b8361cb1d24d', 3, 1, 'HASHKEY123', '2025-11-24 00:22:13', 1, 'kumar@gmail.com', '87456321'),
+(9, 'ramesh', 'UKMPL', 2, 'userlog', 'df15e08a109a1ca36c6129c4033dff9a', 3, 1, 'HASHKEY123', '2025-11-24 03:40:59', 1, 'ramesh@gmail.com', '951456357'),
+(10, 'sailesh kumar', 'UKMPL', 2, 'hod', 'c0da0e7607981099b9874324911d646b', 2, 1, 'HASHKEY123', '2025-11-27 23:56:49', 5, 'miscentraloffice@ramojifilmcity.com', '741963258'),
+(11, 'Satish Kumar', 'UKMPL', 2, 'FINANCEHOD', 'e27f4a867eaceaa81eca368d175a7716', 2, 1, 'HASHKEY123', '2025-11-30 09:57:12', 5, 'gmaccounts@ramojifilmcity.com', '321987456'),
+(12, 'pallam raju', 'UKMPL', 3, 'hruser', '5980d6ad05354bd8681adff071323804', 2, 1, 'HASHKEY123', '2025-11-30 15:37:58', 5, 'raju@gmail.com', '456812397'),
+(13, 'khan', 'UKMPL', 5, 'security', '7f56499c9bcb7018d17adba024f12b36', 4, 1, NULL, '2025-12-01 10:32:56', 5, 'khan@gmail.com', '89595875'),
+(14, 'Kumar', 'UKMPL', 5, 'kumar', 'b9b580e1f1d30f72a52c9696dfa3c1a3', 3, 0, NULL, '2025-12-02 03:46:21', 5, 'kumar@gmail.com', '53532581');
 
 -- --------------------------------------------------------
 
@@ -237,7 +243,19 @@ INSERT INTO `visitors` (`id`, `v_code`, `group_code`, `visitor_name`, `visitor_e
 (4, 'V000004', 'GV000003', 'vamsi T', 'vamsi@gmail.com', '8959563333', 'Interview', '2025-12-01', 'Project Meet Purpose ', NULL, NULL, 5, NULL, 'approved', 0, NULL, 5, '2025-11-30 22:04:49', '2025-12-01 11:15:56', 'PAN Card', '25655585', 'visitor_4_qr.png', '', 'Car', '', '', '09:09:00'),
 (5, 'V000005', 'GV000004', 'prakash', 'developers@ramojifilmcity.com', '8959586333', 'Meeting', '2025-12-02', 'to Meet CITO Garu', NULL, NULL, 9, NULL, 'approved', 2, '00:05:04', 9, '2025-12-01 15:52:41', '2025-12-01 16:11:00', 'Aadhar Card', '245863696632', 'visitor_5_qr.png', 'AP123TYT366', 'Bike', '1764584561_d09a987936442c4e0eb1.png', '1764584561_e50065c48f30de3bd02a.png', '09:50:00'),
 (6, 'V000006', 'GV000004', 'ravikumar', 'ukmledp@ramojifilmcity.com', '8959586333', 'Meeting', '2025-12-02', 'to Meet CITO Garu', NULL, NULL, 9, NULL, 'approved', 1, NULL, 9, '2025-12-01 15:52:41', '2025-12-01 16:07:15', 'Aadhar Card', '895958633321', 'visitor_6_qr.png', 'AP123TYT366', 'Bike', '', '', '09:52:00'),
-(7, 'V000007', 'GV000005', 'mahesh  karna', 'developers@ramojifilmcity.com', '1593574568', 'Site Inspection', '2025-12-02', 'Site Inspection Purpose ', NULL, NULL, 5, NULL, 'approved', 0, NULL, 5, '2025-12-01 16:57:59', '2025-12-01 16:58:19', 'PAN Card', 'PAN2528AT', 'visitor_7_qr.png', ' AP25TST232', 'Car', '', '', '09:57:00');
+(7, 'V000007', 'GV000005', 'mahesh  karna', 'developers@ramojifilmcity.com', '1593574568', 'Site Inspection', '2025-12-02', 'Site Inspection Purpose ', NULL, NULL, 5, NULL, 'approved', 1, NULL, 5, '2025-12-01 16:57:59', '2025-12-02 11:17:01', 'PAN Card', 'PAN2528AT', 'visitor_7_qr.png', ' AP25TST232', 'Car', '', '', '09:57:00'),
+(8, 'V000008', 'GV000006', 'syam', 'karnamahesh42@gmail.com', '8919146333', 'Meeting', '2025-12-02', 'Meeting Purpose', NULL, NULL, 8, NULL, 'approved', 1, NULL, 8, '2025-12-02 11:28:33', '2025-12-02 12:27:59', 'Aadhar Card', '12345678982', 'visitor_V000008_qr.png', ' AP123AP25', 'Bike', '', '', '11:28:00'),
+(9, 'V000009', 'GV000007', 'Ramesh Babu', 'karnamahesh42@gmail.com', '8919146333', 'Interview', '2025-12-02', '', NULL, NULL, 8, NULL, 'approved', 1, NULL, 8, '2025-12-02 14:21:40', '2025-12-03 11:36:26', 'Aadhar Card', '519848410144', 'visitor_V000009_qr.png', ' AP25TST236', 'Bike', '', '', '16:21:00'),
+(10, 'V000010', 'GV000008', 'Kamesh', 'ukmledp@ramojifilmcity.com', '8949456333', 'Meeting', '2025-12-02', 'SAP Meeting', NULL, NULL, 8, NULL, 'approved', 1, NULL, 8, '2025-12-02 14:43:00', '2025-12-02 15:06:32', 'Aadhar Card', '89855213365', NULL, 'AP125RT525', 'Bike', '', '', '15:42:00'),
+(11, 'V000011', 'GV000009', 'Ramu P', 'ukmledp@ramojifilmcity.com', '7894561234', 'Document Submission', '2025-12-02', 'Document Submission  ', NULL, NULL, 8, NULL, 'approved', 0, NULL, 8, '2025-12-02 15:00:44', '2025-12-03 11:35:14', 'Aadhar Card', '582369745244', 'visitor_V000011_qr.png', ' AP25TST232', 'Bike', '', '', '16:00:00'),
+(12, 'V000012', 'GV000010', 'Keshav', 'karnamahesh@gmail.com', '8919146333', 'Meeting', '2025-12-02', 'SAP Meeting', NULL, NULL, 8, NULL, 'approved', 0, NULL, 8, '2025-12-02 15:49:38', '2025-12-03 11:33:23', 'Aadhar Card', '8882823455687', 'visitor_V000012_qr.png', '', '', '', '', '16:49:00'),
+(13, 'V000013', 'GV000011', 'Ravikumar', 'developers@ramojifilmcity.com', '1593574568', 'General Visit', '2025-12-04', 'Test', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 12:51:43', '2025-12-03 14:58:13', 'Aadhar Card', '78945612332', 'visitor_V000013_qr.png', ' AP25TST232', 'Bike', '', '', '13:52:00'),
+(14, 'V000014', 'GV000012', 'kamal', 'developers@ramojifilmcity.com', '7894561234', 'Document Submission', '2025-12-04', 'Test', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 12:53:01', '2025-12-03 15:00:51', 'PAN Card', '1234654568q', 'visitor_V000014_qr.png', ' AP25TST236', 'Bike', '', '', '13:53:00'),
+(15, 'V000015', 'GV000013', 'Pavan', 'developers@ramojifilmcity.com', '1593574568', 'Verification / Approval', '2025-12-03', ' ', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 15:06:38', '2025-12-03 15:08:43', 'Aadhar Card', '78945612332', 'visitor_V000015_qr.png', '', '', '', '', '16:06:00'),
+(16, 'V000016', 'GV000014', 'Kiran', 'developers@ramojifilmcity.com', '9153684555', 'Interview', '2025-12-04', ' ', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 15:07:12', '2025-12-03 15:11:26', 'Driving License', '1234856', 'visitor_V000016_qr.png', '', '', '', '', '16:07:00'),
+(17, 'V000017', 'GV000015', 'Raghava', 'developers@ramojifilmcity.com', '1593574568', 'Meeting', '2025-12-03', 'Test', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 15:07:46', '2025-12-03 16:54:14', 'PAN Card', '1234856', 'visitor_V000017_qr.png', '', '', '', '', '16:08:00'),
+(18, 'V000018', 'GV000016', 'Praveen ', 'maheshkarna@gmail.com', '7894561234', 'Meeting', '2025-12-03', ' test', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 17:02:57', '2025-12-03 17:04:48', 'PAN Card', '12345678', 'visitor_V000018_qr.png', '', '', '', '', '18:02:00'),
+(19, 'V000019', 'GV000017', 'kamesh', 'karnamahesh42@gmail.com', '7894561234', 'Interview', '2025-12-04', '', NULL, NULL, 9, NULL, 'approved', 0, NULL, 9, '2025-12-03 17:13:32', '2025-12-03 17:13:55', 'Voter ID', '582369745244', 'visitor_V000019_qr.png', '', '', '', '', '18:13:00');
 
 -- --------------------------------------------------------
 
@@ -273,7 +291,31 @@ INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_stat
 (10, 6, 'approved', 'pending', 'approved', '', 5, '2025-12-01 15:54:02'),
 (11, 5, 'approved', 'pending', 'approved', '', 5, '2025-12-01 15:54:10'),
 (12, 7, 'Created', NULL, 'pending', '--', 5, '2025-12-01 16:57:59'),
-(13, 7, 'approved', 'pending', 'approved', '', 5, '2025-12-01 16:58:18');
+(13, 7, 'approved', 'pending', 'approved', '', 5, '2025-12-01 16:58:18'),
+(14, 8, 'Created', NULL, 'pending', '--', 8, '2025-12-02 11:28:33'),
+(15, 8, 'approved', 'pending', 'approved', '', 5, '2025-12-02 11:35:25'),
+(16, 9, 'Created', NULL, 'pending', '--', 8, '2025-12-02 14:21:40'),
+(17, 10, 'Created', NULL, 'pending', '--', 8, '2025-12-02 14:43:00'),
+(18, 10, 'approved', 'pending', 'approved', '', 5, '2025-12-02 14:54:10'),
+(19, 9, 'approved', 'pending', 'approved', '', 5, '2025-12-02 14:55:27'),
+(20, 11, 'Created', NULL, 'pending', '--', 8, '2025-12-02 15:00:44'),
+(21, 11, 'approved', 'pending', 'approved', '', 5, '2025-12-02 15:01:07'),
+(22, 12, 'Created', NULL, 'pending', '--', 8, '2025-12-02 15:49:38'),
+(23, 12, 'approved', 'pending', 'approved', '', 5, '2025-12-02 15:50:49'),
+(24, 13, 'Created', NULL, 'pending', '--', 9, '2025-12-03 12:51:43'),
+(25, 14, 'Created', NULL, 'pending', '--', 9, '2025-12-03 12:53:01'),
+(26, 13, 'approved', 'pending', 'approved', '', 1, '2025-12-03 14:58:12'),
+(27, 14, 'approved', 'pending', 'approved', '', 1, '2025-12-03 15:00:51'),
+(28, 15, 'Created', NULL, 'pending', '--', 9, '2025-12-03 15:06:38'),
+(29, 16, 'Created', NULL, 'pending', '--', 9, '2025-12-03 15:07:12'),
+(30, 17, 'Created', NULL, 'pending', '--', 9, '2025-12-03 15:07:46'),
+(31, 15, 'approved', 'pending', 'approved', '', 1, '2025-12-03 15:08:42'),
+(32, 16, 'approved', 'pending', 'approved', '', 1, '2025-12-03 15:11:25'),
+(33, 17, 'approved', 'pending', 'approved', '', 1, '2025-12-03 16:54:13'),
+(34, 18, 'Created', NULL, 'pending', '--', 9, '2025-12-03 17:02:57'),
+(35, 18, 'approved', 'pending', 'approved', '', 1, '2025-12-03 17:04:47'),
+(36, 19, 'Created', NULL, 'pending', '--', 9, '2025-12-03 17:13:32'),
+(37, 19, 'approved', 'pending', 'approved', '', 1, '2025-12-03 17:13:54');
 
 --
 -- Indexes for dumped tables
@@ -380,13 +422,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `security_gate_logs`
 --
 ALTER TABLE `security_gate_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_hashkeys`
@@ -398,13 +440,13 @@ ALTER TABLE `user_hashkeys`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables

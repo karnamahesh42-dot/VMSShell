@@ -38,6 +38,9 @@
                         <button id="toggleAutoScan" class="btn btn-light btn-sm ms-auto">
                             <i class="fas fa-check-circle"></i> Auto Scan: ON
                         </button>
+
+                        <!-- Auto Scan Hidden Input -->
+                         <input type="hidden" value="" id="auto_scan_btn">
                     </div>
 
                     <div class="card-body">
@@ -86,7 +89,8 @@
                                 </div>
                                 <div>
                                     <h5 id="vName" class="mb-0 text-primary"></h5>
-                                    <span id="vEmail" class="text-muted small"></span>
+                                    <span id="vEmail" class="text-muted small"></span></br>
+                                    <span id="vCode" class="text-muted small text-bold"></span>
                                 </div>
                             </div>
 
@@ -156,22 +160,23 @@
 $(document).ready(function () {
 
     let autoScan = true; // default ON
-
+    $('#auto_scan_btn').val('on');
     // Focus input on load
     setTimeout(() => $("#vcodeInput").focus(), 300);
 
     // Auto Scan Toggle Button
     $("#toggleAutoScan").click(function () {
         autoScan = !autoScan;
-
         if (autoScan) {
             $(this).html('<i class="fas fa-check-circle"></i> Auto Scan: ON');
             $(this).removeClass("btn-danger").addClass("btn-light");
+             $('#auto_scan_btn').val('on');
         } else {
             $(this).html('<i class="fas fa-times-circle"></i> Auto Scan: OFF');
             $(this).removeClass("btn-light").addClass("btn-danger");
+            $('#auto_scan_btn').val('off');
         }
-      setTimeout(() => $("#vcodeInput").focus(), 300);
+        setTimeout(() => $("#vcodeInput").focus(), 300);
     });
 
     // Auto verify when autoScan is true
@@ -185,6 +190,8 @@ $(document).ready(function () {
         }
     });
 });
+
+
 
 
 // -----------------------------------------------------
@@ -206,12 +213,14 @@ $("#searchBtn").on('click', function () {
         success: function (res) {
 
             if (res.status === "error") {
-                Swal.fire("Not Found", "Visitor record not found!", "error");
+              
+                Swal.fire({icon:"error",title:"Not Found",text:"Visitor record not found!",timer:1500,timerProgressBar:true,showConfirmButton:false});
                 return;
             }
 
             if (res.status === "not_approved") {
-                Swal.fire("Not Approved", "Visitor is not approved yet.", "warning");
+              
+                  Swal.fire({icon:"warning",title:"Not Approved",text:"Visitor is not approved yet.",timer:1500,timerProgressBar:true,showConfirmButton:false});
                 return;
             }
 
@@ -224,7 +233,7 @@ $("#searchBtn").on('click', function () {
             $("#vPhone").text(res.visitor.visitor_phone);
             $("#vEmail").text(res.visitor.visitor_email);
             $("#vPurpose").text(res.visitor.purpose);
-
+            $('#vCode').text(res.visitor.v_code)
             $("#vGroupCode").text(res.visitor.group_code);
             $("#vVehicleNo").text(res.visitor.vehicle_no);
             $("#vExpVisitTime").text(res.visitor.visit_time);
@@ -261,9 +270,10 @@ $("#searchBtn").on('click', function () {
             // -------------------------------------
             // AUTO APPROVAL (AUTO CHECK-IN)
             // -------------------------------------
-            if (res.visitor.securityCheckStatus == 0) {
-                console.log("Auto approving entry...");
-                $("#allowEntryBtn").click();
+            
+            if (res.visitor.securityCheckStatus == 0 && $('#auto_scan_btn').val() == "on") {
+                 console.log("Auto approving entry...");
+                 $("#allowEntryBtn").click();
             }
         
             $("#vcodeInput").val('');
@@ -271,6 +281,7 @@ $("#searchBtn").on('click', function () {
         }
     });
 });
+
 
 
 // -----------------------------------------------------
@@ -283,19 +294,27 @@ $("#allowEntryBtn").on('click', function () {
         type: "POST",
         data: {
             visitor_request_id: $("#visitorRequestId").val(),
-            v_code: $("#vcodeInput").val()
+            v_code: $('#vCode').text()
         },
         success: function (res) {
 
             if (res.status === "exists") {
-                Swal.fire("Already Inside", "Visitor already checked in.", "info");
+                
+                alert(res.status);
+                Swal.fire({icon:"info",title:"Already Inside",text:"Visitor already checked in.",timer:1500,timerProgressBar:true,showConfirmButton:false});
                 return;
             }
 
-            Swal.fire("Success", "Visitor entry recorded.", "success");
+             $("#vStatus").text("Inside").addClass("bg-warning text-dark");
+             $("#allowEntryBtn").addClass("d-none");
+             $("#markExitBtn").removeClass("d-none");
+             Swal.fire({icon:"success",title:"success",text:"Visitor entry recorded.",timer:1500,timerProgressBar:true,showConfirmButton:false});
+
         }
     });
 });
+
+
 
 // -----------------------------------------------------
 //  MARK EXIT
@@ -309,11 +328,17 @@ $("#markExitBtn").on('click', function () {
         success: function (res) {
 
             if (res.status === "no_entry") {
-                Swal.fire("No Entry", "Visitor has no entry record.", "warning");
+                // Swal.fire("No Entry", "Visitor has no entry record.", "warning");
+                Swal.fire({icon:"warning",title:"No Entry",text:"Visitor has no entry record.",timer:1500,timerProgressBar:true,showConfirmButton:false});
                 return;
             }
+            
+            $("#vStatus").removeClass("bg-warning text-dark");
+            $("#vStatus").text("Completed").addClass("bg-success");
+            $("#markExitBtn").addClass("d-none");
+            // Swal.fire("Recorded", "Visitor exit recorded.", "success");
+            Swal.fire({icon:"success",title:"Recorded",text:"Visitor exit recorded.",timer:1500,timerProgressBar:true,showConfirmButton:false});
 
-            Swal.fire("Recorded", "Visitor exit recorded.", "success");
         }
     });
 });
