@@ -1,32 +1,9 @@
-<?= $this->include('/dashboard/layouts/header') ?>
 <?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<!--begin::App Main-->
-<main class="app-main">
-
-    <!--begin::App Content Header-->
-    <div class="app-content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6"><h3 class="mb-0">Visitor Request</h3></div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Visitor Request</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end::App Content Header-->
-
-    <div class="app-content">
+<?= $this->include('/dashboard/layouts/navbar') ?>
+<main class="main-content" id="mainContent">
         <div class="container-fluid">
 
-            <div class="row d-flex justify-content-center">
-        
-
-                <!-- Satart view Visitor Request Form Pop-Up  -->
+                 <!-- Satart view Visitor Request Form Pop-Up  -->
                     <div class="modal fade" id="visitorModal">
                     <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -63,26 +40,29 @@
                     </div>
                     </div>
                     </div>
-
+            <div class="row d-flex justify-content-center">
                 <!-- End view Visitor Request Form Pop-Up  -->
 
-                    <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                        <h3 class="card-title">Visitor Request List</h3>
 
-                        <div class="card-tools">
-                            <div class="" >
-                            <!-- <input type="button" name="add" class="form-control float-right" placeholder="Search"> -->
-                             <a href="<?= base_url('group_visito_request') ?>" class="btn btn-warning mx-1"> <i class="fa-solid fa-users"></i> Group Request</a>
-                            <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mx-1"> <i class="fa-solid fa-user"></i> New Request</a>
+                <div class="col-12">
+                    <div class="card card-primary visitor-list-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">Visitor Request List</h3>
+
+                            <div class="card-header-actions">
+                                <a href="<?= base_url('group_visito_request') ?>" class="btn btn-warning mx-1">
+                                    <i class="fa-solid fa-users"></i> Group Request
+                                </a>
+
+                                <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mx-1">
+                                    <i class="fa-solid fa-user"></i> New Request
+                                </a>
                             </div>
-                        </div>
                         </div>
                         <!-- /.card-header -->
                          <!-- /.card-body -->
                             <div class="card-body table-responsive">
-                                <table class="table table-bordered table-striped"  id="visitorTable">
+                                <table class="table table-bordered table-hover"  id="visitorTable">
                                     <thead class="bg-light">
                                         <tr>
                                             <th>#</th>
@@ -107,16 +87,12 @@
                     <!-- /.card -->
                 </div>
             </div>
-
-        </div>
     </div>
 </main>
-<!--end::App Main-->
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 
 <script>
-
 $(document).ready(function() {
     loadVisitorList();
 });
@@ -294,17 +270,6 @@ function rejectComment(id, status, vcode, comment) {
 
 function approvalProcess(id, status, vcode, comment) {
 
-    // 1️⃣ Show loader
-    Swal.fire({
-        title: 'Processing...',
-        text: 'Please wait',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
-    });
-
     $.ajax({
         url: "<?= base_url('/approvalprocess') ?>",
         type: "POST",
@@ -312,19 +277,19 @@ function approvalProcess(id, status, vcode, comment) {
         dataType: "json",
 
         success: function (res) {
-            // 2️⃣ Close loader
-            Swal.close();
-            // 3️⃣ Show result popup
             if (res.status === "success") {
              Swal.fire({
                     icon: 'success',
                     title: 'Action Completed Successfully!',
                     showConfirmButton: false,
-                    timer: 1000
+                    timer: 900
                 });
-                // 4️⃣ Refresh visitor list
 
+                // Call send-email using AJAX
+                sendMail(res.mail_data);
                 
+                // console.log(res.mail_data);
+
                 loadVisitorList();
             } else {
                 Swal.fire({
@@ -335,18 +300,24 @@ function approvalProcess(id, status, vcode, comment) {
                 });
             }
         },
-
+    });
+}
+// Mail Function Calls 
+function sendMail(postData) {
+    $.ajax({
+        url: "<?= base_url('/send-email') ?>",
+        type: "POST",
+        data: postData,
+        dataType: "json",
+        success: function (mailRes) {
+            // console.log("Mail Sent:", mailRes);
+        },
         error: function () {
-            Swal.close();
-            Swal.fire({
-                icon: 'error',
-                title: 'Server Error!',
-                text: 'Something went wrong.',
-                confirmButtonColor: '#d33'
-            });
+            // console.log("Email sending failed");
         }
     });
 }
+
 
 </script>
 

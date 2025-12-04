@@ -1,28 +1,8 @@
-<?= $this->include('/dashboard/layouts/header') ?>
-<?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<!--begin::App Main-->
-<main class="app-main">
-
-    <!--begin::App Content Header-->
-    <div class="app-content-header">
+  <?= $this->include('/dashboard/layouts/sidebar') ?>
+  <?= $this->include('/dashboard/layouts/navbar') ?>
+     
+    <main class="main-content" id="mainContent">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6"><h3 class="mb-0">Visitor Request</h3></div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Visitor Request</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end::App Content Header-->
-
-    <div class="app-content">
-        <div class="container-fluid">
-
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="card card-primary">
@@ -160,24 +140,19 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <a href="<?= base_url('visitorequestlist') ?>" class="btn btn-danger float-right">Back</a>
                             </div>
-
                         </form>
                     </div>
-                   
-
 
                 </div>
             </div>
-
         </div>
-    </div>
-</main>
+    </main>
 <!--end::App Main-->
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 
 <script>
-        $("#visitorForm").submit(function(e){
+    $("#visitorForm").submit(function(e){
     e.preventDefault();
 
     let formData = new FormData(this); // REQUIRED for file upload
@@ -200,7 +175,12 @@
                 timer: 1200,
                 showConfirmButton: false
                 });
-                setTimeout(() => location.reload(), 1200);
+                setTimeout(() => location.reload(), 800);
+
+                // send mail Method
+                if(res.submit_type == 'admin'){
+                    sendMail(res.mail_data);
+                }
             }
         },
 
@@ -214,5 +194,24 @@
         }
     });
 });
+
+
+
+// Mail Function Calls 
+function sendMail(postData) {
+    $.ajax({
+        url: "<?= base_url('/send-email') ?>",
+        type: "POST",
+        data: postData,
+        dataType: "json",
+        success: function (mailRes) {
+            console.log("Mail Sent:", mailRes);
+        },
+        error: function () {
+            console.log("Email sending failed");
+        }
+    });
+}
+
 
 </script>

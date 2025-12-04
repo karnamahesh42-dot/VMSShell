@@ -1,32 +1,10 @@
-       <?= $this->include('/dashboard/layouts/header') ?>
+  <?= $this->include('/dashboard/layouts/sidebar') ?>
+  <?= $this->include('/dashboard/layouts/navbar') ?>
      
-       <?= $this->include('/dashboard/layouts/sidebar') ?>
-     
-       <!--begin::App Main-->
-      <main class="app-main">
-        <!--begin::App Content Header-->
-        <div class="app-content-header">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">New User</h3></div>
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="<?= base_url('/') ?>" >Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">User</li>
-                </ol>
-              </div>
-            </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Container-->
-        </div>
-        <div class="app-content">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row d-flex justify-content-center" >
+   <main class="main-content" id="mainContent">
+        <div class="container-fluid">
+
+             <div class="row d-flex justify-content-center" >
 
               <!-- /.col-md-6 -->
                 <div class="col-md-8">
@@ -131,13 +109,10 @@
                </div>
               <!-- /.col-md-6 -->
             </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Container-->
+
         </div>
-        <!--end::App Content-->
-      </main>
-      <!--end::App Main-->
+    </main>
+  
      
   <?= $this->include('/dashboard/layouts/footer') ?>
 

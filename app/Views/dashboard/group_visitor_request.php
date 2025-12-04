@@ -1,28 +1,10 @@
-<?= $this->include('/dashboard/layouts/header') ?>
-<?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<main class="app-main">
-
-    <div class="app-content-header">
+  <?= $this->include('/dashboard/layouts/sidebar') ?>
+  <?= $this->include('/dashboard/layouts/navbar') ?>
+     
+   <main class="main-content" id="mainContent">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6"><h3 class="mb-0"> <i class="fa-solid fa-users"></i> Visitor Request</h3></div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Group Request</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="app-content">
-        <div class="container-fluid">
-
-            <div class="row d-flex justify-content-center">
+           <div class="row d-flex justify-content-center">
                 <div class="col-md-12">
-
                     <div class="card card-primary">
                         <div class="card-header py-2">
                             <h3 class="card-title m-0">Visitor Request</h3>
@@ -30,10 +12,7 @@
 
                         <form id="visitorForm" enctype="multipart/form-data">
                             <div class="card-body">
-
-                              
-
-                                <div class="table-responsive">
+                                <div class="table-responsive dynamic-form-table">
                                     <table class="table table-bordered" id="visitorGrid">
                                         <thead class="bg-light">
                                             <tr>
@@ -56,7 +35,6 @@
                                         </thead>
 
                                         <tbody>
-
                                             <!-- Default Row -->
                                             <tr>
                                                 <td>
@@ -145,7 +123,6 @@
 
                                 <!-- Hidden -->
                                 <input type="hidden" name="host_user_id" value="<?= $_SESSION['user_id']; ?>">
-
                             </div>
 
                             <div class="card-footer py-2">
@@ -154,14 +131,10 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
-
-        </div>
-    </div>
-
-</main>
+         </div>
+    </main>
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 
@@ -281,7 +254,6 @@ $("#visitorForm").submit(function(e){
         success: function(res){
             if(res.status === "success"){
                 $("#visitorForm")[0].reset();
-
                 Swal.fire({
                     position: 'top-end',
                     toast: true,
@@ -291,6 +263,13 @@ $("#visitorForm").submit(function(e){
                     timer: 3000,
                     timerProgressBar: true
                 });
+
+                    // Send mails only for approved ones
+                if(res.submit_type === 'admin'){
+                    res.mail_data.forEach(item => {
+                        sendMail(item);
+                    });
+                }
             }
         },
 
@@ -307,6 +286,23 @@ $("#visitorForm").submit(function(e){
         }
     });
 });
+
+
+// Mail Function Calls 
+function sendMail(postData) {
+    $.ajax({
+        url: "<?= base_url('/send-email') ?>",
+        type: "POST",
+        data: postData,
+        dataType: "json",
+        success: function (mailRes) {
+            // console.log("Mail Sent:", mailRes);
+        },
+        error: function () {
+            // console.log("Email sending failed");
+        }
+    });
+}
 
 
 $(document).on('click', '.uploadBtn', function () {

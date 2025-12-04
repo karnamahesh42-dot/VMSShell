@@ -8,7 +8,7 @@ class MailController extends Controller
     public function sendMail()
     {
         try {
-            // ------------------------------
+            // ---  ---------------------------
             // Get POST Data
             // ------------------------------
              // $email   = $this->request->getPost("email");  // use actual visitor email
@@ -54,24 +54,11 @@ class MailController extends Controller
             // Load Email Service (Auto Reads .env)
             // ------------------------------
             $emailService = \Config\Services::email();
-
             $emailService->setTo($email);
-           
-            // From Address (correct .env keys)
-            $emailService->setFrom(
-                env('app.email.fromEmail'),
-                env('app.email.fromName')
-            );
-
+            $emailService->setFrom(env('app.email.fromEmail'),env('app.email.fromName'));
             $emailService->setSubject("Your Visitor QR Code");
-
-            // Load the HTML template
-            $emailService->setMessage(
-                view("emails/visitor_mail_template", $data)
-            );
-
-            // Set QR Attachement 
-             $emailService->attach($qrFile);
+            $emailService->setMessage(view("emails/visitor_mail_template", $data));
+            $emailService->attach($qrFile);
             // ------------------------------
             // Send Email
             // ------------------------------

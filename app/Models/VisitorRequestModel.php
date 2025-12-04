@@ -8,6 +8,7 @@ class VisitorRequestModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
+        'request_header_id',
         'v_code',
         'group_code',
         'visitor_name',

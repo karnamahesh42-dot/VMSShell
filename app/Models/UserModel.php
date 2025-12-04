@@ -30,26 +30,58 @@ class UserModel extends Model
         $this->db = \Config\Database::connect();  // <--- FIX
     }
 
-    // Secure Login Function
-    public function checkLoginModel($username, $password)
-    {
-        $sql = "SELECT * FROM users WHERE username = ?  AND active = 1 LIMIT 1";
-        $query = $this->db->query($sql, [$username]);
-        $user = $query->getRow();
+    // // Secure Login Function
+    // public function checkLoginModel($username, $password)
+    // {
+    //     $sql = "SELECT * FROM users WHERE username = ?  AND active = 1 LIMIT 1";
+    //     $query = $this->db->query($sql, [$username]);
+    //     $user = $query->getRow();
 
-        if (!$user) {
-            return false;
-        }
+    //     if (!$user) {
+    //         return false;
+    //     }
 
-        $userPassword = md5($password."HASHKEY123");
+    //     $userPassword = md5($password."HASHKEY123");
      
-        if ($userPassword !== $user->password) {
-        return false; // wrong password
+    //     if ($userPassword !== $user->password) {
+    //     return false; // wrong password
+    //     }
+
+    //     return $user;
+        
+    // }
+
+    // Secure Login Function with Role & Department Join
+        public function checkLoginModel($username, $password)
+        {
+            $sql = "SELECT 
+                        u.*, 
+                        r.role_name, 
+                        d.department_name
+                    FROM users u
+                    LEFT JOIN roles r ON r.id = u.role_id
+                    LEFT JOIN departments d ON d.id = u.department_id
+                    WHERE u.username = ? 
+                    AND u.active = 1
+                    LIMIT 1";
+
+            $query = $this->db->query($sql, [$username]);
+            $user = $query->getRow();
+
+            if (!$user) {
+                return false;
+            }
+
+            // Secure password hash check
+            $userPassword = md5($password . 'HASHKEY123');
+
+            if ($userPassword !== $user->password) {
+                return false; // Wrong password
+            }
+
+            return $user; // return user with joined role_name & department_name
         }
 
-        return $user;
-        
-    }
     
     public function get($id)
     {

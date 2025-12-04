@@ -1,32 +1,9 @@
-<?= $this->include('/dashboard/layouts/header') ?>
 <?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<main class="app-main">
-
-    <!-- Page Header -->
-    <div class="app-content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Reference</h3>
-                </div>
-
-                <!-- ADD BUTTON -->
-                <div class="col-sm-6 text-end">
-                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Reference</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Page Content -->
-    <div class="app-content">
-        <div class="container-fluid">
-
-            <div class="card card-primary">
+  <?= $this->include('/dashboard/layouts/navbar') ?>
+     
+<main class="main-content" id="mainContent">
+     <div class="container-fluid">
+           <div class="card card-primary">
                 <div class="card-header">
                     <h4 class="card-title">Reference List</h4>
 
@@ -42,8 +19,6 @@
                            <a href="#" class="btn btn-warning mt-1"  data-bs-toggle="modal" data-bs-target="#addReferenceModal">New Reference</a>
                         </div>
                   </div>
-
-
                 </div>
                
                 <div class="card-body">
@@ -65,10 +40,8 @@
                         </tbody>
                     </table>
                 </div>
-
-            </div>
-
-        </div>
+            </div>  
+    
     </div>
 </main>
 

@@ -1,36 +1,14 @@
-<?= $this->include('/dashboard/layouts/header') ?>
 <?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<main class="app-main">
-
-    <!-- Page Header -->
-    <div class="app-content-header">
+  <?= $this->include('/dashboard/layouts/navbar') ?>
+     
+   <main class="main-content" id="mainContent">
         <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">
-                        <i class="fas fa-shield-check text-primary"></i> Security Authorization
-                    </h3>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Gate Checkpoint</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="app-content">
-        <div class="container-fluid">
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-6">
+             <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-sm-8 col-8">
 
             <!-- Search Box -->
-                <div class="card shadow-sm border-0 mt-4">
-                    <div class="card-header bg-primary text-white d-flex align-items-center">
+                <div class="card card-primary">
+                    <div class="card-header text-white d-flex align-items-center">
                         <h5 class="mb-0">
                             <i class="fas fa-qrcode"></i> Visitor Access Verification
                         </h5>
@@ -48,7 +26,7 @@
                             <label class="fw-bold">Scan / Enter V-Code</label>
 
                             <div class="col-9 col-md-9 col-sm-9">
-                                <input type="text" id="vcodeInput" class="form-control form-control-lg"
+                                <input type="text" id="vcodeInput" class="form-control"
                                     placeholder="Example: V00001 or Scan QR">
                             </div>
 
@@ -69,7 +47,7 @@
 
                     <!-- Visitor Details Card Start -->
 
-                <div id="visitorDetails" class="card shadow-sm border-0 mt-3 d-none">
+                <div id="visitorDetails" class="card visitor-details-card">
 
                     <div class="card-header bg-success text-white">
                     
@@ -140,15 +118,11 @@
                         </div>
                     </div>
                 </div>
-
-                     
                     <!-- Visitor Details Card End -->
                 </div>
             </div>
-
         </div>
-    </div>
-</main>
+    </main>
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 

@@ -1,35 +1,14 @@
-<?= $this->include('/dashboard/layouts/header') ?>
 <?= $this->include('/dashboard/layouts/sidebar') ?>
-
-<main class="app-main">
-
-    <!-- Page Header -->
-    <div class="app-content-header">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">
-                        <i class="fas fa-shield-check text-primary"></i>  Authorized Visitor List
-                    </h3>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
-                        <li class="breadcrumb-item active"> Authorized Visitor List</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="app-content">
+  <?= $this->include('/dashboard/layouts/navbar') ?>
+     
+   <main class="main-content" id="mainContent">
         <div class="container-fluid">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-10">
+             <div class="row d-flex justify-content-center">
+                <div class="col-md-12">
 
                   <!-- AUTHORIZED VISITOR LIST -->
-                    <div class="card shadow-sm border-0 mt-4">
+                    <div class="card visitor-list-card">
                         <div class="card-header bg-success text-white d-flex">
                             <h5 class="mb-0">
                                 <i class="fas fa-users"></i> Authorized Visitor List
@@ -60,13 +39,11 @@
                     </div>
                     <!-- AUTHORIZED VISITOR LIST  Card End -->
 
-
                 </div>
             </div>
 
         </div>
-    </div>
-</main>
+    </main>
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 

@@ -21,12 +21,26 @@ class Login extends BaseController
                 return redirect()->to('login')->with('error', 'Invalid username or password');
             }
 
+            // session()->set([
+            //     'user_id'    => $user->id,
+            //     'username'   =>  $user->username,
+            //     'role_id'    => $user->role_id,
+            //     'department_id'    => $user->department_id,
+            //     'isLoggedIn' => true,
+            // ]);
+            
             session()->set([
-                'user_id'    => $user->id,
-                'username'   =>  $user->username,
-                'role_id'    => $user->role_id,
-                'department_id'    => $user->department_id,
-                'isLoggedIn' => true,
+                'user_id'         => $user->id,
+                'username'        => $user->username,
+                'role_id'         => $user->role_id,
+                'role_name'       => $user->role_name,
+                'department_id'   => $user->department_id,
+                'department_name' => $user->department_name,
+                'name'            => $user->name,
+                'email'           => $user->email,
+                'employee_code'   => $user->employee_code,
+                'company_name'    => $user->company_name,
+                'isLoggedIn'      => true,
             ]);
 
             // header("Location: " . base_url('/'));

@@ -2,82 +2,140 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Visitor Pass</title>
+    <title>Visitor Pass | Ramoji Film City</title>
 </head>
-<body style="margin:0; padding:0; background:#f4f4f4; font-family: Arial, sans-serif;">
 
-    <table width="100%" cellpadding="0" cellspacing="0" style="padding:20px; background:#f4f4f4;">
+<body style="margin:0; padding:0; background:#eef2f7; font-family: Arial, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:25px; background:#eef2f7;">
+<tr>
+<td align="center">
+    <!-- Email Card -->
+    <table width="600" cellpadding="0" cellspacing="0"
+           style="background:#ffffff; border-radius:14px;
+           box-shadow:0 8px 25px rgba(0,0,0,0.15); overflow:hidden;">
+
+        <!-- HEADER WITH LOGO + THEME -->
         <tr>
-            <td align="center">
+            <td style="
+                background: linear-gradient(135deg, #001f3f, #0056a6);
+                padding:20px 20px;
+                text-align:center;
+            ">
+                <img src="https://www.nicepng.com/png/detail/37-376583_ramoji-film-city-hyderabad-logo.png"
+                     alt="Ramoji Logo"
+                     style="width:160px; margin-bottom:5px;">
 
-                <table width="600" cellpadding="0" cellspacing="0" style="background:#fff; border-radius:10px; box-shadow:0px 3px 10px rgba(0,0,0,0.1);">
+                <h2 style="margin:0; font-size:20px; color:#ffffff;">
+                    Visitor Pass Confirmation
+                </h2>
 
-                    <!-- HEADER -->
-                    <tr>
-                        <td style="background:#4A90E2; padding:20px; text-align:center; color:white;">
-                            <h2 style="margin:0; font-size:22px;">Visitor Pass Confirmation</h2>
-                            <p style="margin:0; font-size:13px;">Thank you for registering your visit</p>
-                        </td>
-                    </tr>
+                <p style="margin:6px 0 0; font-size:14px; color:#dde7f7;">
+                    Your visit has been officially registered
+                </p>
+            </td>
+        </tr>
 
-                    <!-- BODY -->
-                    <tr>
-                        <td style="padding:20px;">
+        <!-- BODY CONTENT -->
+        <tr>
+            <td style="padding:30px;">
 
-                            <p style="font-size:15px; color:#333; margin-top:0;">
-                                Hello <strong><?= esc($name) ?></strong>,
-                            </p>
+                <p style="font-size:16px; color:#222; margin-top:0;">
+                    Hello <strong> <?= esc($name) ?></strong>,
+                </p>
 
-                            <p style="font-size:14px; color:#555;">
-                                Your visit has been registered. Here are your details:
-                            </p>
+                <p style="font-size:12px; color:#555; line-height:1.6;">
+                    Thank you for scheduling your visit. Please find your
+                    appointment details and QR code below. Present this QR code
+                    at the security gate for seamless entry into
+                    <strong>Ramoji Film City</strong>.
+                </p>
 
-                            <!-- DETAILS BOX -->
-                            <table width="100%" cellpadding="8" cellspacing="0" style="background:#fafafa; border:1px solid #eee; border-radius:6px;">
-                                <tr>
-                                    <td width="40%" style="font-weight:bold; color:#333;">Visitor Name</td>
-                                    <td style="color:#555;"><?= esc($name) ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight:bold; color:#333;">Phone</td>
-                                    <td style="color:#555;"><?= esc($phone) ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight:bold; color:#333;">Purpose</td>
-                                    <td style="color:#555;"><?= esc($purpose) ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight:bold; color:#333;">V-Code</td>
-                                    <td style="color:#555;"><?= esc($v_code) ?></td>
-                                </tr>
-                            </table>
+                <!-- DETAILS BOX -->
+               <table width="100%" cellpadding="12" cellspacing="0"
+       style="background:#f7f9fc; border:1px solid #dde3ee;
+       border-radius:8px; margin-top:18px;">
 
-                            <!-- QR CODE -->
-                            <div style="text-align:center; margin-top:20px;">
-                                <h3 style="color:#333; margin-bottom:5px;">Your QR Code</h3>
-                                <p style="font-size:13px; color:#777;">Show this QR at the security gate</p>
+    <!-- Visitor Name -->
+    <tr>
+        <td style="font-weight:bold; color:#001f3f; width:40%; text-align:right; padding-right:15px;">
+            Name :
+        </td>
+        <td style="color:#333; text-align:left;">
+           <?= esc($name) ?>
+        </td>
+    </tr>
 
-                                <!-- QR Image (FAST) -->
-                                <img src="<?= $qr_url ?>" 
-                                     alt="QR Code" 
-                                     style="width:150px; height:150px; border:1px solid #ccc;">
-                            </div>
+    <!-- Phone -->
+    <tr>
+        <td style="font-weight:bold; color:#001f3f; text-align:right; padding-right:15px;">
+            Phone :
+        </td>
+        <td style="color:#333; text-align:left;">
+           <?= esc($phone) ?>
+        </td>
+    </tr>
 
-                        </td>
-                    </tr>
+    <!-- Purpose -->
+    <tr>
+        <td style="font-weight:bold; color:#001f3f; text-align:right; padding-right:15px;">
+            Purpose :
+        </td>
+        <td style="color:#333; text-align:left;">
+           <?= esc($purpose) ?>
+        </td>
+    </tr>
 
-                    <!-- FOOTER -->
-                    <tr>
-                        <td style="background:#4A90E2; padding:12px; text-align:center; color:white; font-size:12px;">
-                            Visitor Management System © <?= date("Y") ?>
-                        </td>
-                    </tr>
+    <!-- Visitor Code -->
+    <tr>
+        <td style="font-weight:bold; color:#001f3f; text-align:right; padding-right:15px;">
+            V-Code :
+        </td>
+        <td style="color:#333; text-align:left;">
+          <?= esc($v_code) ?>
+        </td>
+    </tr>
 
-                </table>
+</table>
+
+
+                <!-- QR CODE SECTION -->
+                <div style="text-align:center; margin-top:28px;">
+                    <h3 style="color:#001f3f; margin-bottom:6px;">
+                        Entry QR Code
+                    </h3>
+
+                    <p style="font-size:13px; color:#777; margin-top:0;">
+                        Please show this QR at the entrance
+                    </p>
+
+                    <img src="https://quickchart.io/qr?text=TEST123&size=200"
+                         alt="QR Code"
+                         style="width:180px; height:180px; border-radius:10px;
+                         border:2px solid #0056a6; padding:6px; background:white;">
+                </div>
 
             </td>
         </tr>
+
+        <!-- FOOTER -->
+        <tr>
+            <td style="
+                background:#e53935;
+                padding:14px;
+                text-align:center;
+                color:#ffffff;
+                font-size:12px;
+            ">
+                © 2025 Ramoji Film City • Visitor Management System
+            </td>
+        </tr>
+
     </table>
+
+</td>
+</tr>
+</table>
 
 </body>
 </html>
