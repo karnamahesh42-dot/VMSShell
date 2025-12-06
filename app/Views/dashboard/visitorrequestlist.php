@@ -1,49 +1,111 @@
 <?= $this->include('/dashboard/layouts/sidebar') ?>
 <?= $this->include('/dashboard/layouts/navbar') ?>
+<style>
+    #visitorModal .card {
+        border-radius: 16px !important;
+    }
+    #visitorModal .table th, 
+    #visitorModal .table td {
+        vertical-align: middle;
+    }
+</style>
+
 <main class="main-content" id="mainContent">
         <div class="container-fluid">
 
                  <!-- Satart view Visitor Request Form Pop-Up  -->
-                    <div class="modal fade" id="visitorModal">
-                    <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+                    <!-- Visitor Request Modal -->
+<div class="modal fade" id="visitorModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content shadow-lg rounded-4 border-0">
 
-                        <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">Visitor Details</h5>
-                        <!-- <button type="button" class="close" data-bs-dismiss="modal">&times;</button> -->
-                        </div>
+            <!-- HEADER -->
+            <div class="modal-header bg-primary text-white rounded-top-4">
+                <h5 class="modal-title">Visitor Request Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
 
-                        <div class="modal-body">
+            <!-- BODY -->
+            <div class="modal-body">
 
-                        <table class="table table-bordered">
-                            <tr><th>Name</th> <td id="v_name"></td></tr>
-                            <tr><th>Email</th> <td id="v_email"></td></tr>
-                            <tr><th>Phone</th> <td id="v_phone"></td></tr>
-                            <tr><th>Purpose</th> <td id="v_purpose"></td></tr>
-                            <tr><th>ID Type</th> <td id="v_id_type"></td></tr>
-                            <tr><th>ID Number</th> <td id="v_id_number"></td></tr>
-                            <tr><th>Visit Date</th> <td id="v_date"></td></tr>
-                            <tr><th>Description</th> <td id="v_desc"></td></tr>
-                            <tr><th>QR Code</th> <td><img id="v_qr" src="" width="150"></td> 
-                            <input type="hidden" id="qr_path" value="">
-                        </tr>
-                            <tr><th>V-Code</th> <td id="v_code"></td></tr>
+                <!-- HEADER INFO CARD -->
+                <div class="card mb-4 border-0 shadow-sm rounded-4">
+                    <div class="card-body visitor-card">
+                        <h5 class="fw-bold mb-3 text-primary">Request Header</h5>
+                        <div class="row g-2">
+
+                            <div class="col-md-3">
+                                <label class="fw-semibold">Request Code:</label>
+                                <div id="h_code" class="text-dark fw-bold"></div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="fw-semibold">Requested By:</label>
+                                <div id="h_requested_by"></div>
+                            </div>
+                              
+                            <div class="col-md-3">
+                                <label class="fw-semibold">Company:</label>
+                                <div id="h_company"></div>
+                            </div>
+
+                             <div class="col-md-3">
+                                <label class="fw-semibold">Department</label>
+                                <div id="h_department"></div>
+                            </div>
+
+                             <div class="col-md-3">
+                                <label class="fw-semibold">Visitors Count </label>
+                                <div id="h_count">2</div>
+                            </div>
+
+                             <div class="col-md-3">
+                                <label class="fw-semibold">Email</label>
+                                <div id="h_email"></div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="fw-semibold">Purpose </label>
+                                <div id="h_purpose">2</div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="fw-semibold">Visit Date & Time </label>
+                                <div id="h_date">2</div>
+                            </div>
                             
-                            <tr id="action_row"><th>Actions</th> <th id='buttonContainer'></th></tr>
-                            <input type="hidden" id="v_id" value="test">
-                        </table>
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Description </label>
+                                <div id="h_description">2</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Actions</label>
+                                <?php if(session()->get('role_id') <= 2){ ?>
+                               
+                                <div id= "actionBtns"></div>
+                                <?php } ?>
+
+                            </div>
+                        
                         </div>
-                        <div class="modal-footer">
-                        <button class="btn btn-success"  onclick="resendqr()" id="re-sendButton">Re-Send QR</button>
-                        <button class="btn btn-danger text-end" data-bs-dismiss="modal">Close</button>
-                        </div>
                     </div>
-                    </div>
-                    </div>
-            <div class="row d-flex justify-content-center">
+                </div>
+
+                <!-- VISITOR CARDS -->
+             
+                <div class="row g-4" id="visitorCardsContainer"></div>
+            </div>
+            <!-- FOOTER -->
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
                 <!-- End view Visitor Request Form Pop-Up  -->
-
-
                 <div class="col-12">
                     <div class="card card-primary visitor-list-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -66,12 +128,12 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th>#</th>
-                                             <th>V-Code</th>
-                                            <th>Visitor</th>
-                                            <th>Visit Date</th>
+                                            <th>Request ID</th>
+                                            <th>Department</th>
                                             <th>Purpose</th>
-                                            <th>Phone</th>
                                             <th>Description</th>
+                                            <th>Visit Date</th>
+                                            <th>Visitors Count</th>
                                             <th>Status</th>
                                             <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){?>
                                             <th style="width:150px;">Actions</th>
@@ -97,7 +159,7 @@ $(document).ready(function() {
     loadVisitorList();
 });
 
-// 👉 CORRECT function
+//  CORRECT function
 function loadVisitorList() {
 
     $.ajax({
@@ -105,6 +167,7 @@ function loadVisitorList() {
         type: "GET",
         dataType: "json",
         success: function(data) {
+            // console.log(data);
 
             let rows = "";
             let i = 1;
@@ -121,28 +184,29 @@ function loadVisitorList() {
                 let actions = "";
                 if (item.status === "pending") {
                     actions = `
-                        <button class="btn btn-success btn-sm approvalBtn mx-1" onclick = approvalProcess(${item.id},'approved','${item.v_code}','') ><i class="fa-solid fa-check"></i></button>
-                        <button class="btn btn-danger btn-sm approvalBtn mx-1" onclick = rejectComment(${item.id},'rejected','${item.v_code}','') ><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success btn-sm approvalBtn mx-1" onclick = approvalProcess(${item.id},'approved','${item.header_code}','') ><i class="fa-solid fa-check"></i></button>
+                        <button class="btn btn-danger btn-sm approvalBtn mx-1" onclick = rejectComment(${item.id},'rejected','${item.header_code}','') ><i class="fa-solid fa-xmark"></i></button>
                     `;
                 } else {
                     actions = `<span class="text-muted">--</span>`;
                 }
 
                 rows += `
-                    <tr>
-                        <td>${i++}</td>
-                        <td>${item.v_code}</td>
-                        <td>${item.visitor_name}</td>
-                        <td>${item.visit_date}</td>
-                        <td>${item.purpose}</td>
-                        <td>${item.visitor_phone}</td>
-                        <td>${item.description ?? ''}</td>
-                        <td>${statusBadge}</td>
+                    <tr> 
+                        <td onclick="view_visitor(${item.id})">${i++}</td>
+                        <td onclick="view_visitor(${item.id})">${item.header_code}</td>
+                        <td onclick="view_visitor(${item.id})">${item.department}</td>
+                        <td onclick="view_visitor(${item.id})">${item.purpose}</td>
+                        <td onclick="view_visitor(${item.id})">${item.description}</td>
+                        <td onclick="view_visitor(${item.id})">${item.requested_date}</td>
+                        <td onclick="view_visitor(${item.id})">${item.total_visitors ?? ''}</td>
+                        <td onclick="view_visitor(${item.id})">${statusBadge}</td>
+                        </a>
                          <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){?>
                         <td>${actions}</td>
                         <?php } ?>
                         <td>
-                        <button class="btn btn-info btn-sm viewBtn" data-id="${item.id}">
+                        <button class="btn btn-info btn-sm " onclick="view_visitor(${item.id})" >
                         <i class="fa-solid fa-eye"></i>
                         </button>
                         </td>
@@ -156,55 +220,123 @@ function loadVisitorList() {
 }
 
 
-$(document).on("click", ".viewBtn", function () {
+// View Visitor Details Section 
+      
 
-    let id = $(this).data("id");
+// View Visitor Details Section
+
+function view_visitor(id){
+
+    // alert(id);
     $.ajax({
         url: "<?= base_url('getvisitorrequestdata/') ?>" + id,
         type: "GET",
         dataType: "json",
-        success: function (data) {
-            $("#v_name").text(data.visitor_name);
-            $("#v_email").text(data.visitor_email);
-            $("#v_phone").text(data.visitor_phone);
-            $("#v_purpose").text(data.purpose);
-            $("#v_id_type").text(data.proof_id_type);
-            $("#v_id_number").text(data.proof_id_number);
-            $("#v_date").text(data.visit_date);
-            $("#v_desc").text(data.description);
-            $("#v_id").val(data.id);
-            $("#v_code").text(data.v_code);
-            $("#qr_path").val(data.qr_code);
-          
+
+        success: function (res) {
+
+              console.log(res)
+            if (res.status !== "success" || res.data.length === 0) {
+                alert("No data found");
+                return;
+            }  
+
+            // Fill header
+            let actionButtons = "";
+            let h = res.data[0];
+
+            // console.log(h)
+            // console.log(h.status)
+            if (h.status === "pending" ) {
+
+                    actionButtons = `
+                        <button class="btn btn-success btn-sm me-2"
+                            onclick="approvalProcess(${h.id}, 'approved', '${h.header_code}')">
+                            <i class="fas fa-check-circle"></i> Approve
+                        </button>
+
+                        <button class="btn btn-danger btn-sm"
+                            onclick="rejectComment(${h.id}, 'rejected', '${h.header_code}')">
+                            <i class="fas fa-times-circle"></i> Reject
+                        </button>
+                    `;
+                } 
+        
+            $("#actionBtns").html(actionButtons);
+            $("#h_code").text(h.header_code);
+            $("#h_requested_by").text(h.requested_by);
+            $("#h_department").text(h.department);
+            $("#h_email").text(h.email ?? "-");
+            $("#h_company").text(h.company);
+            // $("#h_date").text(h.requested_date '-'h.visit_time );
+            $("#h_requested_by").text(h.visitor_created_by_name);
+            $("#h_purpose").text(h.purpose);
+            $("#h_date").text(h.requested_date +" & "+ h.requested_time);
+            $("#h_description").text(h.description);
+                           
             
-            <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){ ?>
-              $("#action_row").show();
-           <?php }else{?>
-              $("#action_row").hide();
-            <?php } ?> 
+            let cardsHtml = "";
 
-            if (data.qr_code) {
-                $("#v_qr").attr("src", "<?= base_url('public/uploads/qr_codes/') ?>" + data.qr_code);
-            } else {
-                $("#v_qr").attr("src", "");
-            }
+            res.data.forEach(v => {
 
-            let buttons = '- -'
-            if(data.status == 'pending'){
-                $("#re-sendButton ").hide();
-               buttons = `
-                <button class="btn btn-success btn-sm approvalBtn" onclick = approvalProcess(${data.id},'approved','${data.v_code}','') >Approve</button>
-                <button class="btn btn-danger btn-sm approvalBtn" onclick = rejectComment(${data.id},'rejected','${data.v_code}','') >Reject</button>`;
-            }else{
-                 $("#re-sendButton ").show();
-            }
-              $("#buttonContainer").html(buttons);
-    
+                let qrImg = v.qr_code 
+                    ? `<?= base_url('public/uploads/qr_codes/') ?>${v.qr_code}`
+                    : "";
+                let resendButton = " <span>--</span>";
+
+                
+                if (v.status === "approved") {
+                    resendButton = `
+                        <button class="btn btn-warning btn-sm w-100"
+                            onclick="resendqr('${v.v_code}')">
+                            <i class="fas fa-paper-plane"></i> Re-send QR
+                        </button>`;
+                }
+
+                   cardsHtml += `<div class="col-md-6">
+                        <div class="card visitor-card p-4">
+
+                            <div class="row visitor-card-body">
+
+                                <!-- Visitor Details -->
+                                <div class="col-8 visitor-details">
+                                    <h5 class="visitor-name">
+                                        <i class="fas fa-user text-primary me-2"></i> ${v.visitor_name}
+                                    </h5>
+
+                                    <p class="visitor-email">${v.visitor_email}</p>
+                                    <p class="visitor-code">Code: ${v.v_code}</p>
+
+                                    <p class="visitor-info"><b>Phone:</b> ${v.visitor_phone}</p>
+                                    <p class="visitor-info"><b>ID Type:</b> ${v.proof_id_type}</p>
+                                    <p class="visitor-info"><b>ID Number:</b> ${v.proof_id_number}</p>
+                                    <p class="visitor-info"><b>Visit Date:</b> ${v.visit_date}</p>
+                                </div>
+
+                                <!-- QR & Resend -->
+                                <div class="col-4 text-center">
+                                    <img src="${qrImg}" class="visitor-qr mb-2">
+
+                                    ${v.status === "approved" ? `
+                                        <button class="btn btn-warning btn-sm w-100 resend-btn"
+                                            onclick="resendqr('${v.v_code}')">
+                                            <i class="fas fa-paper-plane"></i> Send QR
+                                        </button>` : ""}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>`;
+
+            });
+
+            $("#visitorCardsContainer").html(cardsHtml);
             $("#visitorModal").modal("show");
         }
     });
-});
 
+}
 
 
 
@@ -248,7 +380,7 @@ function resendqr() {
 
 
 
-function rejectComment(id, status, vcode, comment) {
+function rejectComment(head_id, status, header_code, comment) {
     Swal.fire({
         title: "Reject Visitor Request",
         input: "text",
@@ -258,22 +390,21 @@ function rejectComment(id, status, vcode, comment) {
         confirmButtonText: "Submit",
     }).then((result) => {
         if (result.isConfirmed) {
-
             let comment = result.value; // user comment
             // Call your approval process with comment
-            approvalProcess(id, status, vcode, comment);
+            approvalProcess(head_id, status, header_code, comment);
         }
     });
 }
 
 
 
-function approvalProcess(id, status, vcode, comment) {
+function approvalProcess(head_id, status, header_code, comment) {
 
     $.ajax({
         url: "<?= base_url('/approvalprocess') ?>",
         type: "POST",
-        data: { id: id, status: status, v_code: vcode, comment : comment},
+        data: { head_id: head_id, status: status, header_code: header_code, comment : comment},
         dataType: "json",
 
         success: function (res) {
@@ -284,12 +415,10 @@ function approvalProcess(id, status, vcode, comment) {
                     showConfirmButton: false,
                     timer: 900
                 });
-
                 // Call send-email using AJAX
-                sendMail(res.mail_data);
-                
+                // sendMail(res.mail_data);
                 // console.log(res.mail_data);
-
+           sendMail(JSON.stringify(res.mail_data)); 
                 loadVisitorList();
             } else {
                 Swal.fire({
@@ -302,18 +431,19 @@ function approvalProcess(id, status, vcode, comment) {
         },
     });
 }
-// Mail Function Calls 
-function sendMail(postData) {
+
+
+function sendMail(maildata) {
     $.ajax({
         url: "<?= base_url('/send-email') ?>",
         type: "POST",
-        data: postData,
+        data:{ mail_data : maildata },
         dataType: "json",
         success: function (mailRes) {
-            // console.log("Mail Sent:", mailRes);
+            console.log(mailRes);
         },
         error: function () {
-            // console.log("Email sending failed");
+            console.log("Email sending failed");
         }
     });
 }

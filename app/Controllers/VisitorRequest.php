@@ -89,212 +89,158 @@ class VisitorRequest extends BaseController
         ]);
     }
 
+    public function submit()
+    {
+        if (!$this->request->isAJAX()) return;
 
+        // Uploads
+        $vehicleID = $this->uploadFile($this->request->getFile('vehicle_id_proof'), 'public/uploads/vehicle');
+        $visitorID = $this->uploadFile($this->request->getFile('visitor_id_proof'), 'public/uploads/visitor');
 
+        // Auto codes
+        $codeGen   = new GenerateCodesController();
+        $vCode     = $codeGen->generateVisitorsCode();
+        $groupCode = $codeGen->generateGroupVisitorsCode();
 
+        $status = (session()->get('role_id') <= 2) ? "approved" : "pending";
 
-    /* ==================================================================
-       SINGLE VISITOR SUBMIT
-    ================================================================== */
-    // public function submit()
-    // {
-    //     if (!$this->request->isAJAX()) return;
+        // Generate QR
+        $qrFile = ($status === 'approved') ? $this->generateQRcode($vCode) : "";
 
-    //     // Uploads (optimized)
-    //     $vehicleID = $this->uploadFile($this->request->getFile('vehicle_id_proof'), 'public/uploads/vehicle');
-    //     $visitorID = $this->uploadFile($this->request->getFile('visitor_id_proof'), 'public/uploads/visitor');
+        /* =======================================================
+        STEP 1 — INSERT INTO visitor_request_header FIRST
+        ======================================================= */
 
-    //     // Auto codes
-    //     $codeGen   = new GenerateCodesController();
-    //     $vCode     = $codeGen->generateVisitorsCode();
-    //     $groupCode = $codeGen->generateGroupVisitorsCode();
+        $headerData = [
+            'header_code'     => $groupCode,
+            'requested_by'    => session()->get('user_id'),
+            'requested_date'  => $this->request->getPost('visit_date'),
+            'requested_time'  => $this->request->getPost('visit_time'),
+            'department'      => session()->get('department_name'),
+            'company'      => session()->get('company_name'),
+            'total_visitors'  => 1,
+            'status'          => $status,
+            'remarks'         => '',
+            'purpose'         => $this->request->getPost('purpose'),
+            'description'         => $this->request->getPost('description'), 
+            'email'         => $this->request->getPost('visitor_email'), 
+        ];
 
-    //     $status = (session()->get('role_id') <= 2) ? "approved" : "pending";
+        $headerId = $this->VisitorRequestHeaderModel->insert($headerData);
 
-    //     // Generate QR only if auto-approved
-    //     $qrFile = ($status === 'approved') ? $this->generateQRcode($vCode) : "";
+        /* =======================================================
+        STEP 2 — INSERT INTO visitors (link to header)
+        ======================================================= */
 
-    //     // Prepare Data
-    //     $data = [
-    //         'v_code'            => $vCode,
-    //         'group_code'        => $groupCode,
-    //         'visitor_name'      => $this->request->getPost('visitor_name'),
-    //         'visitor_email'     => $this->request->getPost('visitor_email'),
-    //         'visitor_phone'     => $this->request->getPost('visitor_phone'),
-    //         'purpose'           => $this->request->getPost('purpose'),
-    //         'proof_id_type'     => $this->request->getPost('proof_id_type'),
-    //         'proof_id_number'   => $this->request->getPost('proof_id_number'),
-    //         'visit_date'        => $this->request->getPost('visit_date'),
-    //         'visit_time'        => $this->request->getPost('visit_time'),
-    //         'description'       => $this->request->getPost('description'),
-    //         'vehicle_no'        => $this->request->getPost('vehicle_no'),
-    //         'vehicle_type'      => $this->request->getPost('vehicle_type'),
-    //         'vehicle_id_proof'  => $vehicleID,
-    //         'visitor_id_proof'  => $visitorID,
-    //         'host_user_id'      => session()->get('user_id'),
-    //         'status'            => $status,
-    //         'qr_code'           => $qrFile,
-    //         'created_by'        => session()->get('user_id'),
-    //     ];
+        $visitorData = [
+            'request_header_id'         => $headerId,   // NEW IMPORTANT LINK
+            'v_code'            => $vCode,
+            'group_code'        => $groupCode,
+            'visitor_name'      => $this->request->getPost('visitor_name'),
+            'visitor_email'     => $this->request->getPost('visitor_email'),
+            'visitor_phone'     => $this->request->getPost('visitor_phone'),
+            'purpose'           => $this->request->getPost('purpose'),
+            'proof_id_type'     => $this->request->getPost('proof_id_type'),
+            'proof_id_number'   => $this->request->getPost('proof_id_number'),
+            'visit_date'        => $this->request->getPost('visit_date'),
+            'visit_time'        => $this->request->getPost('visit_time'),
+            'description'       => $this->request->getPost('description'),
+            'vehicle_no'        => $this->request->getPost('vehicle_no'),
+            'vehicle_type'      => $this->request->getPost('vehicle_type'),
+            'vehicle_id_proof'  => $vehicleID,
+            'visitor_id_proof'  => $visitorID,
+            'host_user_id'      => session()->get('user_id'),
+            'status'            => $status,
+            'qr_code'           => $qrFile,
+            'created_by'        => session()->get('user_id'),
+        ];
 
-    //     // Insert request
-    //     $vRequestId = $this->visitorModel->insert($data);
+        $visitorId = $this->visitorModel->insert($visitorData);
 
-    //     // Log
-    //     $this->insertLog($vRequestId, 'Created', null, $status);
+        // Log entry
+        $this->insertLog($visitorId, 'Created', null, $status);
 
-    //     // Auto-email for approved requests
-    //     if ($status === "approved") {
-    //         $mail_data = [
-    //             'name'    => $data['visitor_name'],
-    //             'email'   => $data['visitor_email'],
-    //             'phone'   => $data['visitor_phone'],
-    //             'purpose' => $data['purpose'],
-    //             'vid'     => $vRequestId,
-    //             'v_code'  => $vCode,
-    //             'qr_path' => $qrFile,
-    //         ];
-    //     return $this->response->setJSON(['status' => 'success','mail_data' => $mail_data,'submit_type' => 'admin']);
-    //     }
-
-    //     return $this->response->setJSON(['status' => 'success','mail_data' => '','submit_type' =>'user' ]);
-    // }
-
-        public function submit()
-        {
-            if (!$this->request->isAJAX()) return;
-
-            // Uploads
-            $vehicleID = $this->uploadFile($this->request->getFile('vehicle_id_proof'), 'public/uploads/vehicle');
-            $visitorID = $this->uploadFile($this->request->getFile('visitor_id_proof'), 'public/uploads/visitor');
-
-            // Auto codes
-            $codeGen   = new GenerateCodesController();
-            $vCode     = $codeGen->generateVisitorsCode();
-            $groupCode = $codeGen->generateGroupVisitorsCode();
-
-            $status = (session()->get('role_id') <= 2) ? "approved" : "pending";
-
-            // Generate QR
-            $qrFile = ($status === 'approved') ? $this->generateQRcode($vCode) : "";
-
-            /* =======================================================
-            STEP 1 — INSERT INTO visitor_request_header FIRST
-            ======================================================= */
-
-            $headerData = [
-                'header_code'     => $groupCode,
-                'requested_by'    => session()->get('user_id'),
-                'requested_date'  => date('Y-m-d'),
-                'requested_time'  => date('H:i:s'),
-                'department'      => 'IT', // static — OR load dynamically
-                'total_visitors'  => 1,
-                'status'          => $status,
-                'remarks'         => $this->request->getPost('purpose'),
+        // Auto email logic
+        if ($status === "approved") {
+            $mail_data = [
+                'name'    => $visitorData['visitor_name'],
+                'email'   => $visitorData['visitor_email'],
+                'phone'   => $visitorData['visitor_phone'],
+                'purpose' => $visitorData['purpose'],
+                'vid'     => $visitorId,
+                'v_code'  => $vCode,
+                'qr_path' => $qrFile,
             ];
-
-            $headerId = $this->VisitorRequestHeaderModel->insert($headerData);
-
-            /* =======================================================
-            STEP 2 — INSERT INTO visitors (link to header)
-            ======================================================= */
-
-            $visitorData = [
-                'request_header_id'         => $headerId,   // NEW IMPORTANT LINK
-                'v_code'            => $vCode,
-                'group_code'        => $groupCode,
-                'visitor_name'      => $this->request->getPost('visitor_name'),
-                'visitor_email'     => $this->request->getPost('visitor_email'),
-                'visitor_phone'     => $this->request->getPost('visitor_phone'),
-                'purpose'           => $this->request->getPost('purpose'),
-                'proof_id_type'     => $this->request->getPost('proof_id_type'),
-                'proof_id_number'   => $this->request->getPost('proof_id_number'),
-                'visit_date'        => $this->request->getPost('visit_date'),
-                'visit_time'        => $this->request->getPost('visit_time'),
-                'description'       => $this->request->getPost('description'),
-                'vehicle_no'        => $this->request->getPost('vehicle_no'),
-                'vehicle_type'      => $this->request->getPost('vehicle_type'),
-                'vehicle_id_proof'  => $vehicleID,
-                'visitor_id_proof'  => $visitorID,
-                'host_user_id'      => session()->get('user_id'),
-                'status'            => $status,
-                'qr_code'           => $qrFile,
-                'created_by'        => session()->get('user_id'),
-            ];
-
-            $visitorId = $this->visitorModel->insert($visitorData);
-
-            // Log entry
-            $this->insertLog($visitorId, 'Created', null, $status);
-
-            // Auto email logic
-            if ($status === "approved") {
-                $mail_data = [
-                    'name'    => $visitorData['visitor_name'],
-                    'email'   => $visitorData['visitor_email'],
-                    'phone'   => $visitorData['visitor_phone'],
-                    'purpose' => $visitorData['purpose'],
-                    'vid'     => $visitorId,
-                    'v_code'  => $vCode,
-                    'qr_path' => $qrFile,
-                ];
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'mail_data' => $mail_data,
-                    'submit_type' => 'admin'
-                ]);
-            }
-
             return $this->response->setJSON([
                 'status' => 'success',
-                'mail_data' => '',
-                'submit_type' => 'user'
+                'mail_data' => $mail_data,
+                'submit_type' => 'admin'
             ]);
         }
 
+        return $this->response->setJSON([
+            'status' => 'success',
+            'mail_data' => '',
+            'submit_type' => 'user'
+        ]);
+    }
 
-/* ==================================================================
-   GROUP VISITOR SUBMIT (Return mail data for all approved visitors)
-================================================================== */
+
 public function groupSubmit()
 {
     if (!$this->request->isAJAX()) return;
-
     $codeGen = new GenerateCodesController();
     $groupCode = $codeGen->generateGroupVisitorsCode();
-
     $names  = $this->request->getPost('visitor_name');
-    $emails = $this->request->getPost('visitor_email');
+    $head_email = $this->request->getPost('email');
     $phones = $this->request->getPost('visitor_phone');
-
+    $visit_time   = $this->request->getPost('visit_time');
+    $visit_date   = $this->request->getPost('visit_date');
+    $purpose   = $this->request->getPost('purpose');
+    $description   = $this->request->getPost('description');
     $autoApprove = (session()->get('role_id') <= 2);
-
     $vehicleFiles = $this->request->getFileMultiple('vehicle_id_proof');
     $visitorFiles = $this->request->getFileMultiple('visitor_id_proof');
+    $mailDataList = []; // Collect mail data
 
-    $mailDataList = [];   // <===== COLLECT MAIL DATA HERE
+    // 1️ Insert Header Record
+    $headerData = [
+        'header_code'    => $groupCode,
+        'requested_by'   => session()->get('user_id'),
+        'requested_date' => $visit_date, // Take from first visitor
+        'requested_time' => $visit_time,
+        'department'     => session()->get('department_name'),
+        'company'        => session()->get('company_name'),
+        'total_visitors' => count($names),
+        'status'         => $autoApprove ? 'approved' : 'pending',
+        'remarks'        => '',
+        'purpose'        => $purpose,
+        'description'    => $this->request->getPost('description'),
+        'email'          => $head_email
+    ];
 
+      $headerId = $this->VisitorRequestHeaderModel->insert($headerData);
+
+    // 2️ Loop through visitors
     foreach ($names as $i => $name)
     {
         $vCode  = $codeGen->generateVisitorsCode();
         $status = $autoApprove ? "approved" : "pending";
-
-        // Generate QR only if approved
         $qrFile = $autoApprove ? $this->generateQRcode($vCode) : "";
 
-        // Prepare row data
         $data = [
-            'v_code'            => $vCode,
             'group_code'        => $groupCode,
+            'v_code'            => $vCode,
+            'request_header_id' => $headerId, // link to header
             'visitor_name'      => $name,
-            'visitor_email'     => $emails[$i],
+            'visitor_email'     => $this->request->getPost('visitor_email')[$i],
             'visitor_phone'     => $phones[$i],
-            'purpose'           => $this->request->getPost('purpose')[$i],
+            'purpose'           => $purpose,
             'proof_id_type'     => $this->request->getPost('proof_id_type')[$i],
             'proof_id_number'   => $this->request->getPost('proof_id_number')[$i],
-            'visit_date'        => $this->request->getPost('visit_date')[$i],
-            'visit_time'        => $this->request->getPost('visit_time')[$i],
-            'description'       => $this->request->getPost('description')[$i],
+            'visit_date'        => $visit_date,
+            'visit_time'        => $visit_time,
+            'description'       => $description,
             'vehicle_no'        => $this->request->getPost('vehicle_no')[$i],
             'vehicle_type'      => $this->request->getPost('vehicle_type')[$i],
             'vehicle_id_proof'  => $this->uploadFile($vehicleFiles[$i], 'public/uploads/vehicle'),
@@ -305,74 +251,158 @@ public function groupSubmit()
             'created_by'        => session()->get('user_id'),
         ];
 
-        // Insert DB record
         $vRequestId = $this->visitorModel->insert($data);
 
         $this->insertLog($vRequestId, 'Created', null, $status);
-
-        // If approved → push mail data into array
+    // 3 Collect Mail Data
         if ($autoApprove) 
         {
-            $mailDataList[] = [
-                'name'    => $name,
-                'email'   => $emails[$i],
-                'phone'   => $phones[$i],
-                'purpose' => $data['purpose'],
-                'vid'     => $vRequestId,
-                'v_code'  => $vCode,
-                'qr_path' => $qrFile
-            ];
+            // $mailDataList[] = [
+            //     'name'    => $name,
+            //     'email'   => $emails[$i],
+            //     'phone'   => $phones[$i],
+            //     'purpose' => $data['purpose'],
+            //     'vid'     => $vRequestId,
+            //     'v_code'  => $vCode,
+            //     'qr_path' => $qrFile
+            // ];
         }
     }
 
     return $this->response->setJSON([
         'status'      => 'success',
         'submit_type' => $autoApprove ? 'admin' : 'user',
-        'mail_data'   => $mailDataList   // SEND MAIL DATA BACK
+        'mail_data'   => $head_email
     ]);
 }
-
 
 
     /* ==================================================================
        APPROVAL PROCESS
     ================================================================== */
+
+
+
     public function approvalProcess()
     {
-        $id     = $this->request->getPost('id');
-        $status = $this->request->getPost('status');
-        $vCode  = $this->request->getPost('v_code');
-        $remark = $this->request->getPost('comment');
 
-        $visitor = $this->visitorModel->find($id);
+            $head_id  = $this->request->getPost('head_id');
+            $status   = $this->request->getPost('status');
+            $remark   = $this->request->getPost('comment');
 
-        $this->insertLog($id, $status, $visitor['status'], $status, $remark);
+            // ------------------------------
+            // 1. GET ALL VISITORS BY HEAD ID
+            // ------------------------------
+            $visitors = $this->visitorModel
+                            ->where('request_header_id', $head_id)
+                            ->findAll();
 
-        if ($status === "approved") {
+        
 
-            $qrFile = $this->generateQRcode($vCode);
+            if (empty($visitors)) {
+                return $this->response->setJSON([
+                    "status"  => "error",
+                    "message" => "No visitors found for this head_id"
+                ]);
+            }
 
-            $this->visitorModel->update($id, [
-                'qr_code' => $qrFile,
-                'status'  => $status
+            // // ------------------------------
+            // // 2. UPDATE EACH VISITOR + ADD LOG
+            // // ------------------------------
+                $mail_data = [];   // create empty array
+
+                foreach ($visitors as $v) {
+
+                    // Generate QR
+                    $qrFile = $this->generateQRcode($v['v_code']);
+
+                    // Update visitor status
+                    $this->visitorModel->update($v['id'], [
+                        'status'  => $status,
+                        'qr_code' => $qrFile
+                    ]);
+
+                    // Insert log
+                    $this->insertLog(
+                        $v['id'],        // visitor_id
+                        $status,         // new status
+                        $v['status'],    // old status
+                        $status,         // updated status
+                        $remark          // comment
+                    );
+
+                    // ADD THIS: push visitor mail data to array
+                    $mail_data[] = [
+                        'name'    => $v['visitor_name'],
+                        'email'   => $v['visitor_email'],
+                        'phone'   => $v['visitor_phone'],
+                        'purpose' => $v['purpose'],
+                        'vid'     => $v['id'],
+                        'v_code'  => $v['v_code'],
+                        'qr_path' => $qrFile
+                    ];
+                }
+
+            // -----------------------------------
+            // 3. UPDATE HEAD TABLE STATUS
+            // -----------------------------------
+            $this->VisitorRequestHeaderModel->update($head_id, [
+                'status' => $status,
+                'remark' => $remark,
             ]);
+
+            
+
+            // -----------------------------------
+            // 4. SEND RESPONSE
+            // -----------------------------------
 
             return $this->response->setJSON([
-                "status"    => "success",
-                "message"   => "Action completed successfully!",
-                "mail_data" => [
-                    'name'    => $visitor['visitor_name'],
-                    'email'   => $visitor['visitor_email'],
-                    'phone'   => $visitor['visitor_phone'],
-                    'purpose' => $visitor['purpose'],
-                    'vid'     => $id,
-                    'v_code'  => $vCode,
-                    'qr_path' => $qrFile
-                ]
+                "status"  => "success",
+                "message" => "Head status & all visitors updated successfully!",
+                'mail_data' => $mail_data
             ]);
-        }
+    
 
-        return $this->response->setJSON(["status" => "success"]);
+
+
+        // $head_id     = $this->request->getPost('head_id');
+        // $status = $this->request->getPost('status');
+        // $head_code  = $this->request->getPost('head_code');
+        // $remark = $this->request->getPost('comment');
+
+        
+        //  $visitor = $this->visitorModel->find($head_id);
+
+        //  print_r($visitor);
+        
+         // $this->insertLog($id, $status, $visitor['status'], $status, $remark);
+
+        // if ($status === "approved") {
+
+        //     $qrFile = $this->generateQRcode($vCode);
+
+        //     $this->visitorModel->update($id, [
+        //         'qr_code' => $qrFile,
+        //         'status'  => $status
+        //     ]);
+
+        //     return $this->response->setJSON([
+        //         "status"    => "success",
+        //         "message"   => "Action completed successfully!",
+        //         "mail_data" => [
+        //             'name'    => $visitor['visitor_name'],
+        //             'email'   => $visitor['visitor_email'],
+        //             'phone'   => $visitor['visitor_phone'],
+        //             'purpose' => $visitor['purpose'],
+        //             'vid'     => $id,
+        //             'v_code'  => $vCode,
+        //             'qr_path' => $qrFile
+        //         ]
+        //     ]);
+        // }
+
+        // return $this->response->setJSON(["status" => "success"]);
     }
 
     /* ==================================================================
@@ -389,18 +419,149 @@ public function groupSubmit()
         $uid  = session()->get('user_id');
 
         $query = $this->visitorModel->orderBy('id', 'DESC');
+          $query = $this->VisitorRequestHeaderModel->orderBy('id', 'DESC');
+        
 
         if ($role == 3) {
-            $query->where('created_by', $uid);
+            $query->where('requested_by', $uid);
         }
 
         return $this->response->setJSON($query->findAll());
     }
 
+       /* ==================================================================
+       VISITOR LIST By GV-Code
+    ================================================================== */
+    // public function getVisitorRequastDataById($head_id)
+    // {
+    //     return $this->response->setJSON(
+    //         $this->visitorModel->find($id)
+    //     );
+    // }
+
+
     public function getVisitorRequastDataById($id)
     {
-        return $this->response->setJSON(
-            $this->visitorModel->find($id)
-        );
+        $headerModel = new \App\Models\VisitorRequestHeaderModel();
+
+        $data = $headerModel->getHeaderWithVisitors($id);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $data
+        ]);
     }
+
+
+        // downloadCsvTemplate
+        public function downloadCsvTemplate()
+        {
+            $filename = "Visitor_Template.csv";
+
+            // CSV Header Row
+            $header = [
+                "S.No",
+                "Visitor Name",
+                "Email",
+                "Phone",
+                "ID Type",
+                "ID Number",
+                "Vehicle No",
+                "Vehicle Type",
+                "Vehicle ID Proof",
+                "Visitor ID Proof",
+                "Action"
+            ];
+
+            // Dropdown options (CSV cannot have dropdowns, so we provide allowed values)
+            $allowedIdTypes = "Options: Aadhaar Card| PAN Card| Voter ID | Passport | Driving License";
+            $allowedVehicleTypes = "Options: Bike | Car | Van | Bus | Auto | Truck";
+
+            // Sample Rows
+            $sampleRows = [
+                [
+                    1, "Prakash", "john@example.com", "9876543210", 
+                    "Aadhaar Card", "123456789012", "TN10AB1234", "Car", "Yes", "Yes", ""
+                ],
+                [
+                    2, "Sharath", "mary@example.com", "9876501234",
+                    "PAN Card", "ABCDE1234F", "TN09XY9876", "Bike", "No", "Yes", ""
+                ]
+            ];
+
+            // Output CSV
+            header("Content-Type: text/csv");
+            header("Content-Disposition: attachment; filename={$filename}");
+
+            $output = fopen("php://output", "w");
+
+            // Write header
+            fputcsv($output, $header);
+
+            // Write allowed options row (row 2)
+            fputcsv($output, [
+                "",
+                "",
+                "",
+                "",
+                $allowedIdTypes,
+                "",
+                "",
+                $allowedVehicleTypes,
+                "",
+                "",
+                ""
+            ]);
+
+            // Write sample rows
+            foreach ($sampleRows as $row) {
+                fputcsv($output, $row);
+            }
+
+            fclose($output);
+            exit;
+        }
+
+        
+
+         // Upload CSV Template
+        public function uploadCsv()
+        {
+            $file = $this->request->getFile('excel_file');
+
+            if (!$file->isValid()) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid File']);
+            }
+
+            $path = $file->getTempName();
+            $csv = array_map('str_getcsv', file($path));
+
+            $finalData = [];
+
+            foreach ($csv as $index => $row) {
+
+            if ($index == 0) continue; // Skip header
+            if (empty($row[1])) continue; // Skip empty rows
+
+            $finalData[] = [
+                'sno'            => $row[0],
+                'visitor_name'   => $row[1],
+                'email'          => $row[2],
+                'phone'          => $row[3],
+                'id_type'        => $row[4],
+                'id_number'      => $row[5],
+                'vehicle_no'     => $row[6],
+                'vehicle_type'   => $row[7],
+                'vehicle_id'     => $row[8],
+                'visitor_id'     => $row[9],
+            ];
+            }
+
+            return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $finalData
+            ]);
+        }
+
+
 }

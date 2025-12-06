@@ -13,9 +13,13 @@ class VisitorRequestHeaderModel extends Model
     protected $allowedFields = [
         'header_code',
         'requested_by',
+        'description',
+        'purpose',
         'requested_date',
         'requested_time',
         'department',
+        'email',
+        'company',
         'total_visitors',
         'status',
         'remarks'
@@ -25,4 +29,24 @@ class VisitorRequestHeaderModel extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+
+     /* ============================================================
+       JOIN HEADER + VISITORS TABLE
+       visitors.request_header_id = visitor_request_header.id
+    ============================================================ */
+   
+  public function getHeaderWithVisitors($headerId)
+{
+    return $this->select("
+            visitor_request_header.*,
+            visitors.*,
+            users.name AS visitor_created_by_name,
+            users.email AS visitor_created_by_email
+        ")
+        ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
+        ->join('users', 'users.id = visitors.created_by', 'left') // 👈 corrected
+        ->where('visitor_request_header.id', $headerId)
+        ->findAll();
+}
 }

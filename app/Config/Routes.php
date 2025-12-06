@@ -31,6 +31,10 @@ $routes->post('/visitorequest/create_group','VisitorRequest::groupSubmit');
 $routes->post('/approvalprocess', 'VisitorRequest::approvalProcess');//To Approval Process 
 $routes->get('/getvisitorrequestdata/(:num)', 'VisitorRequest::getVisitorRequastDataById/$1'); //To get Visito Request Data By ID
 
+$routes->get('/visitor-template-download', 'VisitorRequest::downloadCsvTemplate');
+$routes->post('/visitor-template-upload', 'VisitorRequest::uploadCsv');
+
+
 // $routes->get('send-email', 'MailController::sendMail');
 $routes->post('send-email', 'MailController::sendMail');
 

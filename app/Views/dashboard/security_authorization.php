@@ -1,5 +1,81 @@
 <?= $this->include('/dashboard/layouts/sidebar') ?>
   <?= $this->include('/dashboard/layouts/navbar') ?>
+
+  <style>
+    /* Card Styling */
+.visitor-details-smart {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #ffffff;
+    border: none;
+    backdrop-filter: blur(8px);
+    transition: 0.3s;
+}
+
+.visitor-details-smart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.bg-gradient-success {
+    background: linear-gradient(90deg, #28a745, #1e7e34);
+}
+
+/* Profile Icon */
+.profile-icon {
+    width: 65px;
+    height: 65px;
+    background: #e9f7ef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #28a745;
+    margin-right: 15px;
+}
+
+/* Name */
+.visitor-name {
+    margin-bottom: 2px;
+    color: #1e7e34;
+    font-weight: 700;
+}
+
+/* Info Line */
+.info-line {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.info-line i {
+    width: 20px;
+    color: #28a745;
+}
+
+/* Status Badge */
+.visitor-status {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Smart Buttons */
+.smart-btn {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.smart-btn:hover {
+    transform: scale(1.02);
+}
+
+  </style>
      
    <main class="main-content" id="mainContent">
         <div class="container-fluid">
@@ -47,77 +123,97 @@
 
                     <!-- Visitor Details Card Start -->
 
-                <div id="visitorDetails" class="card visitor-details-card">
-
-                    <div class="card-header bg-success text-white">
-                    
-                        <h5 class="mb-0">Visitor Information</h5>
-                        
-                    </div>
-
-                    <div class="card-body">
-
-                        <!-- PROFILE + STATUS IN SAME LINE -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-
-                            <!-- Profile Section -->
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle bg-light p-3 me-3 border">
-                                    <i class="fas fa-user text-primary fa-2x"></i>
-                                </div>
-                                <div>
-                                    <h5 id="vName" class="mb-0 text-primary"></h5>
-                                    <span id="vEmail" class="text-muted small"></span></br>
-                                    <span id="vCode" class="text-muted small text-bold"></span>
-                                </div>
-                            </div>
-
-                            <!-- Status Badge (Right Side) -->
-                            <span id="vStatus" class="badge px-3 py-2"></span>
-
-                        </div>
-
-                        <hr>
-
-                        <!-- Two Column Layout -->
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <p><b>Phone :</b> <span id="vPhone"></span></p>
-                                <p><b>Purpose :</b> <span id="vPurpose"></span></p>
-                                <p><b>Group Code :</b> <span id="vGroupCode"></span></p>
-                                <p><b>Vehicle No :</b> <span id="vVehicleNo"></span></p>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p><b>Exp Visit Date :</b> <span id="vExpVisitDate"></span></p>
-                                <p><b>Exp Visit Time :</b> <span id="vExpVisitTime"></span></p>
-                                <p><b>Id Proof Type :</b> <span id="vIdProofType"></span></p>
-                                <p><b>Id Proof No :</b> <span id="vIdProofNo"></span></p>
-                            <input type="hidden" id="visitorRequestId">
+    
 
 
-                            <div class="col-md-12">
-                                <p><b>Description:</b> <span id="vDescription"></span></p>
-                            </div>
+                <!-- Visitor Details Card Start -->
+<div id="visitorDetails" class="card visitor-details-smart shadow-lg">
 
-                        </div>
+    <!-- Header -->
+    <div class="card-header bg-gradient-success text-white d-flex align-items-center">
+        <i class="fas fa-id-card fa-lg me-2"></i>
+        <h5 class="mb-0">Visitor Information</h5>
+    </div>
 
-                        <input type="hidden" id="visitorRequestId">
-                        <input type="hidden" id="securityCheckStatus">
+    <div class="card-body">
 
-                        <!-- Action Buttons -->
-                        <div class="mt-4">
-                            <button class="btn btn-success w-100 mb-2 d-none" id="allowEntryBtn">
-                                <i class="fas fa-door-open"></i> Allow Entry
-                            </button>
+        <!-- Profile + Status -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-                            <button class="btn btn-danger w-100 d-none" id="markExitBtn">
-                                <i class="fas fa-door-closed"></i> Mark Exit
-                            </button>
-                        </div>
+            <!-- Profile -->
+            <div class="d-flex align-items-center">
+                <div class="profile-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div>
+                    <h4 id="vName" class="visitor-name"></h4>
+                    <div class="text-muted small">
+                        <i class="fas fa-envelope"></i> <span id="vEmail"></span><br>
+                        <i class="fas fa-hashtag"></i> <span id="vCode"></span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Status -->
+            <span id="vStatus" class="visitor-status"></span>
+
+        </div>
+
+        <hr>
+
+        <!-- 2 Column Smart Info Layout -->
+        <div class="row g-3">
+
+            <div class="col-md-6">
+
+                <p class="info-line"><i class="fas fa-phone"></i> <span id="vPhone"></span></p>
+
+                <p class="info-line"><i class="fas fa-bullseye"></i> <span id="vPurpose"></span></p>
+
+                <p class="info-line"><i class="fas fa-users"></i> <span id="vGroupCode"></span></p>
+
+                <p class="info-line"><i class="fas fa-car"></i> <span id="vVehicleNo"></span></p>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <p class="info-line"><i class="fas fa-calendar"></i> <span id="vExpVisitDate"></span></p>
+
+                <p class="info-line"><i class="fas fa-clock"></i> <span id="vExpVisitTime"></span></p>
+
+                <p class="info-line"><i class="fas fa-id-badge"></i> <span id="vIdProofType"></span></p>
+
+                <p class="info-line"><i class="fas fa-barcode"></i> <span id="vIdProofNo"></span></p>
+
+            </div>
+
+            <div class="col-12">
+                <p class="info-line"><i class="fas fa-comment-alt"></i> <span id="vDescription"></span></p>
+            </div>
+
+        </div>
+
+        <input type="hidden" id="visitorRequestId">
+        <input type="hidden" id="securityCheckStatus">
+
+        <!-- Action Buttons -->
+        <div class="mt-4">
+            <button class="btn btn-success smart-btn mb-2 d-none" id="allowEntryBtn">
+                <i class="fas fa-door-open"></i> Allow Entry
+            </button>
+
+            <button class="btn btn-danger smart-btn d-none" id="markExitBtn">
+                <i class="fas fa-door-closed"></i> Mark Exit
+            </button>
+        </div>
+
+    </div>
+</div>
+<!-- Visitor Details Card End -->
+
+                
                     <!-- Visitor Details Card End -->
                 </div>
             </div>

@@ -780,3 +780,50 @@ input[type="file"] {
     background: #eef4ff;
     cursor: pointer;
 }
+
+
+
+/* Make all visitor details small font */
+.visitor-details p,
+.visitor-details .visitor-info,
+.visitor-details .visitor-email,
+.visitor-details .visitor-code {
+    font-size: 0.80rem !important; /* small font */
+    line-height: 1.20rem;
+    margin-bottom: 4px;
+}
+
+/* Visitor name slightly bigger but still compact */
+.visitor-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Code style */
+.visitor-code {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* QR Image */
+.visitor-qr {
+    max-width: 100px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+}
+
+/* Resend Button small */
+.resend-btn {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+}
+
+/* Card Spacing */
+.visitor-card-body {
+    padding: 5px;
+}
+
+.visitor-card {
+    border-radius: 14px;
+}

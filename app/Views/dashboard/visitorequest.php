@@ -12,6 +12,44 @@
 
                         <form id="visitorForm" enctype="multipart/form-data">
                             <div class="card-body">
+                                  <!-- Visit Info -->
+                                <h5 class="text-primary font-weight-bold">Visit Information</h5>
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-2">
+                                        <label>Purpose</label>
+                                        <select name="purpose" class="form-control" required>
+                                            <option value="">-- Select Purpose --</option>
+                                            <option>General Visit</option>
+                                            <option>Meeting</option>
+                                            <option>Interview</option>
+                                            <option>Document Submission</option>
+                                            <option>Verification / Approval</option>
+                                            <option>Event Visit</option>
+                                            <option>Tourism Visit</option>
+                                            <option>Personal Visit</option>
+                                            <option>Site Inspection</option>
+                                            <option>Maintenance / Service</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label>Date of Visit</label>
+                                        <input type="date" name="visit_date" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label>Time of Visit</label>
+                                        <input type="time" name="visit_time" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-12 mb-2">
+                                        <label>Description</label>
+                                        <textarea name="description" class="form-control" rows="2" placeholder="Enter visit purpose details (optional)"></textarea>
+                                    </div>
+
+                                </div>
 
                                 <!-- Visitor Details -->
                                 <h5 class="text-primary font-weight-bold">Visitor Details</h5>
@@ -53,45 +91,7 @@
 
                                 </div>
 
-                                <!-- Visit Info -->
-                                <h5 class="text-primary font-weight-bold">Visit Information</h5>
-                                <div class="row">
-
-                                    <div class="col-md-6 mb-2">
-                                        <label>Purpose</label>
-                                        <select name="purpose" class="form-control" required>
-                                            <option value="">-- Select Purpose --</option>
-                                            <option>General Visit</option>
-                                            <option>Meeting</option>
-                                            <option>Interview</option>
-                                            <option>Document Submission</option>
-                                            <option>Verification / Approval</option>
-                                            <option>Event Visit</option>
-                                            <option>Tourism Visit</option>
-                                            <option>Personal Visit</option>
-                                            <option>Site Inspection</option>
-                                            <option>Maintenance / Service</option>
-                                            <option>Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3 mb-2">
-                                        <label>Date of Visit</label>
-                                        <input type="date" name="visit_date" class="form-control" required>
-                                    </div>
-
-                                    <div class="col-md-3 mb-2">
-                                        <label>Time of Visit</label>
-                                        <input type="time" name="visit_time" class="form-control" required>
-                                    </div>
-
-                                    <div class="col-md-12 mb-2">
-                                        <label>Description</label>
-                                        <textarea name="description" class="form-control" rows="2" placeholder="Enter visit purpose details (optional)"></textarea>
-                                    </div>
-
-                                </div>
-
+                              
                                 <!-- Vehicle Details -->
                                 <h5 class="text-primary font-weight-bold">Vehicle Information</h5>
                                 <div class="row">

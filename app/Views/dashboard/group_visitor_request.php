@@ -1,159 +1,192 @@
   <?= $this->include('/dashboard/layouts/sidebar') ?>
-  <?= $this->include('/dashboard/layouts/navbar') ?>
-     
-   <main class="main-content" id="mainContent">
-        <div class="container-fluid">
-           <div class="row d-flex justify-content-center">
-                <div class="col-md-12">
-                    <div class="card card-primary">
-                        <div class="card-header py-2">
-                            <h3 class="card-title m-0">Visitor Request</h3>
-                        </div>
+<?= $this->include('/dashboard/layouts/navbar') ?>
+<main class="main-content" id="mainContent">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12">
+                <div class="card card-primary">
 
-                        <form id="visitorForm" enctype="multipart/form-data">
-                            <div class="card-body">
-                                <div class="table-responsive dynamic-form-table">
-                                    <table class="table table-bordered" id="visitorGrid">
-                                        <thead class="bg-light">
-                                            <tr>
-                                                <th>S.No</th>
-                                                <th>Visitor Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>ID Type</th>
-                                                <th>ID Number</th>
-                                                <th>Purpose</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
-                                                <th>Vehicle No</th>
-                                                <th>Vehicle Type</th>
-                                                <th>Description</th>
-                                                <th>Vehicle ID Proof</th>
-                                                <th>Visitor ID Proof</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+                    <!-- CARD HEADER -->
+                    <div class="card-header py-2">
+                        <h3 class="card-title m-0">Visitor Request</h3>
+                    </div>
 
-                                        <tbody>
-                                            <!-- Default Row -->
-                                            <tr>
-                                                <td>
-                                                    <lable>1</lable>
-                                                    <!-- <input type="text" name="group_code[]" class="form-control group-code" value="1" readonly> -->
-                                                </td>
+                    <form id="visitorForm" enctype="multipart/form-data">
+                        <div class="card-body">
 
-                                                <td><input type="text" name="visitor_name[]" class="form-control" required></td>
+                            <!-- ********* COMMON HEADER FIELDS ********* -->
+                          <div class="row">
+                                <div class="col-md-2 mb-2">
+                                    <label>Company</label>
+                                    <input type="text" name="company" class="form-control" value="<?= session()->get('company_name')?>" placeholder="Enter Company" required readonly>
+                                </div>
 
-                                                <td><input type="email" name="visitor_email[]" class="form-control" required></td>
+                                <div class="col-md-2 mb-2">
+                                    <label>Department</label>
+                                    <input type="text" name="department" class="form-control input-readonly-dark" value="<?= session()->get('department_name')?>" placeholder="Enter Department" required readonly>
+                                </div>
 
-                                                <td><input type="text" name="visitor_phone[]" class="form-control" required></td>
+                                <div class="col-md-2 mb-2">
+                                    <label>Purpose</label>
+                                    <select name="purpose" class="form-control" required>
+                                        <option value="">-- Select Purpose --</option>
+                                        <option>General Visit</option>
+                                        <option>Meeting</option>
+                                        <option>Interview</option>
+                                        <option>Document Submission</option>
+                                        <option>Verification / Approval</option>
+                                        <option>Event Visit</option>
+                                        <option>Personal Visit</option>
+                                        <option>Site Inspection</option>
+                                        <option>Maintenance / Service</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label>Visit Date</label>
+                                    <input type="date" name="visit_date" class="form-control" placeholder="Select Date" required>
+                                </div>
 
-                                                <td>
-                                                    <select name="proof_id_type[]" class="form-control" required>
-                                                        <option value="">Select</option>
-                                                        <option>Aadhar Card</option>
-                                                        <option>PAN Card</option>
-                                                        <option>Voter ID</option>
-                                                        <option>Passport</option>
-                                                        <option>Driving License</option>
-                                                        <option>Employee / Student ID</option>
-                                                        <option>Other</option>
-                                                    </select>
-                                                </td>
+                                <div class="col-md-2 mb-2">
+                                    <label>Visit Time</label>
+                                    <input type="time" name="visit_time" class="form-control" placeholder="Select Time" required>
+                                </div>
+                                
+                                <div class="col-md-2 mb-2">
+                                    <label>Email</label>
+                                    <input type="email" name="email"  class="form-control" placeholder=" Please Enter Email" required>
+                                </div>
 
-                                                <td><input type="text" name="proof_id_number[]" class="form-control" required></td>
+                                <div class="col-md-6 mb-2">
+                                    <label>Description</label>
+                                    <textarea name="description" class="form-control" rows="1" placeholder="Please Enter Description"></textarea>
+                                </div>
 
-                                                <td>
-                                                    <select name="purpose[]" class="form-control" required>
-                                                        <option value="">Purpose</option>
-                                                        <option>General Visit</option>
-                                                        <option>Meeting</option>
-                                                        <option>Interview</option>
-                                                        <option>Document Submission</option>
-                                                        <option>Verification / Approval</option>
-                                                        <option>Event Visit</option>
-                                                        <option>Personal Visit</option>
-                                                        <option>Site Inspection</option>
-                                                        <option>Maintenance / Service</option>
-                                                        <option>Other</option>
-                                                    </select>
-                                                </td>
+                                <!-- ====== Download & Upload Excel Buttons ====== -->
+                                <div class="col-md-6 mb-2 d-flex align-items-end gap-2">
 
-                                                <td><input type="date" name="visit_date[]" class="form-control" required></td>
+                                    <!-- download button -->
+                                    <a href="<?= base_url('visitor-template-download') ?>" 
+                                    class="btn btn-success me-2">
+                                        <i class="fa-solid fa-download"></i> Download Template
+                                    </a>
 
-                                                <td><input type="time" name="visit_time[]" class="form-control" required></td>
-                                                
-                                                <td><input type="text" name="vehicle_no[]" class="form-control"></td>
-                                                
-                                                <td><select name="vehicle_type[]" class="form-control">
-                                                    <option value="">-- Select Vehicle Type --</option>
+                                    <!-- upload button -->
+                                    <label class="btn btn-primary mb-0">
+                                        <i class="fa-solid fa-upload"></i> Upload Template File
+                                        <input type="file" name="excel_file" id="excelUpload" class="d-none" accept=".xlsx,.xls,.csv">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- ********* DYNAMIC TABLE ********* -->
+                            <div class="table-responsive dynamic-form-table">
+                                <table class="table table-bordered" id="visitorGrid">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Visitor Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>ID Type</th>
+                                            <th>ID Number</th>
+                                            <th>Vehicle No</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Vehicle ID Proof</th>
+                                            <th>Visitor ID Proof</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            <td><input type="text" name="visitor_name[]" class="form-control" required></td>
+
+                                            <td><input type="email" name="visitor_email[]" class="form-control" required></td>
+
+                                            <td><input type="text" name="visitor_phone[]" class="form-control" required></td>
+
+                                            <td>
+                                                <select name="proof_id_type[]" class="form-control" required>
+                                                    <option value="">Select</option>
+                                                    <option>Aadhaar Card</option>
+                                                    <option>PAN Card</option>
+                                                    <option>Voter ID</option>
+                                                    <option>Passport</option>
+                                                    <option>Driving License</option>
+                                                </select>
+                                            </td>
+
+                                            <td><input type="text" name="proof_id_number[]" class="form-control" required></td>
+
+                                            <td><input type="text" name="vehicle_no[]" class="form-control"></td>
+
+                                            <td>
+                                                <select name="vehicle_type[]" class="form-control">
+                                                    <option value="">Select</option>
                                                     <option>Bike</option>
                                                     <option>Car</option>
                                                     <option>Van</option>
                                                     <option>Bus</option>
                                                     <option>Auto</option>
                                                     <option>Truck</option>
-                                                    </select></td>
+                                                </select>
+                                            </td>
 
-                                                <td><textarea name="description[]" class="form-control" rows="2" ></textarea></td>
-                                            
-                                                <td class="text-center">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
-                                                       <i class="fa-solid fa-file-arrow-up"></i>
-                                                    </button>
-                                                    <input type="file" name="vehicle_id_proof[]" class="fileInput d-none">
-                                                </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
+                                                    <i class="fa-solid fa-file-arrow-up"></i>
+                                                </button>
+                                                <input type="file" name="vehicle_id_proof[]" class="fileInput d-none">
+                                            </td>
 
-                                                <td class="text-center">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
-                                                     <i class="fa-solid fa-file-arrow-up"></i>
-                                                    </button>
-                                                    <input type="file" name="visitor_id_proof[]" class="fileInput d-none">
-                                                </td>
-                                                   
-                                                <td>
-                                                    <button type="button" class="btn btn-success btn-sm addRow"> <i class="fa-solid fa-user-plus"></i> </button>
-                                                </td>
-                                            </tr>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
+                                                    <i class="fa-solid fa-file-arrow-up"></i>
+                                                </button>
+                                                <input type="file" name="visitor_id_proof[]" class="fileInput d-none">
+                                            </td>
 
-                                        </tbody>
-
-                                    </table>
-                                </div>
-
-                                <!-- Hidden -->
-                                <input type="hidden" name="host_user_id" value="<?= $_SESSION['user_id']; ?>">
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-sm addRow"><i class="fa-solid fa-user-plus"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+                            <input type="hidden" name="host_user_id" value="<?= $_SESSION['user_id']; ?>">
+                        </div>
 
-                            <div class="card-footer py-2">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <a href="<?= base_url('visitorequestlist') ?>" class="btn btn-danger float-right">Back</a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="card-footer py-2">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="<?= base_url('visitorequestlist') ?>" class="btn btn-danger float-right">Back</a>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-         </div>
-    </main>
+        </div>
+    </div>
+</main>
 
 <?= $this->include('/dashboard/layouts/footer') ?>
 
 
 <!-- Dynamic Row Script -->
 <script>
-let groupIndex = 1;
-
 let serial = 1;
 
-$(document).on('click', '.addRow', function(){
-
+$(document).on('click', '.addRow', function () {
     serial++;
-
     let row = `
         <tr>
-            <td>
-              <lable>${serial}</lable>
-            </td>
+            <td>${serial}</td>
+
             <td><input type="text" name="visitor_name[]" class="form-control" required></td>
             <td><input type="email" name="visitor_email[]" class="form-control" required></td>
             <td><input type="text" name="visitor_phone[]" class="form-control" required></td>
@@ -161,67 +194,45 @@ $(document).on('click', '.addRow', function(){
             <td>
                 <select name="proof_id_type[]" class="form-control" required>
                     <option value="">Select</option>
-                    <option>Aadhar Card</option>
+                    <option>Aadhaar Card</option>
                     <option>PAN Card</option>
                     <option>Voter ID</option>
                     <option>Passport</option>
                     <option>Driving License</option>
-                    <option>Employee / Student ID</option>
-                    <option>Other</option>
                 </select>
             </td>
 
             <td><input type="text" name="proof_id_number[]" class="form-control" required></td>
+            <td><input type="text" name="vehicle_no[]" class="form-control"></td>
 
             <td>
-                <select name="purpose[]" class="form-control" required>
-                    <option value="">Purpose</option>
-                    <option>General Visit</option>
-                    <option>Meeting</option>
-                    <option>Interview</option>
-                    <option>Document Submission</option>
-                    <option>Verification / Approval</option>
-                    <option>Event Visit</option>
-                    <option>Personal Visit</option>
-                    <option>Site Inspection</option>
-                    <option>Maintenance / Service</option>
-                    <option>Other</option>
+                <select name="vehicle_type[]" class="form-control">
+                    <option value="">Select</option>
+                    <option>Bike</option>
+                    <option>Car</option>
+                    <option>Van</option>
+                    <option>Bus</option>
+                    <option>Auto</option>
+                    <option>Truck</option>
                 </select>
             </td>
 
-            <td><input type="date" name="visit_date[]" class="form-control" required></td>
-            <td><input type="time" name="visit_time[]" class="form-control" required></td>
-
-            <td><input type="text" name="vehicle_no[]" class="form-control" ></td>
-            
-            <td><select name="vehicle_type[]" class="form-control">
-                <option value="">-- Select Vehicle Type --</option>
-                <option>Bike</option>
-                <option>Car</option>
-                <option>Van</option>
-                <option>Bus</option>
-                <option>Auto</option>
-                <option>Truck</option>
-                </select></td>
-
-            <td><textarea name="description[]" class="form-control" rows="2" ></textarea></td>
-            
             <td class="text-center">
                 <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
-                    <i class="fas fa-upload"></i>
+                    <i class="fa-solid fa-file-arrow-up"></i>
                 </button>
                 <input type="file" name="vehicle_id_proof[]" class="fileInput d-none">
             </td>
 
             <td class="text-center">
                 <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
-                    <i class="fas fa-upload"></i>
+                    <i class="fa-solid fa-file-arrow-up"></i>
                 </button>
                 <input type="file" name="visitor_id_proof[]" class="fileInput d-none">
             </td>
 
             <td>
-                <button type="button" class="btn btn-danger btn-sm removeRow"> <i class="fa-solid fa-user-xmark"></i> </button>
+                <button type="button" class="btn btn-danger btn-sm removeRow"><i class="fa-solid fa-user-xmark"></i></button>
             </td>
         </tr>
     `;
@@ -229,7 +240,7 @@ $(document).on('click', '.addRow', function(){
     $("#visitorGrid tbody").append(row);
 });
 
-$(document).on('click', '.removeRow', function(){
+$(document).on('click', '.removeRow', function () {
     $(this).closest('tr').remove();
 });
 </script>
@@ -254,15 +265,15 @@ $("#visitorForm").submit(function(e){
         success: function(res){
             if(res.status === "success"){
                 $("#visitorForm")[0].reset();
+              
                 Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    icon: 'success',
-                    title: 'Visitor Saved Successfully',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
+                icon: "success",
+                title: "Visitor Saved Successfully",
+                timer: 1000,
+                showConfirmButton: false
                 });
+                setTimeout(() => location.reload(), 800);
+
 
                     // Send mails only for approved ones
                 if(res.submit_type === 'admin'){
@@ -308,4 +319,111 @@ function sendMail(postData) {
 $(document).on('click', '.uploadBtn', function () {
     $(this).closest('td').find('.fileInput').click();
 });
+
+
+
+// CSV Upload Event
+// CSV / Excel Upload Event
+$("#excelUpload").change(function () {
+
+    let file = this.files[0];
+
+    if (!file) return;
+
+    // FIX: Define formData before using it
+    let formData = new FormData();
+    formData.append("excel_file", file);
+
+    $.ajax({
+        url: "<?= base_url('visitor-template-upload') ?>",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+
+            if (res.status === "success") {
+
+                $("#visitorGrid tbody").html(""); // clear table
+                serial = 0;
+
+                res.data.forEach((row) => {
+                    serial++;
+
+                    let newRow = `
+                        <tr>
+                            <td>${serial}</td>
+
+                            <td><input type="text" name="visitor_name[]" 
+                                class="form-control" value="${row.visitor_name}" required></td>
+
+                            <td><input type="email" name="visitor_email[]" 
+                                class="form-control" value="${row.email}" required></td>
+
+                            <td><input type="text" name="visitor_phone[]" 
+                                class="form-control" value="${row.phone}" required></td>
+
+                            <td>
+                                <select name="proof_id_type[]" class="form-control" required>
+                                    <option value="">Select</option>
+                                    <option ${row.id_type == 'Aadhaar Card' ? 'selected' : ''}>Aadhaar Card</option>
+                                    <option ${row.id_type == 'PAN Card' ? 'selected' : ''}>PAN Card</option>
+                                    <option ${row.id_type == 'Voter ID' ? 'selected' : ''}>Voter ID</option>
+                                    <option ${row.id_type == 'Passport' ? 'selected' : ''}>Passport</option>
+                                    <option ${row.id_type == 'Driving License' ? 'selected' : ''}>Driving License</option>
+                                </select>
+                            </td>
+
+                            <td><input type="text" name="proof_id_number[]" 
+                                class="form-control" value="${row.id_number}" required></td>
+
+                            <td><input type="text" name="vehicle_no[]" 
+                                class="form-control" value="${row.vehicle_no}"></td>
+
+                            <td>
+                                <select name="vehicle_type[]" class="form-control">
+                                    <option value="">Select</option>
+                                    <option ${row.vehicle_type == 'Bike' ? 'selected' : ''}>Bike</option>
+                                    <option ${row.vehicle_type == 'Car' ? 'selected' : ''}>Car</option>
+                                    <option ${row.vehicle_type == 'Van' ? 'selected' : ''}>Van</option>
+                                    <option ${row.vehicle_type == 'Bus' ? 'selected' : ''}>Bus</option>
+                                    <option ${row.vehicle_type == 'Auto' ? 'selected' : ''}>Auto</option>
+                                    <option ${row.vehicle_type == 'Truck' ? 'selected' : ''}>Truck</option>
+                                </select>
+                            </td>
+
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
+                                    <i class="fa-solid fa-file-arrow-up"></i>
+                                </button>
+                                <input type="file" name="vehicle_id_proof[]" class="fileInput d-none">
+                            </td>
+
+                            <td class="text-center">
+                                <button type="button" class="btn btn-outline-primary btn-sm uploadBtn">
+                                    <i class="fa-solid fa-file-arrow-up"></i>
+                                </button>
+                                <input type="file" name="visitor_id_proof[]" class="fileInput d-none">
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm removeRow">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+
+                    $("#visitorGrid tbody").append(newRow);
+                });
+            }
+        },
+        error: function () {
+            alert("Error reading uploaded file");
+        }
+    });
+});
+
+
+
 </script>

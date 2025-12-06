@@ -27,7 +27,7 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
 <!-- Sidebar -->
 <nav class="sidebar" id="sidebar">
   <div class="brand-area">
-    <img src="https://www.nicepng.com/png/detail/37-376583_ramoji-film-city-hyderabad-logo.png" alt="Logo">
+    <img src="<?= base_url('public/dist/ramoji-logo.png') ?>" alt="Logo">
   </div>
   <ul class="nav flex-column">
     <li>

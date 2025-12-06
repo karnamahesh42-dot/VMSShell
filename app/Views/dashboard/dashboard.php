@@ -46,29 +46,38 @@
                 </div>
                 <div><a href="<?= base_url('visitorequestlist') ?>" class="btn btn-sm btn-outline-primary">View All</a></div>
               </div>
-              <ul class="pending-list mt-2">
-                <li>
-                  <div>
-                    <div class="fw-700">John Doe</div>
-                    <small class="muted">Interview • 2025-12-04</small>
-                  </div>
-                  <div class="text-end"><span class="badge-pending">Pending</span></div>
-                </li>
-                <li>
-                  <div>
-                    <div class="fw-700">Mary Smith</div>
-                    <small class="muted">Group Visit • 2025-12-05</small>
-                  </div>
-                  <div class="text-end"><span class="badge-pending">Pending</span></div>
-                </li>
-                <li>
-                  <div>
-                    <div class="fw-700">Guest X</div>
-                    <small class="muted">Vendor Visit • 2025-12-06</small>
-                  </div>
-                  <div class="text-end"><span class="badge-approved">Auto-approved</span></div>
-                </li>
-              </ul>
+          <ul class="pending-list mt-2">
+              <?php if (!empty($pendingList)): ?>
+                  <?php foreach ($pendingList as $item): ?>
+                      <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
+                          
+                          <div>
+                              <!-- GV Code -->
+                              <div class="fw-700">
+                                  <?= $item['header_code'] ?>
+                              </div>
+
+                              <!-- Purpose + date + persons -->
+                              <small class="muted">
+                                  <?= $item['purpose'] ?> • 
+                                  <?= $item['requested_date'] ?> <?= $item['requested_time'] ?> •
+                                  <?= $item['total_visitors'] ?> Persons
+                              </small>
+                          </div>
+
+                          <div class="text-end">
+                              <span class="badge-pending">Pending</span>
+                          </div>
+
+                      </li>
+                  <?php endforeach; ?>
+              <?php else: ?>
+                  <li>
+                      <div class="text-center text-muted w-100">No pending requests</div>
+                  </li>
+              <?php endif; ?>
+          </ul>
+
             </div>
             <div class="card-dash card-large">
               <h4 class="mb-3">Quick Links</h4>

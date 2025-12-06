@@ -60,6 +60,7 @@
         type: "GET",
         dataType: "json",
         success: function(res) {
+        
 
             let tbody = $("#authorizedVisitorTable");
             tbody.empty();
@@ -76,6 +77,8 @@
             }
 
             $("#authCount").text(res.length);
+
+            
 
             res.forEach((v, index) => {
 

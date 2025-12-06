@@ -16,8 +16,8 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost/VSMShell/';
-    // public string $baseURL = 'http://192.168.24.186/VSMShell/';
+    // public string $baseURL = 'http://localhost/VSMShell/';
+    public string $baseURL = 'http://192.168.24.186/VSMShell/';
 
     
     /**
@@ -135,8 +135,8 @@ class App extends BaseConfig
      * @see https://www.php.net/manual/en/timezones.php for list of timezones
      *      supported by PHP.
      */
-    public string $appTimezone = 'UTC';
-
+    // public string $appTimezone = 'UTC';
+    public string $appTimezone = 'Asia/Kolkata';
     /**
      * --------------------------------------------------------------------------
      * Default Character Set
