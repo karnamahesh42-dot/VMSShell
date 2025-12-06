@@ -18,4 +18,5 @@ class SecurityGateLogModel extends Model
     ];
 
     protected $useTimestamps = false; // We are manually storing times
+    
 }
