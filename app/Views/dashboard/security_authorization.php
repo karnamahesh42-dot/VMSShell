@@ -83,7 +83,7 @@
             <div class="col-md-8 col-sm-8 col-8">
 
             <!-- Search Box -->
-                <div class="card card-primary">
+                <div class="card card-primary mb-3">
                     <div class="card-header text-white d-flex align-items-center">
                         <h5 class="mb-0">
                             <i class="fas fa-qrcode"></i> Visitor Access Verification
@@ -127,7 +127,7 @@
 
 
                 <!-- Visitor Details Card Start -->
-<div id="visitorDetails" class="card visitor-details-smart shadow-lg">
+<div id="visitorDetails" class="card visitor-details-smart shadow-lg mb-5 d-none">
 
     <!-- Header -->
     <div class="card-header bg-gradient-success text-white d-flex align-items-center">
@@ -165,7 +165,7 @@
         <!-- 2 Column Smart Info Layout -->
         <div class="row g-3">
 
-            <div class="col-md-6">
+            <div class="col-md-6 pl-5">
 
                 <p class="info-line"><i class="fas fa-phone"></i> <span id="vPhone"></span></p>
 

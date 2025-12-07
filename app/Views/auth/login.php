@@ -9,7 +9,7 @@
 
     <style>
         body {
-            background: linear-gradient(to right, #e3f2fd, #fce4ec);
+            background: linear-gradient(to right, #c2e6ffff, #f7ccccff);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,7 +22,8 @@
             padding: 30px;
             border-radius: 18px;
             background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            /* box-shadow: 0 10px 25px rgba(0,0,0,0.15); */
+            box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
         }

@@ -81,6 +81,49 @@ class Dashboard extends BaseController
 
             $data['pendingList'] = $pendingList;
 
+        $recentAuthorized = $this->SecurityGateLogModel->getRecentAuthorized(10);
+
+        // print_r ($recentAuthorized);
+        // return;
+
+         // Today visitors (actual check-in)
+$today = date('Y-m-d');
+$todayVisitors = $this->SecurityGateLogModel
+                        ->where('DATE(check_in_time)', $today)
+                        ->where('check_in_time IS NOT NULL')
+                        ->countAllResults();
+
+// Week visitors (Mon–Sun)
+$weekStart = date('Y-m-d', strtotime('monday this week'));
+$weekEnd   = date('Y-m-d', strtotime('sunday this week'));
+$weekVisitors = $this->SecurityGateLogModel
+                        ->where('DATE(check_in_time) >=', $weekStart)
+                        ->where('DATE(check_in_time) <=', $weekEnd)
+                        ->where('check_in_time IS NOT NULL')
+                        ->countAllResults();
+
+// Month visitors
+$monthStart = date('Y-m-01');
+$monthEnd   = date('Y-m-t');
+$monthVisitors = $this->SecurityGateLogModel
+                        ->where('DATE(check_in_time) >=', $monthStart)
+                        ->where('DATE(check_in_time) <=', $monthEnd)
+                        ->where('check_in_time IS NOT NULL')
+                        ->countAllResults();
+
+        // Security alerts — example (0 for now, or fetch from DB)
+        $alerts = 0;
+
+            $data['meds'] = [
+            ['title' => 'Today Visitors', 'count' => $todayVisitors, 'icon' => 'fa-users', 'desc' => $todayVisitors . ' people visited today.'],
+            ['title' => 'This Week', 'count' => $weekVisitors, 'icon' => 'fa-calendar-week', 'desc' => $weekVisitors . ' visitors this week.'],
+            ['title' => 'This Month', 'count' => $monthVisitors, 'icon' => 'fa-calendar', 'desc' => $monthVisitors . ' visitors this month.'],
+            ['title' => 'Alerts', 'count' => $alerts, 'icon' => 'fa-bell', 'desc' => $alerts == 0 ? 'No security alerts.' : $alerts . ' alerts pending.'],
+        ];
+
+    
+        $data['recentAuthorized'] = $recentAuthorized;
+
         return view('dashboard/dashboard', $data);
     }
 }

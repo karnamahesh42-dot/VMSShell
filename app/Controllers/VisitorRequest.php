@@ -162,7 +162,7 @@ class VisitorRequest extends BaseController
 
         // Auto email logic
         if ($status === "approved") {
-            $mail_data = [
+            $mail_data[] = [
                 'name'    => $visitorData['visitor_name'],
                 'email'   => $visitorData['visitor_email'],
                 'phone'   => $visitorData['visitor_phone'],
@@ -296,8 +296,6 @@ public function groupSubmit()
             $visitors = $this->visitorModel
                             ->where('request_header_id', $head_id)
                             ->findAll();
-
-        
 
             if (empty($visitors)) {
                 return $this->response->setJSON([

@@ -45,7 +45,7 @@
                                 
                                 <div class="col-md-2 mb-2">
                                     <label>Visit Date</label>
-                                    <input type="date" name="visit_date" class="form-control" placeholder="Select Date" required>
+                                    <input type="date" name="visit_date" class="form-control idNumberField" placeholder="Select Date" required>
                                 </div>
 
                                 <div class="col-md-2 mb-2">
@@ -60,7 +60,7 @@
 
                                 <div class="col-md-6 mb-2">
                                     <label>Description</label>
-                                    <textarea name="description" class="form-control" rows="1" placeholder="Please Enter Description"></textarea>
+                                    <textarea name="description"  id="description" class="form-control" rows="1" placeholder="Please Enter Description"></textarea>
                                 </div>
 
                                 <!-- ====== Download & Upload Excel Buttons ====== -->
@@ -105,11 +105,11 @@
                                         <tr>
                                             <td>1</td>
 
-                                            <td><input type="text" name="visitor_name[]" class="form-control" required></td>
+                                            <td><input type="text" name="visitor_name[]" class="form-control nameField" required></td>
 
                                             <td><input type="email" name="visitor_email[]" class="form-control" required></td>
 
-                                            <td><input type="text" name="visitor_phone[]" class="form-control" required></td>
+                                            <td><input type="text" name="visitor_phone[]" class="form-control phoneField" required></td>
 
                                             <td>
                                                 <select name="proof_id_type[]" class="form-control" required>
@@ -122,7 +122,7 @@
                                                 </select>
                                             </td>
 
-                                            <td><input type="text" name="proof_id_number[]" class="form-control" required></td>
+                                            <td><input type="text" name="proof_id_number[]" class="form-control idNumberField" required></td>
 
                                             <td><input type="text" name="vehicle_no[]" class="form-control"></td>
 
@@ -425,5 +425,31 @@ $("#excelUpload").change(function () {
 });
 
 
+    // Visitor Name Camel Case
+    $("#description").on("input", function () {
+        let val = this.value.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+        this.value = val;
+    });
+
+
+    // function applyValidation() {
+    //     $(".nameField").off().on("input", function(){
+    //         this.value = this.value.replace(/[^A-Za-z ]/g, ""); 
+    //     });
+
+    //     $(".idNumberField").off().on("input", function(){
+    //         this.value = this.value.replace(/[^A-Za-z0-9]/g, "");
+    //     });
+
+    //     $(".phoneField").off().on("input", function(){
+    //         this.value = this.value.replace(/[^0-9]/g, "").slice(0,10);
+    //     });
+    // }
+
+    // applyValidation();
+
+    // $(document).on("click", ".addRow", function () {
+    //     setTimeout(applyValidation, 200);
+    // });
 
 </script>

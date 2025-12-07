@@ -20,24 +20,29 @@
               <?php endforeach; ?>
             </section>
           <!-- ROW 2: Medium Cards -->
-          <section class="dash-row row-medium mb-3">
-            <?php
-            $meds = [
-              ['title'=>'Today Visitors','desc'=>'32 people visited today.'],
-              ['title'=>'This Week','desc'=>'142 visitors this week.'],
-              ['title'=>'This Month','desc'=>'530 visitors this month.'],
-              ['title'=>'Alerts','desc'=>'No security alerts.']
-            ];
-            foreach($meds as $m): ?>
-            <div class="card-dash card-medium">
-              <div class="title"><?= esc($m['title']) ?></div>
-              <div class="muted mt-2"><?= esc($m['desc']) ?></div>
-            </div>
-            <?php endforeach; ?>
-          </section>
+    <section class="dash-row row-medium mb-3">
+    <?php foreach($meds as $m): ?>
+    <div class="card-dash card-medium">
+
+        <!-- Icon + Title side-by-side -->
+        <div class="title-row">
+            <i class="fa <?= esc($m['icon']) ?> icon"></i>
+            <span class="title"><?= esc($m['title']) ?></span>
+        </div>
+
+        <!-- Big Count -->
+        <div class="count-number"><?= esc($m['count']) ?></div>
+
+        <!-- Small Description -->
+        <div class="muted"><?= esc($m['desc']) ?></div>
+
+    </div>
+    <?php endforeach; ?>
+</section>
+
 
           <!-- ROW 3: Pending + Quick Links -->
-          <section class="dash-row row-large mb-3">
+        <section class="dash-row row-large mb-3">
             <div class="card-dash card-large">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
@@ -77,8 +82,8 @@
                   </li>
               <?php endif; ?>
           </ul>
+        </div>
 
-            </div>
             <div class="card-dash card-large">
               <h4 class="mb-3">Quick Links</h4>
               <div class="quick-links">
@@ -92,29 +97,58 @@
           </section>
 
           <!-- Example Table -->
-          <div class="card-dash mb-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h5 class="mb-0">Recent Visitor Entries</h5>
-              <small class="muted">Latest 10</small>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover align-middle">
+      <div class="card-dash mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">Recent Authorized Entries</h5>
+            <small class="muted">Latest 10</small>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
                 <thead class="table-light">
-                  <tr>
-                    <th>Visitor</th><th>Phone</th><th>Purpose</th><th>V-Code</th><th>Status</th>
-                  </tr>
+                    <tr>
+                        <th>Visitor</th>
+                        <th>Phone</th>
+                        <th>Purpose</th>
+                        <th>V-Code</th>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                        <th>Status</th> <!-- ⭐ Added -->
+                    </tr>
                 </thead>
+
                 <tbody>
-                  <tr>
-                    <td>John Doe</td><td>9876543210</td><td>Meeting</td><td>RFC-202512</td><td><span class="badge badge-success">Approved</span></td>
-                  </tr>
-                  <tr>
-                    <td>Mary Smith</td><td>9911223344</td><td>Interview</td><td>RFC-202513</td><td><span class="badge badge-warning">Pending</span></td>
-                  </tr>
+                    <?php foreach($recentAuthorized as $row): ?>
+
+                    <?php 
+                        // STATUS LOGIC
+                        if (!empty($row['check_in_time']) && empty($row['check_out_time'])) {
+                            $status = "<span class='badge bg-info'>Inside</span>";
+                        } 
+                        elseif (!empty($row['check_in_time']) && !empty($row['check_out_time'])) {
+                            $status = "<span class='badge bg-success'>Completed</span>";
+                        } 
+                        else {
+                            $status = "<span class='badge bg-warning text-dark'>Pending</span>";
+                        }
+                    ?>
+
+                    <tr>
+                        <td><?= $row['visitor_name'] ?></td>
+                        <td><?= $row['visitor_phone'] ?></td>
+                        <td><?= $row['purpose'] ?></td>
+                        <td><?= $row['v_code'] ?></td>
+                        <td><?= $row['check_in_time'] ?></td>
+                        <td><?= $row['check_out_time'] ?></td>
+                        <td><?= $status ?></td> <!-- ⭐ Display Status -->
+                    </tr>
+
+                    <?php endforeach; ?>
                 </tbody>
-              </table>
-            </div>
-          </div>
+            </table>
+        </div>
+    </div>
+
 <!-- <test></test> -->
         </div>
       </main>

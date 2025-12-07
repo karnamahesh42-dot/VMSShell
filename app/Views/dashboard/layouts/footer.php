@@ -1,7 +1,7 @@
 
 <!-- Footer -->
 <footer class="footer" id="footer" >
-  <strong> © 2014-2025 <a href="https://adminlte.io" class="text-decoration-none">Ushakiran Movies Private Limited.</a> </strong> All rights reserved.
+  <strong> ©2025 <a href="https://adminlte.io" class="text-decoration-none">Ushakiran Movies Private Limited.</a> </strong> All rights reserved.
 </footer>
 
 <!-- Scripts -->

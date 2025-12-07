@@ -9,8 +9,26 @@
       --footer-bg: #f5f7fb;
       --rfc-blue: #0056b3;
       --rfc-red: #d60000;
-      --rfc-light-bg: #f5f7fb;
+      --rfc-light-bg: #f1f4fc;
     }
+
+.brand-area {
+    width: 100%;        /* Full width of sidebar */
+         /* Optional padding */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the logo horizontally */
+    margin-bottom: 10px;
+
+}
+
+.brand-area img {
+    width: 100%;        /* Make image take full width */
+     /* Maintain aspect ratio */
+    /* object-fit: contain; Ensure it doesn't stretch */
+height: 60px;
+}
+
 
     html, body {
       height: 100%;
@@ -27,12 +45,14 @@
       left: 0;
       width: var(--sidebar-width);
       height: 100%;
-      background: var(--sidebar-bg);
+      /* background: var(--sidebar-bg); */
+       background: linear-gradient(180deg, #4aa8ff,#ff7272);
       color: #fff;
       transition: all 0.3s ease;
       overflow-y: auto;
       padding: 5px 10px;
       z-index: 1040;
+     
     }
 
     .sidebar.closed {
@@ -54,14 +74,14 @@
     }
 
     .sidebar .nav-link:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(19, 12, 121, 0.1);
     }
 
     .sidebar .nav-link.active {
       background: var(--rfc-blue);
     }
 
-    .sidebar .brand-area {
+    /* .sidebar .brand-area {
       text-align: center;
       padding-bottom: 5px;
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -72,7 +92,7 @@
     .sidebar .brand-area img {
       max-width: 140px;
       display: inline-block;
-    }
+    } */
 
     /* Topbar */
     .topbar {
@@ -81,14 +101,26 @@
       left: var(--sidebar-width);
       right: 0;
       height: var(--topbar-height);
-      background: var(--topbar-bg);
-      border-bottom: 1px solid #ddd;
+      /* background: linear-gradient(90deg, #4aa8ff, #ff6b6b); */
+      /* border-bottom: 1px solid #ddd; */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+      background: white;
       display: flex;
       align-items: center;
       padding: 0 20px;
       transition: all 0.3s ease;
       z-index: 1050;
+      margin-bottom: 1px;
     }
+
+    /* .topbar {
+    background: linear-gradient(90deg, #4aa8ff, #ff6b6b);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+} */
 
     .topbar.collapsed {
       left: var(--sidebar-collapsed);
@@ -263,7 +295,7 @@
 
 
     
-    .card-medium { min-height:140px; }
+    .card-medium { min-height:100px; }
     .card-large { min-height:300px; padding:22px; }
 
     .pending-list { list-style:none; padding:0; margin:0; }
@@ -826,4 +858,89 @@ input[type="file"] {
 
 .visitor-card {
     border-radius: 14px;
+}
+
+
+/* ///////////////// */
+
+/* Hover effect */
+.quick-links a:hover {
+    transform: translateY(-3px);           /* subtle lift */
+    background: #f4faff;                    /* soft highlight */
+    border-color: #cbe5ff;                  /* border glow */
+    box-shadow: 0 6px 14px rgba(0, 85, 255, 0.12);
+    color: #0f4c97;
+}
+
+.quick-links a:hover i {
+    color: #0f4c97;
+}
+
+.card-medium {
+    transition: all 0.35s ease;  /* smoother + longer */
+}
+
+.card-medium:hover {
+    transform: translateY(-10px) scale(1.03); /* more zoom + more lift */
+    box-shadow: 0 14px 28px rgba(0,0,0,0.18); /* deeper shadow */
+    border-color: #216cb8;
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+  
+}
+
+.icon {
+    font-size: 26px;
+    color: #216cb8;
+    margin-right: 5px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.count-number {
+    text-align: right;
+    font-size: 34px;
+    font-weight: 700;
+    color: #216cb8;
+}
+
+
+/* ////////////////////////// */
+
+.pending-list {
+    max-height: 260px;       /* FIXED HEIGHT (adjust as you need) */
+    overflow-y: auto;        /* ENABLE VERTICAL SCROLL */
+    padding-right: 5px;      /* SPACE FOR SCROLLBAR */
+    margin: 0;
+}
+
+/* Optional: smooth scrollbar styling */
+.pending-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pending-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+.pending-list::-webkit-scrollbar-thumb {
+    background: #b5b5b5;
+    border-radius: 5px;
+}
+
+.pending-list li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.pending-list li:last-child {
+    border-bottom: none;
 }

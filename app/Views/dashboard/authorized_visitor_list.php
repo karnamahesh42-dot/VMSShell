@@ -9,7 +9,7 @@
 
                   <!-- AUTHORIZED VISITOR LIST -->
                     <div class="card visitor-list-card">
-                        <div class="card-header bg-success text-white d-flex">
+                        <div class="card-header bg-primary text-white d-flex">
                             <h5 class="mb-0">
                                 <i class="fas fa-users"></i> Authorized Visitor List
                             </h5>
