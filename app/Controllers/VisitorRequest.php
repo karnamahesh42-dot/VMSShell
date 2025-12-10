@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\VisitorRequestModel;
 use App\Models\VisitorLogModel;
 use App\Models\VisitorRequestHeaderModel;
+use App\Models\ExpiredVisitorPassModel;
 
   
 
@@ -13,6 +14,7 @@ class VisitorRequest extends BaseController
     protected $visitorModel;
     protected $logModel;
     protected $VisitorRequestHeaderModel;
+    protected $ExpiredVisitorPassModel;
 
 
     public function __construct()
@@ -20,6 +22,7 @@ class VisitorRequest extends BaseController
         $this->visitorModel = new VisitorRequestModel();
         $this->logModel     = new VisitorLogModel();
         $this->VisitorRequestHeaderModel     = new VisitorRequestHeaderModel();
+        $this->ExpiredVisitorPassModel     = new ExpiredVisitorPassModel();
 
     }
 
@@ -256,20 +259,7 @@ public function groupSubmit()
         $vRequestId = $this->visitorModel->insert($data);
 
         $this->insertLog($vRequestId, 'Created', null, $status);
-    // 3 Collect Mail Data
-        if ($autoApprove) 
-        {
-            // $mailDataList[] = [
-            //     'head_id' => $headerId,
-            //     'name'    => $name,
-            //     'email'   => $emails[$i],
-            //     'phone'   => $phones[$i],
-            //     'purpose' => $data['purpose'],
-            //     'vid'     => $vRequestId,
-            //     'v_code'  => $vCode,
-            //     'qr_path' => $qrFile
-            // ];
-        }
+      
     }
 
     return $this->response->setJSON([
@@ -330,17 +320,6 @@ public function groupSubmit()
                         $remark          // comment
                     );
 
-                    // ADD THIS: push visitor mail data to array
-                    // $mail_data[] = [
-                    //     'head_id' => $head_id,
-                    //     'name'    => $v['visitor_name'],
-                    //     'email'   => $v['visitor_email'],
-                    //     'phone'   => $v['visitor_phone'],
-                    //     'purpose' => $v['purpose'],
-                    //     'vid'     => $v['id'],
-                    //     'v_code'  => $v['v_code'],
-                    //     'qr_path' => $qrFile
-                    // ];
                 }
 
             // -----------------------------------
@@ -363,6 +342,7 @@ public function groupSubmit()
             ]);
 
     }
+
 
     /* ==================================================================
        VISITOR LIST
@@ -388,16 +368,11 @@ public function groupSubmit()
         return $this->response->setJSON($query->findAll());
     }
 
-       /* ==================================================================
+       
+
+    /* ==================================================================
        VISITOR LIST By GV-Code
     ================================================================== */
-    // public function getVisitorRequastDataById($head_id)
-    // {
-    //     return $this->response->setJSON(
-    //         $this->visitorModel->find($id)
-    //     );
-    // }
-
 
     public function getVisitorRequastDataById($id)
     {
@@ -481,8 +456,6 @@ public function groupSubmit()
             exit;
         }
 
-        
-
          // Upload CSV Template
         public function uploadCsv()
         {
@@ -523,4 +496,37 @@ public function groupSubmit()
         }
 
 
+        public function updateVisitorValidity()
+        {
+                // Get all expired visitors (older than 1 day & validity = 1)
+                $visitorRequestModelObj = new VisitorRequestModel();
+                $expiredVisitorPassModel = new ExpiredVisitorPassModel();
+                    
+                $expiredVisitors = $visitorRequestModelObj
+                                    ->where('validity', 1)
+                                    ->where('securityCheckStatus', 0)    // Visitor not checked in / not in gate log
+                                    ->where('visit_date <', date('Y-m-d'))  // Visit date older than today
+                                    ->findAll();
+
+                    // print_r($expiredVisitors);
+
+                foreach ($expiredVisitors as $visitor) {
+
+                    // Insert into expired_visitor_passes table
+                    $expiredVisitorPassModel->insert([
+                        'visitor_request_id' => $visitor['id'],
+                        'v_code'       => $visitor['v_code'],   // change column names if needed
+                        'header_code'        => $visitor['group_code'],    // change column names if needed
+                        'expired_at'         => date('Y-m-d H:i:s')
+                    ]);
+                    
+                    $visitorRequestModelObj->update($visitor['id'], ['validity' => 0]);     
+                }
+
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'expired_count' => count($expiredVisitors),
+                    'message' => 'Expired visitor passes stored successfully'
+                ]);
+        }
 }

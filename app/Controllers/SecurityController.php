@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+use App\Models\DepartmentModel;
 
 class SecurityController extends BaseController
 {
@@ -13,73 +14,111 @@ class SecurityController extends BaseController
 
      public function View_authorized_visitor_list()
     {
-      return view('dashboard/authorized_visitor_list');
+          $deptModel = new DepartmentModel();
+    $data['departments'] = $deptModel->findAll();
+      return view('dashboard/authorized_visitor_list',$data);
     }
 
 
+public function authorized_visitors_list_data()
+{
 
-     public function authorized_visitors_list_data()
-    {
-        $db = \Config\Database::connect();
+    $db = \Config\Database::connect();
+    $builder = $db->table('visitors vr');
+    $builder->select("
+        vr.id,
+        vr.v_code,
+        vr.visitor_name,
+        vr.visitor_email,
+        vr.visitor_phone,
+        vr.purpose,
+        vr.visit_time,
+        vr.visit_date,
+        vr.description,
+        vr.vehicle_no,
+        vr.vehicle_type,
+        vr.proof_id_type,
+        vr.proof_id_number,
+        vr.securityCheckStatus,
+        vr.spendTime,
+        log.check_in_time,
+        log.check_out_time,
+        log.verified_by,
+        hr.header_code,
+        hr.department AS department_name,
+        hr.company,
+        hr.requested_by,
+        hr.requested_date,
+        hr.requested_time,
+        u.name AS created_by_name
+    ");
 
-        $builder = $db->table('visitors vr');
-        $builder->select("
-            vr.id,
-            vr.v_code,
-            vr.visitor_name,
-            vr.visitor_email,
-            vr.visitor_phone,
-            vr.purpose,
-            vr.visit_time,
-            vr.visit_date,
-            vr.description,
-            vr.vehicle_no,
-            vr.vehicle_type,
-            vr.proof_id_type,
-            vr.proof_id_number,
-            vr.securityCheckStatus,
-            vr.spendTime,
-            log.check_in_time,
-            log.check_out_time,
-            log.verified_by
-        ");
+    $builder->join('security_gate_logs log', 'log.visitor_request_id = vr.id', 'left');
+    $builder->join('visitor_request_header hr', 'hr.id = vr.request_header_id', 'left');
+    $builder->join('users u', 'u.id = vr.created_by', 'left');
 
-        $builder->join('security_gate_logs log', 'log.visitor_request_id = vr.id', 'left');
+    // Only approved
+    $builder->where('vr.status', 'approved');
 
-        // Only approved visitors
-        $builder->where('vr.status', 'approved');
+    // --- FILTERS ---
+    $company = $this->request->getGet('company');
+    $department = $this->request->getGet('department');
+    $security = $this->request->getGet('securityCheckStatus');
+    $requestcode = $this->request->getGet('requestcode');
+    $v_code = $this->request->getGet('v_code');
+    
 
-        // Optional: show latest first
-        $builder->orderBy('vr.id', 'DESC');
 
-        $result = $builder->get()->getResultArray();
 
-        return $this->response->setJSON($result);
 
+    if (!empty($company)) {
+        $builder->where('hr.company', $company);
     }
 
-
-    public function verifyVisitor()
-    {
-        $vcode = $this->request->getPost('v_code');
-
-        $model = new \App\Models\VisitorRequestModel();
-        $visitor = $model->where('v_code', $vcode)->first();
-
-        if (!$visitor) {
-            return $this->response->setJSON(['status' => 'error']);
-        }
-
-        if ($visitor['status'] !== 'approved') {
-            return $this->response->setJSON(['status' => 'not_approved']);
-        }
-
-        return $this->response->setJSON([
-            'status' => 'success',
-            'visitor' => $visitor
-        ]);
-
+    if (!empty($department)) {
+        $builder->where('hr.department', $department);
     }
+
+    if ($security !== "" && $security !== null) {
+        $builder->where('vr.securityCheckStatus', $security);
+    }
+    
+    if ($requestcode !== "" && $requestcode !== null) {
+        $builder->where('hr.header_code', $requestcode);
+    }
+
+    if ($v_code !== "" && $v_code !== null) {
+        $builder->where('vr.v_code', $v_code);
+    }
+
+    $builder->orderBy('vr.id', 'DESC');
+
+    return $this->response->setJSON($builder->get()->getResultArray());
+}
+
+
+
+public function verifyVisitor()
+{
+    $vcode = $this->request->getPost('v_code');
+
+    $model = new \App\Models\VisitorRequestModel();
+    $visitor = $model->where('v_code', $vcode)->first();
+
+    if (!$visitor) {
+        return $this->response->setJSON(['status' => 'error']);
+    }
+
+    if ($visitor['status'] !== 'approved') {
+        return $this->response->setJSON(['status' => 'not_approved']);
+    }
+
+    return $this->response->setJSON([
+        'status' => 'success',
+        'visitor' => $visitor
+    ]);
+
+}
 
     
 public function checkIn() 

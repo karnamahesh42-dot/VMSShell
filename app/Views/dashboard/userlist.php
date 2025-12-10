@@ -81,9 +81,7 @@
 </div>
 <!-- Edit User Modal -->
 
-
                 <div class="row d-flex justify-content-center">
-             
                     <div class="col-md-12">
                         <div class="card visitor-list-card">
                             <div class="card-header d-flex justify-content-between align-items-center card-header-actions">
@@ -95,6 +93,56 @@
                             </div>
 
                             <div class="card-body table-responsive">
+
+    <!-- 🔍 Filters Section -->
+    <form method="GET" class="mb-3">
+        <div class="row">
+
+            <!-- Company Filter -->
+            <div class="col-md-3 mb-2">
+                <select name="company" class="form-control" onchange="this.form.submit()">
+                    <option value="">All Companies</option>
+                    <option value="UKMPL" <?= (isset($_GET['company']) && $_GET['company']=="UKMPL")?'selected':'' ?>>UKMPL</option>
+                    <option value="DHPL" <?= (isset($_GET['company']) && $_GET['company']=="DHPL")?'selected':'' ?>>DHPL</option>
+                    <option value="ETPL" <?= (isset($_GET['company']) && $_GET['company']=="ETPL")?'selected':'' ?>>ETPL</option>
+                </select>
+            </div>
+
+            <!-- Department Filter -->
+            <div class="col-md-3 mb-2">
+                <select name="department" class="form-control" onchange="this.form.submit()">
+                    <option value="">All Departments</option>
+                    <?php foreach ($departments as $dept): ?>
+                        <option value="<?= $dept['id'] ?>" 
+                            <?= (isset($_GET['department']) && $_GET['department']==$dept['id'])?'selected':'' ?>>
+                            <?= $dept['department_name'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Role Filter -->
+            <div class="col-md-3 mb-2">
+                <select name="role" class="form-control" onchange="this.form.submit()">
+                    <option value="">All Roles</option>
+
+                    <?php foreach ($roles as $role): ?>
+                        <option value="<?= $role['id'] ?>"
+                            <?= (isset($_GET['role']) && $_GET['role']==$role['id'])?'selected':'' ?>>
+                            <?= $role['role_name'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="col-md-2 mb-2">
+                <a href="<?= base_url('userlist') ?>" class="btn btn-secondary w-100">Reset Filters</a>
+            </div>
+
+        </div>
+    </form>
+
                                 <table class="table table-bordered table-hover" id="userTable">
                                     <thead>
                                         <tr>

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\DepartmentModel;
+use App\Models\RoleModel;
 
 class User extends BaseController
 {
@@ -16,42 +17,101 @@ class User extends BaseController
     }
 
 
-    // Create User Function 
-    public function create()
-    {
-        if (!$this->request->isAJAX()) {
-            return redirect()->back();
-        }
 
-        $data = [
+
+    // // Create User Function 
+    // public function create()
+    // {
+    //     if (!$this->request->isAJAX()) {
+    //         return redirect()->back();
+    //     }
+
+    //     $data = [
             
-            'name'   => $this->request->getPost('name'),
-            'company_name'   => $this->request->getPost('company_name'),
-            'department_id'  => $this->request->getPost('department_id'),
-            'email'          => $this->request->getPost('email'),
-            'employee_code'  => $this->request->getPost('employee_code'),
-            'username'       => $this->request->getPost('username'),
-            'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
-            'role_id'        => $this->request->getPost('role_id'),
-            'hash_key'       => "HASHKEY123",
-            'active'         => 1,
-            'created_by'     => session()->get('user_id')
-        ];
+    //         'name'   => $this->request->getPost('name'),
+    //         'company_name'   => $this->request->getPost('company_name'),
+    //         'department_id'  => $this->request->getPost('department_id'),
+    //         'email'          => $this->request->getPost('email'),
+    //         'employee_code'  => $this->request->getPost('employee_code'),
+    //         'username'       => $this->request->getPost('username'),
+    //         'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
+    //         'role_id'        => $this->request->getPost('role_id'),
+    //         'hash_key'       => "HASHKEY123",
+    //         'active'         => 1,
+    //         'created_by'     => session()->get('user_id')
+    //     ];
 
-        $userModel = new \App\Models\UserModel();
+    //     $userModel = new \App\Models\UserModel();
 
-        if ($userModel->insert($data)) {
-            return $this->response->setJSON([
-                'status'  => 'success',
-                'message' => 'User created successfully'
-            ]);
-        }
+    //     if ($userModel->insert($data)) {
+    //         return $this->response->setJSON([
+    //             'status'  => 'success',
+    //             'message' => 'User created successfully'
+    //         ]);
+    //     }
 
+    //     return $this->response->setJSON([
+    //         'status'  => 'error',
+    //         'message' => 'Failed to create user'
+    //     ]);
+    // }
+
+
+
+    public function create()
+{
+    if (!$this->request->isAJAX()) {
+        return redirect()->back();
+    }
+
+    $username = $this->request->getPost('username');
+    $email = $this->request->getPost('email');
+
+    $userModel = new \App\Models\UserModel();
+
+    // 🔍 Check if username already exists
+    if ($userModel->where('username', $username)->first()) {
         return $this->response->setJSON([
-            'status'  => 'error',
-            'message' => 'Failed to create user'
+            'status' => 'error',
+            'message' => 'Username already exists. Please choose another.'
         ]);
     }
+
+    // 🔍 Optional: Check if email exists
+    if ($userModel->where('email', $email)->first()) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Email already registered.'
+        ]);
+    }
+
+    // Insert Data
+    $data = [
+        'name'           => $this->request->getPost('name'),
+        'company_name'   => $this->request->getPost('company_name'),
+        'department_id'  => $this->request->getPost('department_id'),
+        'email'          => $email,
+        'employee_code'  => $this->request->getPost('employee_code'),
+        'username'       => $username,
+        'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
+        'role_id'        => $this->request->getPost('role_id'),
+        'hash_key'       => "HASHKEY123",
+        'active'         => 1,
+        'created_by'     => session()->get('user_id')
+    ];
+
+    if ($userModel->insert($data)) {
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'User created successfully'
+        ]);
+    }
+
+    return $this->response->setJSON([
+        'status'  => 'error',
+        'message' => 'Failed to create user'
+    ]);
+}
     
     // public function userListData()
     // {
@@ -71,31 +131,80 @@ class User extends BaseController
     // }
 
 
+    // public function userListData()
+    // {
+    //     $session = session();
+    //     $deptModel = new DepartmentModel();
+    //     $userModel = new UserModel();
+
+    //     $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
+    //     $userDept = $session->get('department_id');    // Logged user's department
+
+    //     // Base Query
+    //     $userModel
+    //         ->select('users.*, departments.department_name, roles.role_name')
+    //         ->join('departments', 'departments.id = users.department_id')
+    //         ->join('roles', 'roles.id = users.role_id');
+
+    //     // Apply filter ONLY if role is 2
+    //     if ($userRole == 2) {
+    //         $userModel->where('users.department_id', $userDept);
+    //     }
+
+    //     $data['users'] = $userModel->findAll();
+    //     $data['departments'] = $deptModel->findAll();
+
+    //     return view('dashboard/userlist', $data);
+    // }
+
     public function userListData()
-    {
-        $session = session();
-        $deptModel = new DepartmentModel();
-        $userModel = new UserModel();
+{
+    $session = session();
+    $deptModel = new DepartmentModel();
+    $roleModel = new RoleModel();
+    $userModel = new UserModel();
 
-        $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
-        $userDept = $session->get('department_id');    // Logged user's department
+    // Logged-in user info
+    $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
+    $userDept = $session->get('department_id');    // Logged user's dept
 
-        // Base Query
-        $userModel
-            ->select('users.*, departments.department_name, roles.role_name')
-            ->join('departments', 'departments.id = users.department_id')
-            ->join('roles', 'roles.id = users.role_id');
+    // Filters from GET
+    $company    = $this->request->getGet('company');
+    $department = $this->request->getGet('department');
+    $role       = $this->request->getGet('role');
 
-        // Apply filter ONLY if role is 2
-        if ($userRole == 2) {
-            $userModel->where('users.department_id', $userDept);
-        }
+    // Base Query
+    $userModel
+        ->select('users.*, departments.department_name, roles.role_name')
+        ->join('departments', 'departments.id = users.department_id', 'left')
+        ->join('roles', 'roles.id = users.role_id', 'left');
 
-        $data['users'] = $userModel->findAll();
-        $data['departments'] = $deptModel->findAll();
-
-        return view('dashboard/userlist', $data);
+    // Restrict department for role_id = 2
+    if ($userRole == 2) {
+        $userModel->where('users.department_id', $userDept);
     }
+
+    // Apply filters
+    if (!empty($company)) {
+        $userModel->where('users.company_name', $company);
+    }
+
+    if (!empty($department)) {
+        $userModel->where('users.department_id', $department);
+    }
+
+    if (!empty($role)) {
+        $userModel->where('users.role_id', $role);
+    }
+
+    // Fetch data
+    $data['users']       = $userModel->findAll();
+    $data['departments'] = $deptModel->findAll();
+    $data['roles']       = $roleModel->findAll();
+
+    return view('dashboard/userlist', $data);
+}
+
 
 
     public function update()

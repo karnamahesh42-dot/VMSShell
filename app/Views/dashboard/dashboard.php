@@ -135,7 +135,7 @@
     <?php endforeach; ?>
 </section>
 
-        
+        <!-- <button onclick="sendOTP()">Send OTP</button> -->
           <!-- ROW 3: Pending + Quick Links -->
         <section class="dash-row row-large mb-3">
             <div class="card-dash card-large">
@@ -167,7 +167,8 @@
                           </div>
 
                           <div class="text-end">
-                              <span class="badge-pending"> Pending </span>
+                              <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                              <!-- <span class="badge-pending"> Pending </span> -->
                           </div>
 
                       </li>
@@ -236,7 +237,7 @@
                         <td><?= $row['v_code'] ?></td>
                         <td><?= $row['check_in_time'] ?></td>
                         <td><?= $row['check_out_time'] ?></td>
-                        <td><?= $status ?></td> <!-- ⭐ Display Status -->
+                        <td><?= $status ?></td>
                     </tr>
 
                     <?php endforeach; ?>
@@ -332,10 +333,8 @@
                                     <h5 class="visitor-name">
                                         <i class="fas fa-user text-primary me-2"></i> ${v.visitor_name}
                                     </h5>
-
                                     <p class="visitor-email">${v.visitor_email}</p>
                                     <p class="visitor-code">Code: ${v.v_code}</p>
-
                                     <p class="visitor-info"><b>Phone:</b> ${v.visitor_phone}</p>
                                     <p class="visitor-info"><b>ID Type:</b> ${v.proof_id_type}</p>
                                     <p class="visitor-info"><b>ID Number:</b> ${v.proof_id_number}</p>
@@ -378,17 +377,33 @@ function approvalProcess(head_id, status, header_code, comment) {
 
         success: function (res) {
             if (res.status === "success") {
-             Swal.fire({
-                    icon: 'success',
-                    title: 'Action Completed Successfully!',
-                    showConfirmButton: false,
-                    timer: 900
-                });
-                // Call send-email using AJAX
-                // sendMail(res.mail_data);
-                // console.log(res.mail_data);
-            sendMail(res.head_id); 
-                // loadVisitorList();
+            //  Swal.fire({
+            //         icon: 'success',
+            //         title: 'Action Completed Successfully!',
+            //         showConfirmButton: false,
+            //         timer: 900
+            //     });
+            //     // Call send-email using AJAX
+            //     // sendMail(res.mail_data);
+            //     // console.log(res.mail_data);
+            // sendMail(res.head_id); 
+            //     // loadVisitorList();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Action Completed Successfully!',
+                            showConfirmButton: true,
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                // Call send-email using AJAX
+                                sendMail(res.head_id); 
+                                
+                                // Reload page
+                                location.reload();
+                            }
+                        });
+                        
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -414,17 +429,22 @@ function sendMail(head_id) {
 }
 
 
+$(document).ready(function () {
+    updateVisitorValidity();
+});
 
-// function testamile(head_id){
-//      $.ajax({
-//     url: "<?= base_url('/send-email') ?>",
-//     type: "POST",
-//     data: { head_id: head_id },   // 🔥 single variable
-//     success: function(res) {
-//         console.log(res);
-//     }
-// });
-
-// }
+function updateVisitorValidity() {
+ $.ajax({
+        url: "<?= base_url('/updateVisitorValidity') ?>",
+        type: "POST",
+        dataType: "json",
+        success: function (res) {
+            console.log(res);
+        },
+        error: function (xhr) {
+            console.log(xhr);
+        }
+    });
+}
 
   </script>

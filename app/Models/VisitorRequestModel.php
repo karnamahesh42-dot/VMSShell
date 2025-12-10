@@ -18,6 +18,7 @@ class VisitorRequestModel extends Model
         'visit_date',
         'host_user_id',
         'status',
+        'validity',
         'created_by',
         'proof_id_type',
         'proof_id_number',
@@ -32,4 +33,7 @@ class VisitorRequestModel extends Model
         'securityCheckStatus',
         'spendTime'
     ];
+
+
+
 }

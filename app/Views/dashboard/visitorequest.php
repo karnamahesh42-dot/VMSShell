@@ -22,6 +22,10 @@
                                     <select name="purpose" class="form-control" required>
                                         <option value="">-- Select Purpose --</option>
                                         <option>General Visit</option>
+                                        <option>Location Recci</option>
+                                        <option>Wedding</option>
+                                         <option>Vendor Visit</option>
+                                         <option>Delivery</option>
                                         <option>Meeting</option>
                                         <option>Interview</option>
                                         <option>Document Submission</option>

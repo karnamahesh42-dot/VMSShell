@@ -11,9 +11,8 @@ class MailController extends Controller
         $request_head_id = $this->request->getPost('head_id');
         $headerModel = new \App\Models\VisitorRequestHeaderModel();
         $data = $headerModel->getHeaderWithVisitorsMailData($request_head_id);
-        $email   = "karnamahesh42@gmail.com";
-
-         print_r($data);
+      
+        // print_r($data);
         $mailCount = count($data);
         $emailService = \Config\Services::email();
         $successCount = 0;
@@ -21,14 +20,16 @@ class MailController extends Controller
 
 
            for($i = 0; $i < $mailCount; $i++ ){
+                // $email   = "karnamahesh42@gmail.com";
+                $email   = $data[$i]['visitor_email'];
+                $qrFile = FCPATH . 'public/uploads/qr_codes/' . $data[$i]['qr_code'];
                 // Prepare Email
                 $emailService->clear(true);
                 $emailService->setTo($email);
                 $emailService->setFrom(env('app.email.fromEmail'), env('app.email.fromName'));
                 $emailService->setSubject("Your Visitor QR Code");
                 $emailService->setMessage(view("emails/mail_template.php",  ['mailData' => $data[$i]]));
-                // $emailService->attach($qrFile);
-
+                $emailService->attach($qrFile);
                 // Send
                 if ($emailService->send()) {
                     $successCount++;
@@ -39,6 +40,13 @@ class MailController extends Controller
                     ];
                 }
            }   
+
+            return $this->response->setJSON([
+                "status" => "success",
+                "message" => "Mail process completed",
+                "sent" => $successCount,
+                "failed" => $failed
+            ]);
 
 ///////////////////////////////// old Mail //////////////////////////////////////////////////
             // // Get the JSON array

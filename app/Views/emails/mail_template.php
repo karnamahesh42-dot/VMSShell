@@ -48,22 +48,16 @@ $data = $mailData;
                 <table width="100%" cellpadding="8" cellspacing="0"
                        style="background:#f5f7fb; border:1px solid #d7ddea;
                               border-radius:8px; margin-top:15px; font-size:14px;">
-
-                    <tr>
-                        <td style="color:#001f3f; font-weight:bold; width:32%; text-align:right;">V-Code:</td>
-                        <td style="color:#333;"><?= esc($data['v_code']) ?></td>
+                   <tr>
+                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Department:</td>
+                        <td style="color:#333;"><?= esc($data['department_name']) ?></td>
                     </tr>
 
                     <tr>
-                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Name:</td>
-                        <td style="color:#333;"><?= esc($data['visitor_name']) ?></td>
+                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Company:</td>
+                        <td style="color:#333;"><?= esc($data['company']) ?></td>
                     </tr>
-
-                    <tr>
-                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Phone:</td>
-                        <td style="color:#333;"><?= esc($data['visitor_phone']) ?></td>
-                    </tr>
-
+                    
                     <tr>
                         <td style="color:#001f3f; font-weight:bold; text-align:right;"> Purpose:</td>
                         <td style="color:#333;"><?= esc($data['purpose']) ?></td>
@@ -79,22 +73,10 @@ $data = $mailData;
                         <td style="color:#333;"><?= esc($data['vehicle_no']) ?> (<?= esc($data['vehicle_type']) ?>)</td>
                     </tr>
 
+                    
                     <tr>
-                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Department:</td>
-                        <td style="color:#333;"><?= esc($data['department_name']) ?></td>
-                    </tr>
-
-                    <tr>
-                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Company:</td>
-                        <td style="color:#333;"><?= esc($data['company']) ?></td>
-                    </tr>
-
-                    <tr>
-                        <td style="color:#001f3f; font-weight:bold; text-align:right;">Created By:</td>
-                        <td style="color:#333;">
-                            <?= esc($data['created_by_name']) ?>  
-                            (<?= esc($data['created_by_email']) ?>)
-                        </td>
+                        <td style="color:#001f3f; font-weight:bold; width:32%; text-align:right;">V-Code:</td>
+                        <td style="color:#333;"><?= esc($data['v_code']) ?></td>
                     </tr>
 
                 </table>

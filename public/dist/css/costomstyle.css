@@ -426,7 +426,7 @@ height: 60px;
 
 /* Scrollable table body */
 .visitor-list-card .table-responsive {
-    max-height: 430px; /* Adjust height as needed */
+    max-height: 550px; /* Adjust height as needed */
     overflow-y: auto;
 }
 
@@ -917,7 +917,10 @@ input[type="file"] {
     overflow-y: auto;        /* ENABLE VERTICAL SCROLL */
     padding-right: 5px;      /* SPACE FOR SCROLLBAR */
     margin: 0;
+
 }
+
+
 
 /* Optional: smooth scrollbar styling */
 .pending-list::-webkit-scrollbar {
@@ -929,19 +932,33 @@ input[type="file"] {
     border-radius: 5px;
 }
 
-.pending-list::-webkit-scrollbar-thumb {
+/* .pending-list::-webkit-scrollbar-thumb {
     background: #b5b5b5;
     border-radius: 5px;
-}
+} */
 
-.pending-list li {
+/* .pending-list li {
     padding: 10px;
     border-bottom: 1px solid #eee;
+} */
+
+
+/* Hover effect */
+.pending-list li:hover {
+    transform: translateY(-3px);           /* subtle lift */
+    background: #f4faff;                    /* soft highlight */
+    border-color: #cbe5ff;                  /* border glow */
+    box-shadow: 0 6px 14px rgba(0, 85, 255, 0.12);
+    color: #0f4c97;
 }
 
-.pending-list li:last-child {
-    border-bottom: none;
+.pending-list li:hover i {
+    color: #0f4c97;
 }
+
+/* .pending-list li:last-child {
+    border-bottom: none;
+} */
 
 
 .brand {

@@ -20,6 +20,8 @@ $routes->get('/user/get/(:num)', 'User::get/$1');
 $routes->post('user/update', 'User::update');
 $routes->post('user/toggleStatus', 'User::toggleStatus');
 
+$routes->post('send-otp', 'MobileOTPController::sendOtp');// Mobile Otp Contriollr
+
 
 $routes->get('/visitorequest', 'VisitorRequest::index'); // add User Form
 $routes->get('/group_visito_request', 'VisitorRequest::groupVisitorRequestForm'); // add User Form
@@ -27,6 +29,8 @@ $routes->get('/visitorlistdata', 'VisitorRequest::visitorData'); //to get The vi
 $routes->get('/visitorequestlist', 'VisitorRequest::visitorDataListView'); // //to get The visiter Reuest View
 $routes->post('/visitorequest/create','VisitorRequest::submit');
 $routes->post('/visitorequest/create_group','VisitorRequest::groupSubmit');
+$routes->post('/updateVisitorValidity','VisitorRequest::updateVisitorValidity');
+
 
 $routes->post('/approvalprocess', 'VisitorRequest::approvalProcess');//To Approval Process 
 $routes->get('/getvisitorrequestdata/(:num)', 'VisitorRequest::getVisitorRequastDataById/$1'); //To get Visito Request Data By ID
