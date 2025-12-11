@@ -37,6 +37,7 @@ public function authorized_visitors_list_data()
         vr.description,
         vr.vehicle_no,
         vr.vehicle_type,
+        vr.validity,
         vr.proof_id_type,
         vr.proof_id_number,
         vr.securityCheckStatus,

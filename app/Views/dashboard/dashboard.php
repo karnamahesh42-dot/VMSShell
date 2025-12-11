@@ -366,6 +366,28 @@
 }
 
 
+function rejectComment(head_id, status, header_code, comment) {
+
+     $("#visitorModal").modal("hide");
+
+    Swal.fire({
+        title: "Reject Visitor Request",
+        input: "text",
+        inputLabel: "Enter rejection comment",
+        inputPlaceholder: "Write your comment...",
+        showCancelButton: true,
+        confirmButtonText: "Submit",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let comment = result.value; // user comment
+            // Call your approval process with comment
+            approvalProcess(head_id, status, header_code, comment);
+        }
+    });
+}
+
+
+
 
 function approvalProcess(head_id, status, header_code, comment) {
 

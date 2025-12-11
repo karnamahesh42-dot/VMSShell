@@ -84,8 +84,9 @@
                                 <?php if(session()->get('role_id') <= 2){ ?>
                                
                                 <div id= "actionBtns"></div>
+                                
                                 <?php } ?>
-
+                                  <p class="text-danger" id="remarkLablle"><p>      
                             </div>
                         
                         </div>
@@ -275,6 +276,7 @@ function view_visitor(id){
             $("#h_purpose").text(h.purpose);
             $("#h_date").text(h.requested_date +" & "+ h.requested_time);
             $("#h_description").text(h.description);
+            $("#remarkLablle").text(h.remarks);
                            
             
             let cardsHtml = "";
@@ -325,12 +327,9 @@ function view_visitor(id){
                                             <i class="fas fa-paper-plane"></i> Send QR
                                         </button>` : ""}
                                 </div>
-
                             </div>
-
                         </div>
                     </div>`;
-
             });
 
             $("#visitorCardsContainer").html(cardsHtml);
@@ -338,46 +337,6 @@ function view_visitor(id){
         }
     });
 
-}
-
-
-
-
-// Resend QR To Mail Function 
-function resendqr() {
-    let name = $("#v_name").text();
-    let email = $("#v_email").text();
-    let phone = $("#v_phone").text();
-    let purpose = $("#v_purpose").text();
-    let vid = $('#v_id').val(); // << QR Image URL or Base64
-    let v_code = $('#v_code').text(); // V_Code
-    let qr_path = $('#qr_path').val(); // rq_path
-    
-    $.ajax({
-        url: "<?= base_url('send-email') ?>",
-        type: "POST",
-        data: {
-            name: name,
-            email: email,
-            phone: phone,
-            purpose: purpose,
-            vid: vid,
-            v_code: v_code,
-            qr_path: qr_path
-        },
-        dataType: "json",
-        success: function(data) {
-        }
-    });
-
-    Swal.fire({
-        position: 'top-end',
-        toast: true,
-        icon: 'success',
-        title: 'Mail Sent Successfully',
-        showConfirmButton: false,
-        timer: 2000
-    });
 }
 
 
@@ -417,10 +376,9 @@ function approvalProcess(head_id, status, header_code, comment) {
                     showConfirmButton: false,
                     timer: 900
                 });
-                // Call send-email using AJAX
                 // sendMail(res.mail_data);
                 // console.log(res.mail_data);
-           sendMail(JSON.stringify(res.mail_data)); 
+                sendMail(res.head_id); 
                 loadVisitorList();
             } else {
                 Swal.fire({
@@ -435,11 +393,12 @@ function approvalProcess(head_id, status, header_code, comment) {
 }
 
 
-function sendMail(maildata) {
+function sendMail(head_id) {
+    // alert(head_id);
     $.ajax({
         url: "<?= base_url('/send-email') ?>",
         type: "POST",
-        data:{ mail_data : maildata },
+        data:{head_id : head_id },
         dataType: "json",
         success: function (mailRes) {
             console.log(mailRes);
@@ -449,6 +408,32 @@ function sendMail(maildata) {
         }
     });
 }
+
+
+// Resend QR To Mail Function 
+function resendqr(v_code) {
+
+    $.ajax({
+        url: "<?= base_url('send-email') ?>",
+        type: "POST",
+        data:{ re_send : v_code },
+        dataType: "json",
+        success: function(data) {
+
+        }
+    });
+
+    Swal.fire({
+        position: 'top-end',
+        toast: true,
+        icon: 'success',
+        title: 'Mail Sent Successfully',
+        showConfirmButton: false,
+        timer: 2000
+    });
+}
+
+
 
 
 </script>

@@ -63,21 +63,21 @@
 
                                             <div class="col-md-2 d-flex align-items-end gap-1">
 
-    <!-- Search Button -->
-    <button class="btn btn-primary" onclick="loadAuthorizedVisitors()" title="Search">
-        <i class="fas fa-search"></i>
-    </button>
+                                                <!-- Search Button -->
+                                                <button class="btn btn-primary" onclick="loadAuthorizedVisitors()" title="Search">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
 
-    <!-- Reset Button -->
-    <button class="btn btn-secondary" onclick="resetFilters()" title="Reset Filters">
-        <i class="fas fa-sync-alt"></i>
-    </button>
+                                                <!-- Reset Button -->
+                                                <button class="btn btn-secondary" onclick="resetFilters()" title="Reset Filters">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </button>
 
-    <!-- Export Button -->
-    <button class="btn btn-success" onclick="exportTable()" title="Export Data">
-        <i class="fas fa-file-export"></i>
-    </button>
-</div>
+                                                <!-- Export Button -->
+                                                <button class="btn btn-success" onclick="exportTable()" title="Export Data">
+                                                    <i class="fas fa-file-export"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,6 +96,7 @@
                                             <th>Contact</th>
                                             <th>Purpose</th>
                                             <th>Status</th>
+                                            <th>Validity</th>
                                             <th>Check-In</th>
                                             <th>Check-Out</th>
                                             <th>Spend Time</th>
@@ -162,6 +163,15 @@ function loadAuthorizedVisitors() {
                     statusBadge = `<span class="badge bg-success">Completed</span>`;
                 }
 
+
+                let validityBadge = "";
+                if (v.validity == 1) {
+                     validityBadge = `<span class="badge bg-success">Valid</span>`;
+                } 
+                else {
+                   validityBadge = `<span class="badge bg-warning text-dark">Expire</span>`;
+                }
+
                 tbody.append(`
                     <tr>
                         <td>${index + 1}</td>
@@ -174,6 +184,7 @@ function loadAuthorizedVisitors() {
                         <td>${v.visitor_phone}</td>
                         <td>${v.purpose}</td>
                         <td>${statusBadge}</td>
+                        <td>${validityBadge}</td>
                         <td>${v.check_in_time ?? '-'}</td>
                         <td>${v.check_out_time ?? '-'}</td>
                         <td>${v.spendTime ?? '-'}</td>

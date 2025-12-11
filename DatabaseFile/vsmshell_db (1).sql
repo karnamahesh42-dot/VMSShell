@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2025 at 12:54 PM
+-- Generation Time: Dec 11, 2025 at 02:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -95,7 +95,10 @@ INSERT INTO `expired_visitor_passes` (`id`, `visitor_request_id`, `v_code`, `hea
 (30, 38, NULL, 'GV000026', '2025-12-10 17:21:21', '2025-12-10 17:21:21'),
 (31, 41, NULL, 'GV000029', '2025-12-10 17:21:21', '2025-12-10 17:21:21'),
 (32, 42, NULL, 'GV000030', '2025-12-10 17:21:21', '2025-12-10 17:21:21'),
-(33, 43, NULL, 'GV000031', '2025-12-10 17:21:21', '2025-12-10 17:21:21');
+(33, 43, NULL, 'GV000031', '2025-12-10 17:21:21', '2025-12-10 17:21:21'),
+(34, 37, NULL, 'GV000025', '2025-12-11 10:15:44', '2025-12-11 10:15:44'),
+(35, 39, NULL, 'GV000027', '2025-12-11 10:15:44', '2025-12-11 10:15:44'),
+(36, 40, NULL, 'GV000028', '2025-12-11 10:15:44', '2025-12-11 10:15:44');
 
 -- --------------------------------------------------------
 
@@ -193,7 +196,9 @@ INSERT INTO `security_gate_logs` (`id`, `visitor_request_id`, `v_code`, `check_i
 (4, 24, 'V000024', '2025-12-07 22:39:16', NULL, 1, '2025-12-07 22:39:16'),
 (5, 4, 'V000004', '2025-12-08 09:23:47', NULL, 1, '2025-12-08 09:23:47'),
 (6, 26, 'V000026', '2025-12-08 10:49:40', '2025-12-08 12:25:42', 13, '2025-12-08 10:49:40'),
-(7, 27, 'V000027', '2025-12-08 10:50:14', NULL, 13, '2025-12-08 10:50:14');
+(7, 27, 'V000027', '2025-12-08 10:50:14', NULL, 13, '2025-12-08 10:50:14'),
+(8, 48, 'V000048', '2025-12-11 15:57:43', NULL, 1, '2025-12-11 15:57:43'),
+(9, 42, 'V000042', '2025-12-11 17:53:02', NULL, 1, '2025-12-11 17:53:02');
 
 -- --------------------------------------------------------
 
@@ -223,14 +228,14 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `company_name`, `department_id`, `username`, `password`, `role_id`, `active`, `hash_key`, `created_at`, `created_by`, `email`, `employee_code`) VALUES
 (1, 'mahesh', 'UKMPL', 1, 'superadmin', '274d015c638f62ba24b19ca23c9c9503', 1, 1, 'HASHKEY123', '2025-11-20 09:28:43', NULL, 'maheshkarna42@gmail.com', '2523011'),
-(5, 'Sreenivas t', 'UKMPL', 1, 'itadmin', '7f26dfeae2ef1319cc069e939ce87693', 2, 1, 'HASHKEY123', '2025-11-21 05:54:24', 1, 'ukmledp@ramojifilmcity.com', '12345678'),
-(6, 'Prakash', 'UKMPL', 3, 'user2', 'e27f4a867eaceaa81eca368d175a7716', 3, 1, 'HASHKEY123', '2025-11-21 22:15:08', 1, 'prakash@gmail.com', '789654159'),
+(5, 'Sreenivas t', 'UKMPL', 1, 'itadmin', '8e3f128f3e5075f40cd8b8361cb1d24d', 2, 1, 'HASHKEY123', '2025-11-21 05:54:24', 1, 'ukmledp@ramojifilmcity.com', '12345678'),
+(6, 'Prakash', 'UKMPL', 3, 'hruser2', '1b0041377a27ec89d4ff989d048f5e85', 3, 1, 'HASHKEY123', '2025-11-21 22:15:08', 1, 'prakash@gmail.com', '789654159'),
 (7, 'Prasad ', 'UKMPL', 3, 'hrhod', 'f271d1efdfba760f7145d4436f845b8e', 2, 1, 'HASHKEY123', '2025-11-22 05:56:17', 1, 'prasad@gmail.com', '951357456'),
-(8, 'Sury kumar', 'UKMPL', 1, 'ituser', '8e3f128f3e5075f40cd8b8361cb1d24d', 3, 0, 'HASHKEY123', '2025-11-24 00:22:13', 1, 'kumar@gmail.com', '87456321'),
+(8, 'Sury kumar', 'UKMPL', 1, 'ituser', '8e3f128f3e5075f40cd8b8361cb1d24d', 3, 1, 'HASHKEY123', '2025-11-24 00:22:13', 1, 'kumar@gmail.com', '87456321'),
 (9, 'ramesh', 'UKMPL', 2, 'userlog', 'df15e08a109a1ca36c6129c4033dff9a', 3, 1, 'HASHKEY123', '2025-11-24 03:40:59', 1, 'ramesh@gmail.com', '951456357'),
 (10, 'sailesh kumar', 'UKMPL', 2, 'hod', 'c0da0e7607981099b9874324911d646b', 2, 1, 'HASHKEY123', '2025-11-27 23:56:49', 5, 'miscentraloffice@ramojifilmcity.com', '741963258'),
 (11, 'Satish Kumar', 'UKMPL', 2, 'FINANCEHOD', 'e27f4a867eaceaa81eca368d175a7716', 2, 1, 'HASHKEY123', '2025-11-30 09:57:12', 5, 'gmaccounts@ramojifilmcity.com', '321987456'),
-(12, 'pallam raju', 'UKMPL', 3, 'hruser', '5980d6ad05354bd8681adff071323804', 2, 1, 'HASHKEY123', '2025-11-30 15:37:58', 5, 'raju@gmail.com', '456812397'),
+(12, 'pallam raju', 'UKMPL', 3, 'hruser', '5980d6ad05354bd8681adff071323804', 3, 1, 'HASHKEY123', '2025-11-30 15:37:58', 5, 'raju@gmail.com', '456812397'),
 (13, 'khan', 'UKMPL', 5, 'security', '7f56499c9bcb7018d17adba024f12b36', 4, 1, NULL, '2025-12-01 10:32:56', 5, 'khan@gmail.com', '89595875'),
 (14, 'Kumar', 'UKMPL', 5, 'kumar', 'b9b580e1f1d30f72a52c9696dfa3c1a3', 3, 0, NULL, '2025-12-02 03:46:21', 5, 'kumar@gmail.com', '53532581'),
 (15, 'Mahesh', 'UKMPL', 5, 'stores@rfc.com', 'bde72de2ac7798197faa307a4df2db69', 3, 1, 'HASHKEY123', '2025-12-09 11:46:10', 1, 'store@gmail.com', '123456');
@@ -328,13 +333,37 @@ INSERT INTO `visitors` (`id`, `request_header_id`, `v_code`, `group_code`, `visi
 (34, 23, 'V000034', 'GV000023', 'Sharath Test', 'mary@example.com', '9876501234', 'General Visit', '2025-12-08', 'Test', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-08 15:56:30', '2025-12-10 17:21:21', 'PAN Card', 'ABCDE1234F', 'visitor_V000034_qr.png', 'TN09XY9876', 'Bike', '', '', '15:56:00'),
 (35, 24, 'V000035', 'GV000024', 'Prakash Test 1', 'john@example.com', '9876543210', 'Interview', '2025-12-09', 'Test Description ', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-08 16:01:28', '2025-12-10 17:21:21', 'Aadhaar Card', '123456789012', 'visitor_V000035_qr.png', 'TN10AB1234', 'Car', '', '', '16:00:00'),
 (36, 24, 'V000036', 'GV000024', 'Sharath Test 2', 'mary@example.com', '9876501234', 'Interview', '2025-12-09', 'Test Description ', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-08 16:01:29', '2025-12-10 17:21:21', 'PAN Card', 'ABCDE1234F', 'visitor_V000036_qr.png', 'TN09XY9876', 'Bike', '', '', '16:00:00'),
-(37, 25, 'V000037', 'GV000025', ' Rakesh', 'rakesh@gmail.com', '1953226854', 'General Visit', '2025-12-10', 'Test Request ', NULL, NULL, 9, NULL, 'approved', 1, 0, NULL, 9, '2025-12-09 09:19:39', '2025-12-09 09:20:06', 'Aadhar Card', '565484468571564', 'visitor_V000037_qr.png', 'AP145SDDS124', 'Bike', '', '', '09:18:00'),
+(37, 25, 'V000037', 'GV000025', ' Rakesh', 'rakesh@gmail.com', '1953226854', 'General Visit', '2025-12-10', 'Test Request ', NULL, NULL, 9, NULL, 'approved', 0, 0, NULL, 9, '2025-12-09 09:19:39', '2025-12-11 10:15:44', 'Aadhar Card', '565484468571564', 'visitor_V000037_qr.png', 'AP145SDDS124', 'Bike', '', '', '09:18:00'),
 (38, 26, 'V000038', 'GV000026', 'Mahendar ', 'mahi@gmail.com', '7894562363', 'Interview', '2025-12-09', 'Interview Purpose ', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-09 09:22:53', '2025-12-10 17:21:21', 'Aadhar Card', '6546548489751', 'visitor_V000038_qr.png', 'SDFS5354684', 'Car', '', '', '10:22:00'),
-(39, 27, 'V000039', 'GV000027', 'Mahesh Varma', 'maehs@gmail.com', '1235468654', 'Meeting', '2025-12-10', 'Meeting Purpose', NULL, NULL, 1, NULL, 'approved', 1, 0, NULL, 1, '2025-12-09 09:24:33', '2025-12-09 09:24:33', 'Aadhar Card', '216546548', 'visitor_V000039_qr.png', 'DFSD68568', 'Bike', '', '', '10:23:00'),
-(40, 28, 'V000040', 'GV000028', 'Ravindar ', 'ravi@gmail.com', '9123166544', 'General Visit', '2025-12-10', 'General Visit', NULL, NULL, 1, NULL, 'approved', 1, 0, NULL, 1, '2025-12-09 09:25:57', '2025-12-09 09:25:57', 'Aadhar Card', '654643514', 'visitor_V000040_qr.png', 'TEST6584', 'Bike', '', '', '10:30:00'),
+(39, 27, 'V000039', 'GV000027', 'Mahesh Varma', 'maehs@gmail.com', '1235468654', 'Meeting', '2025-12-10', 'Meeting Purpose', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-09 09:24:33', '2025-12-11 10:15:44', 'Aadhar Card', '216546548', 'visitor_V000039_qr.png', 'DFSD68568', 'Bike', '', '', '10:23:00'),
+(40, 28, 'V000040', 'GV000028', 'Ravindar ', 'ravi@gmail.com', '9123166544', 'General Visit', '2025-12-10', 'General Visit', NULL, NULL, 1, NULL, 'approved', 0, 0, NULL, 1, '2025-12-09 09:25:57', '2025-12-11 10:15:44', 'Aadhar Card', '654643514', 'visitor_V000040_qr.png', 'TEST6584', 'Bike', '', '', '10:30:00'),
 (41, 29, 'V000041', 'GV000029', 'Srinivasu', 'ukmledp@ramojifilmcity.com', '1234567890', 'Event Visit', '2025-12-09', 'Location Recci', NULL, NULL, 9, NULL, 'approved', 0, 0, NULL, 9, '2025-12-09 10:08:02', '2025-12-10 17:21:21', 'PAN Card', 'AS34567', 'visitor_V000041_qr.png', ' AP25TST236', 'Bike', '', '', '11:07:00'),
-(42, 30, 'V000042', 'GV000030', 'Rajesh', 'karnamahesh42@gmail.com', '7894561234', 'Location Recci', '2025-12-09', ' Location Recci Purpose', NULL, NULL, 9, NULL, 'approved', 0, 0, NULL, 9, '2025-12-09 10:46:10', '2025-12-10 17:21:21', 'PAN Card', '12365486648', 'visitor_V000042_qr.png', ' AP25TST236', 'Car', '', '', '11:45:00'),
-(43, 31, 'V000043', 'GV000031', 'Kiran', 'karnamahesh42@gmail.com', '1593574568', 'Wedding', '2025-12-09', 'Wedding', NULL, NULL, 9, NULL, 'approved', 0, 0, NULL, 9, '2025-12-09 10:58:47', '2025-12-10 17:21:21', 'Voter ID', '1234856', 'visitor_V000043_qr.png', ' AP25TST236', 'Car', '', '', '11:00:00');
+(42, 30, 'V000042', 'GV000030', 'Rajesh', 'karnamahesh42@gmail.com', '7894561234', 'Location Recci', '2025-12-09', ' Location Recci Purpose', NULL, NULL, 9, NULL, 'approved', 0, 1, NULL, 9, '2025-12-09 10:46:10', '2025-12-11 17:53:02', 'PAN Card', '12365486648', 'visitor_V000042_qr.png', ' AP25TST236', 'Car', '', '', '11:45:00'),
+(43, 31, 'V000043', 'GV000031', 'Kiran', 'karnamahesh42@gmail.com', '1593574568', 'Wedding', '2025-12-09', 'Wedding', NULL, NULL, 9, NULL, 'approved', 0, 0, NULL, 9, '2025-12-09 10:58:47', '2025-12-10 17:21:21', 'Voter ID', '1234856', 'visitor_V000043_qr.png', ' AP25TST236', 'Car', '', '', '11:00:00'),
+(44, 32, 'V000044', 'GV000032', 'Sai K', 'karnamahesh42@gmail.com', '7894561234', 'Meeting', '2025-12-11', 'Sap  Meeting Purpose', NULL, NULL, 1, NULL, 'approved', 1, 0, NULL, 1, '2025-12-11 12:42:18', '2025-12-11 12:42:18', 'PAN Card', '1234856', 'visitor_V000044_qr.png', 'AP1235GT58', 'Bike', '', '', '13:30:00'),
+(45, 33, 'V000045', 'GV000033', 'Kantharao', 'karnamahesh42@gmail.com', '7894561234', 'Interview', '2025-12-11', 'Interview Purpose ', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:18:43', '2025-12-11 14:28:49', 'Aadhar Card', '78945612332', 'visitor_V000045_qr.png', ' AP25TST232', 'Bike', '', '', '16:00:00'),
+(46, 34, 'V000046', 'GV000034', 'Kamal', 'karnamahesh42@gmail.com', '9876543210', 'Personal Visit', '2025-12-12', 'Test Visit Purpose', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:24:39', '2025-12-11 14:26:27', 'Aadhaar Card', '123456789012', 'visitor_V000046_qr.png', 'TN10AB1234', 'Car', '', '', '14:00:00'),
+(47, 34, 'V000047', 'GV000034', 'Vikas', 'developers@ramojifilmcity.com', '9876501234', 'Personal Visit', '2025-12-12', 'Test Visit Purpose', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:24:39', '2025-12-11 14:26:27', 'PAN Card', 'ABCDE1234F', 'visitor_V000047_qr.png', 'TN10AB1234', 'Car', '', '', '14:00:00'),
+(48, 35, 'V000048', 'GV000035', 'Ravikumar', 'karnamahesh42@gmail.com', '7894561234', 'Delivery', '2025-12-11', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 1, NULL, 12, '2025-12-11 14:34:58', '2025-12-11 15:57:43', 'Aadhar Card', '  12345678922', 'visitor_V000048_qr.png', ' AP25TST232', 'Bike', '', '', '14:34:00'),
+(49, 36, 'V000049', 'GV000036', 'Madhu', 'karnamahesh42@gmail.com', '7894561234', 'Meeting', '2025-12-11', 'Testing ', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:35:56', '2025-12-11 14:40:34', 'Aadhar Card', '582369745244', 'visitor_V000049_qr.png', ' AP25TST236', 'Bike', '', '', '15:00:00'),
+(50, 37, 'V000050', 'GV000037', 'Balu', 'karnamahesh42@gmail.com', '7894561234', 'Vendor Visit', '2025-12-11', 'Testing', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:36:39', '2025-12-11 14:44:35', 'Aadhar Card', '  12345678922', 'visitor_V000050_qr.png', ' AP25TST232', 'Bike', '', '', '16:36:00'),
+(51, 38, 'V000051', 'GV000038', 'Raji', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-11', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:48:13', '2025-12-11 15:27:44', 'Aadhar Card', '  12345678922', 'visitor_V000051_qr.png', 'AP123RT215', 'Bike', '', '', '14:47:00'),
+(52, 39, 'V000052', 'GV000039', 'Rthanakar', 'karnamahesh42@gmail.com', '7894561234', 'Location Recci', '2025-12-18', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:48:41', '2025-12-11 15:27:10', 'Aadhar Card', '582369745244', 'visitor_V000052_qr.png', ' AP25TST236', 'Car', '', '', '14:48:00'),
+(53, 40, 'V000053', 'GV000040', ' Rakesh', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-12', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:49:13', '2025-12-11 15:27:24', 'PAN Card', '  12345678922', 'visitor_V000053_qr.png', 'AP123RT215', 'Car', '', '', '14:48:00'),
+(54, 41, 'V000054', 'GV000041', 'Mahesh', 'maheshkarna@gmail.com', '7894561234', 'General Visit', '2025-12-11', ' Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:49:44', '2025-12-11 15:26:59', 'Aadhar Card', '1234856', 'visitor_V000054_qr.png', 'AP123RT215', 'Car', '', '', '15:49:00'),
+(55, 42, 'V000055', 'GV000042', ' Rakesh', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-18', ' Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 14:50:06', '2025-12-11 15:08:22', 'Aadhar Card', '582369745244', 'visitor_V000055_qr.png', 'TET123', 'Bike', '', '', '15:49:00'),
+(56, 43, 'V000056', 'GV000043', 'Kamal', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-11', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 15:09:32', '2025-12-11 15:11:01', 'Aadhar Card', '582369745244', 'visitor_V000056_qr.png', ' AP25TST236', 'Bike', '', '', '15:09:00'),
+(57, 44, 'V000057', 'GV000044', 'Mahesh', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-12', 'Test ', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 15:10:05', '2025-12-11 15:14:20', 'Aadhar Card', '1234856', 'visitor_V000057_qr.png', ' AP25TST232', 'Car', '', '', '15:09:00'),
+(58, 45, 'V000058', 'GV000045', 'Mallesh', 'karnamahesh42@gmail.com', '7894561234', 'General Visit', '2025-12-11', 'Testing', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 15:21:10', '2025-12-11 15:22:20', 'Aadhar Card', '1234856', 'visitor_V000058_qr.png', ' AP25TST236', 'Bike', '', '', '15:20:00'),
+(59, 46, 'V000059', 'GV000046', 'Raviteja', 'karnamahesh42@gmail.com', '7894561234', 'Location Recci', '2025-12-11', 'Test', NULL, NULL, 12, NULL, 'approved', 1, 0, NULL, 12, '2025-12-11 15:21:52', '2025-12-11 15:23:43', 'Aadhar Card', '78945612332', 'visitor_V000059_qr.png', ' AP25TST232', 'Bike', '', '', '15:21:00'),
+(60, 47, 'V000060', 'GV000047', 'Mahesh', 'maheshkarna@gmail.com', '7894561234', 'Meeting', '2025-12-11', 'Meeting With  Hr Hod  ', NULL, NULL, 12, NULL, 'rejected', 1, 0, NULL, 12, '2025-12-11 15:31:30', '2025-12-11 15:55:22', 'Aadhar Card', '582369745244', 'visitor_V000060_qr.png', ' AP25TST232', 'Car', '', '', '15:30:00'),
+(61, 48, 'V000061', 'GV000048', 'Pavan Kumar', 'karnamahesh42@gmail.com', '9876543210', 'Interview', '2025-12-11', 'Interview Purpose', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:34:36', '2025-12-11 15:34:36', 'Aadhaar Card', '123456789012', '', 'TN10AB1234', 'Car', '', '', '15:32:00'),
+(62, 48, 'V000062', 'GV000048', 'Santhosh Kumar', 'developers@ramojifilmcity.com', '9876501234', 'Interview', '2025-12-11', 'Interview Purpose', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:34:36', '2025-12-11 15:34:36', 'PAN Card', 'ABCDE1234F', '', 'TN10AB1234', 'Car', '', '', '15:32:00'),
+(63, 49, 'V000063', 'GV000049', 'Suman', 'maheshkarna@gmail.com', '7894561234', 'Meeting', '2025-12-11', 'Testing', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:37:42', '2025-12-11 15:37:42', 'Aadhar Card', '582369745244', '', ' AP25TST236', 'Bike', '', '', '16:40:00'),
+(64, 50, 'V000064', 'GV000050', 'Raju P', 'karnamahesh42@gmail.com', '7894561234', 'Document Submission', '2025-12-11', 'Test', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:39:04', '2025-12-11 15:39:04', 'Aadhar Card', '582369745244', '', ' AP25TST232', 'Bike', '', '', '16:40:00'),
+(65, 51, 'V000065', 'GV000051', 'Prakash P', 'karnamahesh42@gmail.com', '9876543210', 'General Visit', '2025-12-11', 'Test Xyz', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:40:30', '2025-12-11 15:40:30', 'Aadhaar Card', '123456789012', '', 'TN10AB1234', 'Car', '', '', '16:00:00'),
+(66, 51, 'V000066', 'GV000051', 'Sharath U', 'karnamahesh42@gmail.com', '9876501234', 'General Visit', '2025-12-11', 'Test Xyz', NULL, NULL, 12, NULL, 'pending', 1, 0, NULL, 12, '2025-12-11 15:40:30', '2025-12-11 15:40:30', 'PAN Card', 'ABCDE1234F', '', 'TN10AB1234', 'Car', '', '', '16:00:00'),
+(67, 52, 'V000067', 'GV000052', 'Srini', 'ukmledp@ramojifilmcity.com', '9347364990', 'Location Recci', '2025-12-11', 'Location Recci', NULL, NULL, 8, NULL, 'pending', 1, 0, NULL, 8, '2025-12-11 17:16:33', '2025-12-11 17:16:33', 'Aadhar Card', '56789', '', '', '', '', '', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -429,7 +458,47 @@ INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_stat
 (69, 42, 'Created', NULL, 'pending', '--', 9, '2025-12-09 10:46:10'),
 (70, 43, 'Created', NULL, 'pending', '--', 9, '2025-12-09 10:58:47'),
 (71, 43, 'approved', 'pending', 'approved', NULL, 1, '2025-12-09 10:59:10'),
-(72, 42, 'approved', 'pending', 'approved', NULL, 1, '2025-12-09 11:02:23');
+(72, 42, 'approved', 'pending', 'approved', NULL, 1, '2025-12-09 11:02:23'),
+(73, 44, 'Created', NULL, 'approved', '--', 1, '2025-12-11 12:42:18'),
+(74, 45, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:18:43'),
+(75, 46, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:24:39'),
+(76, 47, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:24:40'),
+(77, 46, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:26:27'),
+(78, 47, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:26:27'),
+(79, 45, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:28:49'),
+(80, 48, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:34:58'),
+(81, 49, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:35:56'),
+(82, 50, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:36:39'),
+(83, 48, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:37:26'),
+(84, 49, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:40:34'),
+(85, 50, 'approved', 'pending', 'approved', '', 7, '2025-12-11 14:44:35'),
+(86, 51, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:48:13'),
+(87, 52, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:48:41'),
+(88, 53, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:49:13'),
+(89, 54, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:49:44'),
+(90, 55, 'Created', NULL, 'pending', '--', 12, '2025-12-11 14:50:06'),
+(91, 55, 'approved', 'pending', 'approved', '', 7, '2025-12-11 15:08:23'),
+(92, 56, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:09:32'),
+(93, 57, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:10:05'),
+(94, 56, 'approved', 'pending', 'approved', '', 7, '2025-12-11 15:11:01'),
+(95, 57, 'approved', 'pending', 'approved', '', 7, '2025-12-11 15:14:20'),
+(96, 58, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:21:10'),
+(97, 59, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:21:52'),
+(98, 58, 'approved', 'pending', 'approved', '', 7, '2025-12-11 15:22:20'),
+(99, 59, 'approved', 'pending', 'approved', NULL, 7, '2025-12-11 15:23:43'),
+(100, 54, 'approved', 'pending', 'approved', NULL, 7, '2025-12-11 15:26:59'),
+(101, 52, 'approved', 'pending', 'approved', NULL, 7, '2025-12-11 15:27:10'),
+(102, 53, 'approved', 'pending', 'approved', NULL, 7, '2025-12-11 15:27:24'),
+(103, 51, 'approved', 'pending', 'approved', NULL, 7, '2025-12-11 15:27:44'),
+(104, 60, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:31:30'),
+(105, 61, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:34:36'),
+(106, 62, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:34:36'),
+(107, 63, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:37:42'),
+(108, 64, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:39:04'),
+(109, 65, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:40:30'),
+(110, 66, 'Created', NULL, 'pending', '--', 12, '2025-12-11 15:40:30'),
+(111, 60, 'rejected', 'pending', 'rejected', 'Wrong Data Raise Request Again', 7, '2025-12-11 15:55:22'),
+(112, 67, 'Created', NULL, 'pending', '--', 8, '2025-12-11 17:16:33');
 
 -- --------------------------------------------------------
 
@@ -491,7 +560,28 @@ INSERT INTO `visitor_request_header` (`id`, `header_code`, `requested_by`, `requ
 (28, 'GV000028', '1', '2025-12-10', '10:30:00', 'IT', 'General Visit', 'General Visit', 'ravi@gmail.com', 1, 'approved', NULL, '', '2025-12-09 09:25:57', '2025-12-09 09:25:57', 'UKMPL'),
 (29, 'GV000029', '9', '2025-12-09', '11:07:00', 'Finance', 'Event Visit', 'Location Recci', 'ukmledp@ramojifilmcity.com', 1, 'approved', NULL, '', '2025-12-09 10:08:02', '2025-12-09 10:10:20', 'UKMPL'),
 (30, 'GV000030', '9', '2025-12-09', '11:45:00', 'Finance', 'Location Recci', ' Location Recci Purpose', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-09 10:46:10', '2025-12-09 11:02:23', 'UKMPL'),
-(31, 'GV000031', '9', '2025-12-09', '11:00:00', 'Finance', 'Wedding', 'Wedding', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-09 10:58:47', '2025-12-09 10:59:10', 'UKMPL');
+(31, 'GV000031', '9', '2025-12-09', '11:00:00', 'Finance', 'Wedding', 'Wedding', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-09 10:58:47', '2025-12-09 10:59:10', 'UKMPL'),
+(32, 'GV000032', '1', '2025-12-11', '13:30:00', 'IT', 'Meeting', 'Sap  Meeting Purpose', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 12:42:18', '2025-12-11 12:42:18', 'UKMPL'),
+(33, 'GV000033', '12', '2025-12-11', '16:00:00', 'HR', 'Interview', 'Interview Purpose ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:18:43', '2025-12-11 14:28:49', 'UKMPL'),
+(34, 'GV000034', '12', '2025-12-12', '14:00:00', 'HR', 'Personal Visit', 'Test Visit Purpose', 'karnamahesh42@gmail.com', 2, 'approved', NULL, '', '2025-12-11 14:24:39', '2025-12-11 14:26:27', 'UKMPL'),
+(35, 'GV000035', '12', '2025-12-11', '14:34:00', 'HR', 'Delivery', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:34:58', '2025-12-11 14:37:26', 'UKMPL'),
+(36, 'GV000036', '12', '2025-12-11', '15:00:00', 'HR', 'Meeting', 'Testing ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:35:56', '2025-12-11 14:40:34', 'UKMPL'),
+(37, 'GV000037', '12', '2025-12-11', '16:36:00', 'HR', 'Vendor Visit', 'Testing', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:36:39', '2025-12-11 14:44:35', 'UKMPL'),
+(38, 'GV000038', '12', '2025-12-11', '14:47:00', 'HR', 'General Visit', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:48:13', '2025-12-11 15:27:44', 'UKMPL'),
+(39, 'GV000039', '12', '2025-12-18', '14:48:00', 'HR', 'Location Recci', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:48:41', '2025-12-11 15:27:10', 'UKMPL'),
+(40, 'GV000040', '12', '2025-12-12', '14:48:00', 'HR', 'General Visit', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:49:13', '2025-12-11 15:27:24', 'UKMPL'),
+(41, 'GV000041', '12', '2025-12-11', '15:49:00', 'HR', 'General Visit', ' Test', 'maheshkarna@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:49:44', '2025-12-11 15:26:59', 'UKMPL'),
+(42, 'GV000042', '12', '2025-12-18', '15:49:00', 'HR', 'General Visit', ' Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 14:50:06', '2025-12-11 15:08:23', 'UKMPL'),
+(43, 'GV000043', '12', '2025-12-11', '15:09:00', 'HR', 'General Visit', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 15:09:32', '2025-12-11 15:11:01', 'UKMPL'),
+(44, 'GV000044', '12', '2025-12-12', '15:09:00', 'HR', 'General Visit', 'Test ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 15:10:05', '2025-12-11 15:14:20', 'UKMPL'),
+(45, 'GV000045', '12', '2025-12-11', '15:20:00', 'HR', 'General Visit', 'Testing', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 15:21:10', '2025-12-11 15:22:20', 'UKMPL'),
+(46, 'GV000046', '12', '2025-12-11', '15:21:00', 'HR', 'Location Recci', 'Test', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-11 15:21:52', '2025-12-11 15:23:43', 'UKMPL'),
+(47, 'GV000047', '12', '2025-12-11', '15:30:00', 'HR', 'Meeting', 'Meeting With  Hr Hod  ', 'maheshkarna@gmail.com', 1, 'rejected', NULL, '	 Wrong Data Raise Request Again', '2025-12-11 15:31:30', '2025-12-11 16:47:11', 'UKMPL'),
+(48, 'GV000048', '12', '2025-12-11', '15:32:00', 'HR', 'Interview', 'Interview Purpose', 'karnamahesh42@gmail.com', 2, 'pending', NULL, '', '2025-12-11 15:34:36', '2025-12-11 15:34:36', 'UKMPL'),
+(49, 'GV000049', '12', '2025-12-11', '16:40:00', 'HR', 'Meeting', 'Testing', 'maheshkarna@gmail.com', 1, 'pending', NULL, '', '2025-12-11 15:37:42', '2025-12-11 15:37:42', 'UKMPL'),
+(50, 'GV000050', '12', '2025-12-11', '16:40:00', 'HR', 'Document Submission', 'Test', 'karnamahesh42@gmail.com', 1, 'pending', NULL, '', '2025-12-11 15:39:04', '2025-12-11 15:39:04', 'UKMPL'),
+(51, 'GV000051', '12', '2025-12-11', '16:00:00', 'HR', 'General Visit', 'Test Xyz', 'karnamahesh42@gmail.com', 2, 'pending', NULL, '', '2025-12-11 15:40:30', '2025-12-11 15:40:30', 'UKMPL'),
+(52, 'GV000052', '8', '2025-12-11', '17:00:00', 'IT', 'Location Recci', 'Location Recci', 'ukmledp@ramojifilmcity.com', 1, 'pending', NULL, '', '2025-12-11 17:16:33', '2025-12-11 17:16:33', 'UKMPL');
 
 --
 -- Indexes for dumped tables
@@ -592,7 +682,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `expired_visitor_passes`
 --
 ALTER TABLE `expired_visitor_passes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `reference`
@@ -616,7 +706,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `security_gate_logs`
 --
 ALTER TABLE `security_gate_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -634,19 +724,19 @@ ALTER TABLE `user_hashkeys`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `visitor_request_header`
 --
 ALTER TABLE `visitor_request_header`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables

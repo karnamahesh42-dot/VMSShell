@@ -298,20 +298,21 @@ public function groupSubmit()
             // // ------------------------------
             // // 2. UPDATE EACH VISITOR + ADD LOG
             // // ------------------------------
-                $mail_data = [];   // create empty array
-
+                $mail_data = [];  
                 foreach ($visitors as $v) {
 
                     // Generate QR
                     $qrFile = $this->generateQRcode($v['v_code']);
 
-                    // Update visitor status
+                    // Update visitor Table status
+                    
                     $this->visitorModel->update($v['id'], [
                         'status'  => $status,
                         'qr_code' => $qrFile
                     ]);
 
                     // Insert log
+
                     $this->insertLog(
                         $v['id'],        // visitor_id
                         $status,         // new status
@@ -325,9 +326,10 @@ public function groupSubmit()
             // -----------------------------------
             // 3. UPDATE HEAD TABLE STATUS
             // -----------------------------------
+
             $this->VisitorRequestHeaderModel->update($head_id, [
                 'status' => $status,
-                'remark' => $remark,
+                'remarks' => $remark,
             ]);
 
             
@@ -338,7 +340,7 @@ public function groupSubmit()
             return $this->response->setJSON([
                 "status"  => "success",
                 "message" => "Head status & all visitors updated successfully!",
-                'head_id' => $head_id
+                "head_id" => $head_id
             ]);
 
     }
@@ -356,6 +358,7 @@ public function groupSubmit()
     {
         $role = session()->get('role_id');
         $uid  = session()->get('user_id');
+        $dep  = session()->get('department_name');
 
         $query = $this->visitorModel->orderBy('id', 'DESC');
           $query = $this->VisitorRequestHeaderModel->orderBy('id', 'DESC');
@@ -363,6 +366,8 @@ public function groupSubmit()
 
         if ($role == 3) {
             $query->where('requested_by', $uid);
+        }elseif($role == 2){
+            $query->where('department', $dep);
         }
 
         return $this->response->setJSON($query->findAll());
