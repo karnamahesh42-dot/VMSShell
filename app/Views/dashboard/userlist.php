@@ -59,6 +59,11 @@
                     <!-- Row 2 -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-medium">Priority</label>
+                            <input type="number" id="priority" name="priority" class="form-control p-2">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-medium">Employee Code</label>
                             <input type="text" id="edit_empcode" name="employee_code" class="form-control p-2">
                         </div>
@@ -227,7 +232,10 @@ $(document).on("click", ".editUserBtn", function () {
             $("#edit_email").val(res.email);
             $("#edit_empcode").val(res.employee_code);
             $("#name").val(res.name);
+             $("#priority").val(res.priority);
             $("#editUserModal").modal("show");
+
+            
         }
     });
 });

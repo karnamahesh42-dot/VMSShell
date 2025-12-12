@@ -9,7 +9,7 @@
     <!-- Satart view Visitor Request Form Pop-Up  -->
                     <!-- Visitor Request Modal -->
 <div class="modal fade" id="visitorModal">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content shadow-lg rounded-4 border-0">
 
             <!-- HEADER -->
@@ -24,55 +24,61 @@
                 <!-- HEADER INFO CARD -->
                 <div class="card mb-4 border-0 shadow-sm rounded-4">
                     <div class="card-body visitor-card">
-                        <h5 class="fw-bold mb-3 text-primary">Request Header</h5>
+                       
                         <div class="row g-2">
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Request Code:</label>
-                                <div id="h_code" class="text-dark fw-bold"></div>
+                                <div id="h_code" class="text-primary" class="cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Requested By:</label>
-                                <div id="h_requested_by"></div>
+                                <div id="h_requested_by" class="cardData"></div>
+                            </div>
+
+
+                             <div class="col-md-3">
+                                <label class="fw-semibold">Referred By:</label>
+                                <div id="referred_by" class="cardData"></div>
                             </div>
                               
                             <div class="col-md-3">
                                 <label class="fw-semibold">Company:</label>
-                                <div id="h_company"></div>
+                                <div id="h_company" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Department</label>
-                                <div id="h_department"></div>
+                                <div id="h_department" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Visitors Count </label>
-                                <div id="h_count"></div>
+                                <div id="h_count" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Email</label>
-                                <div id="h_email"></div>
+                                <div id="h_email" class="cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Purpose </label>
-                                <div id="h_purpose">2</div>
+                                <div id="h_purpose" class="cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Visit Date & Time </label>
-                                <div id="h_date">2</div>
+                                <div id="h_date" class="cardData"></div>
                             </div>
                             
                             <div class="col-md-6">
                                 <label class="fw-semibold">Description </label>
-                                <div id="h_description">2</div>
+                                <div id="h_description" class="cardData"></div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label class="fw-semibold">Actions</label>
                                 <?php if(session()->get('role_id') <= 2){ ?>
                                
@@ -137,52 +143,55 @@
 
         <!-- <button onclick="sendOTP()">Send OTP</button> -->
           <!-- ROW 3: Pending + Quick Links -->
+
+          
         <section class="dash-row row-large mb-3">
+            <?php if($_SESSION['role_id'] != 4){?>
             <div class="card-dash card-large">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                  <h4 class="mb-0">Pending Approvals</h4>
+                  <h5 class="mb-0">Pending Approvals</h5>
                   <div class="muted">Requests that need action</div>
                 </div>
-                <div><a href="<?= base_url('visitorequestlist') ?>" class="btn btn-sm btn-outline-primary">View All</a></div>
+                <div><a href="<?= base_url('visitorequestlist') ?>" class="btn btn-sm btn-outline-primary">List View</a></div>
               </div>
-          <ul class="pending-list mt-2">
-              <?php if (!empty($pendingList)): ?>
-                  <?php foreach ($pendingList as $item): ?>
-                      <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
-                         <!-- <li onclick="testamile(<?= $item['id'] ?>)" style="cursor:pointer;"> -->
-                          
-                          <div>
-                              <!-- GV Code -->
-                              <div class="fw-600">
-                                <?= $item['purpose'] ?> - <?= $item['description'] ?>
-                                  
-                              </div>
-                              <!-- Purpose + date + persons -->
-                              <small class="muted">
-                                  <?= $item['header_code'] ?>  • 
-                                  <?= $item['requested_date'] ?> <?= $item['requested_time'] ?> •
-                                  <?= $item['total_visitors'] ?> Persons
-                              </small>
-                          </div>
+                <ul class="pending-list mt-2">
+                    <?php if (!empty($pendingList)): ?>
+                        <?php foreach ($pendingList as $item): ?>
+                            <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
+                                <!-- <li onclick="testamile(<?= $item['id'] ?>)" style="cursor:pointer;"> -->
+                                
+                                <div>
+                                    <!-- GV Code -->
+                                    <div class="fw-600">
+                                        <?= $item['purpose'] ?> - <?= $item['description'] ?>
+                                        
+                                    </div>
+                                    <!-- Purpose + date + persons -->
+                                    <small class="muted">
+                                        <?= $item['header_code'] ?>  • 
+                                        <?= $item['requested_date'] ?> <?= $item['requested_time'] ?> •
+                                        <?= $item['total_visitors'] ?> Persons
+                                    </small>
+                                </div>
 
-                          <div class="text-end">
-                              <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                              <!-- <span class="badge-pending"> Pending </span> -->
-                          </div>
+                                <div class="text-end">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                    <!-- <span class="badge-pending"> Pending </span> -->
+                                </div>
 
-                      </li>
-                  <?php endforeach; ?>
-              <?php else: ?>
-                  <li>
-                      <div class="text-center text-muted w-100">No pending requests</div>
-                  </li>
-              <?php endif; ?>
-          </ul>
-        </div>
-
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li>
+                            <div class="text-center text-muted w-100">No pending requests</div>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            <?php } ?>
             <div class="card-dash card-large">
-              <h4 class="mb-3">Quick Links</h4>
+              <h5 class="mb-3">Quick Links</h5>
               <div class="quick-links">
                 <a href="<?= base_url('visitorequest') ?>"><i class="bi bi-person-plus me-2"></i> Create Visitor Request</a>
                 <a href="<?= base_url('group_visito_request') ?>"><i class="bi bi-people me-2"></i> Create Group Request</a>
@@ -279,7 +288,7 @@
             if (h.status === "pending" ) {
 
                     actionButtons = `
-                        <button class="btn btn-success btn-sm me-2"
+                        <button class="btn btn-success btn-sm"
                             onclick="approvalProcess(${h.request_header_id}, 'approved', '${h.header_code}')">
                             <i class="fas fa-check-circle"></i> Approve
                         </button>
@@ -303,6 +312,7 @@
             $("#h_purpose").text(h.purpose);
             $("#h_date").text(h.requested_date +" & "+ h.requested_time);
             $("#h_description").text(h.description);
+             $("#referred_by").text(h.referred_by_name);
                            
             
             let cardsHtml = "";
@@ -356,7 +366,6 @@
 
                         </div>
                     </div>`;
-
             });
 
             $("#visitorCardsContainer").html(cardsHtml);

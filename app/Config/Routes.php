@@ -34,10 +34,11 @@ $routes->post('/updateVisitorValidity','VisitorRequest::updateVisitorValidity');
 
 $routes->post('/approvalprocess', 'VisitorRequest::approvalProcess');//To Approval Process 
 $routes->get('/getvisitorrequestdata/(:num)', 'VisitorRequest::getVisitorRequastDataById/$1'); //To get Visito Request Data By ID
+$routes->post('/get-visitor-details', 'VisitorRequest::getVisitorRequastDataByVCode'); //To get Visito Request Data By ID
 
 $routes->get('/visitor-template-download', 'VisitorRequest::downloadCsvTemplate');
 $routes->post('/visitor-template-upload', 'VisitorRequest::uploadCsv');
-
+$routes->post('/visitor/complete-meeting', 'VisitorRequest::completeMeeting');
 
 // $routes->get('send-email', 'MailController::sendMail');
 $routes->post('send-email', 'MailController::sendMail');

@@ -3,6 +3,144 @@
      
    <main class="main-content" id="mainContent">
         <div class="container-fluid">
+    
+    <!-- view Pop-up Form start  -->
+    <div class="modal fade" id="visitorModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content shadow-lg rounded-4 border-0">
+
+                <!-- HEADER -->
+                <div class="modal-header bg-primary text-white rounded-top-4">
+                    <h5 class="modal-title">Visitor Request Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+
+                    <!-- HEADER INFO CARD -->
+                    <div class="card mb-4 border-0 shadow-sm rounded-4">
+                        <div class="card-body visitor-card">
+                            <div class="row g-2">
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Request Code:</label>
+                                    <div id="h_code" class="cardData text-primary"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Requested By:</label>
+                                    <div id="h_requested_by" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Referred By:</label>
+                                    <div id="referred_by" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Company:</label>
+                                    <div id="h_company" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Department:</label>
+                                    <div id="h_department" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Visitors Count:</label>
+                                    <div id="h_count" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Email:</label>
+                                    <div id="h_email" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Purpose:</label>
+                                    <div id="h_purpose" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Visit Date & Time:</label>
+                                    <div id="h_date" class="cardData"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="fw-semibold">Description:</label>
+                                    <div id="h_description" class="cardData"></div>
+                                </div>
+
+                                
+                                <div class="col-md-3">
+                                    <label class="fw-semibold">Actions:</label>
+                                   
+                                    <div id="actionBtns"></div>
+                                   
+                                </div>
+   
+   
+                                <!-- SINGLE VISITOR DETAILS CARD -->
+                                                                <hr>
+                                <h5 class="fw-bold text-primary">Visitor Details</h5>
+                                <div class="row mt-2">
+                                                            
+                                <div class="col-md-4">
+                                        <label class="fw-semibold">Visitor Code:</label>
+                                        <div id="v_code" class="cardData text-primary"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="fw-semibold">Visitor Name:</label>
+                                        <div id="v_name" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="fw-semibold">Visitor Phone:</label>
+                                        <div id="v_phone" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="fw-semibold">Visitor Email:</label>
+                                        <div id="v_email" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="fw-semibold">Vehicle No:</label>
+                                        <div id="v_vehicle_no" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="fw-semibold">Vehicle Type:</label>
+                                        <div id="v_vehicle_type" class="cardData"></div>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VISITOR CARDS -->
+                    <div class="row g-4" id="visitorCardsContainer">
+                     
+
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- view Pop-up Form End   -->
+ 
+
 
              <div class="row d-flex justify-content-center">
                 <div class="col-md-12">
@@ -18,7 +156,8 @@
 
                         <div class="card-body p-0">
                             <div class="card mb-3">
-                                    <div class="card-body">
+                              
+                                    <div class="card-body" >
                                         <div class="row g-2">
                                             <div class="col-md-2">
                                                 <label class="form-label">Request Code</label>
@@ -72,14 +211,18 @@
                                                 <button class="btn btn-secondary" onclick="resetFilters()" title="Reset Filters">
                                                     <i class="fas fa-sync-alt"></i>
                                                 </button>
-
+                                              <?php if($_SESSION['role_id'] == '1'){?>
                                                 <!-- Export Button -->
                                                 <button class="btn btn-success" onclick="exportTable()" title="Export Data">
                                                     <i class="fas fa-file-export"></i>
                                                 </button>
+                                             <?php }?>
                                             </div>
                                         </div>
                                     </div>
+                               
+
+                   
                                 </div>
 
                             <div class="table-responsive">                            
@@ -87,19 +230,16 @@
                                     <thead class="table-light" id="authorizedVisitorTablehead">
                                         <tr>
                                             <th>S.No</th>
-                                            <th>Request Code</th>
-                                            <th>V-Code</th>
+                                            <!-- <th>Request Code</th> -->
+                                            <!-- <th>V-Code</th> -->
                                             <th>Company</th>
                                             <th>department</th>
                                             <th>Rquested By</th>
                                             <th>Visitor</th>
                                             <th>Contact</th>
                                             <th>Purpose</th>
-                                            <th>Status</th>
                                             <th>Validity</th>
-                                            <th>Check-In</th>
-                                            <th>Check-Out</th>
-                                            <th>Spend Time</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="authorizedVisitorTable"></tbody>
@@ -108,10 +248,8 @@
                         </div>
                     </div>
                     <!-- AUTHORIZED VISITOR LIST  Card End -->
-
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -151,16 +289,32 @@ function loadAuthorizedVisitors() {
             }
 
             res.forEach((v, index) => {
-
+         
                 let statusBadge = "";
                 if (v.securityCheckStatus == 0) {
-                    statusBadge = `<span class="badge bg-secondary">Not Entered</span>`;
-                } 
-                else if (v.securityCheckStatus == 1) {
-                    statusBadge = `<span class="badge bg-warning text-dark">Inside</span>`;
-                } 
-                else {
-                    statusBadge = `<span class="badge bg-success">Completed</span>`;
+                    statusBadge = `
+                        <span class="badge bg-secondary">
+                            Not Entered
+                        </span>
+                    `;
+                } else if (v.securityCheckStatus == 1) {
+                    statusBadge = `
+                        <span class="badge bg-warning text-dark">
+                            Inside <br>
+                            In: ${v.check_in_time ?? '-'} <br>
+                            Out: ${v.check_out_time ?? '-'} <br>
+                            Spend: ${v.spendTime ?? '-'}
+                        </span>
+                    `;
+                } else {
+                    statusBadge = `
+                        <span class="badge bg-success">
+                            Completed <br>
+                            In: ${v.check_in_time ?? '-'} <br>
+                            Out: ${v.check_out_time ?? '-'} <br>
+                            Spend: ${v.spendTime ?? '-'}
+                        </span>
+                    `;
                 }
 
 
@@ -173,21 +327,16 @@ function loadAuthorizedVisitors() {
                 }
 
                 tbody.append(`
-                    <tr>
+                    <tr onclick="openVisitorPopup('${v.v_code}')">
                         <td>${index + 1}</td>
-                        <td>${v.header_code}</td>
-                        <td>${v.v_code}</td>
                         <td>${v.company}</td>
                         <td>${v.department_name}</td>
                         <td>${v.created_by_name}</td>
                         <td>${v.visitor_name}</td>
                         <td>${v.visitor_phone}</td>
                         <td>${v.purpose}</td>
-                        <td>${statusBadge}</td>
                         <td>${validityBadge}</td>
-                        <td>${v.check_in_time ?? '-'}</td>
-                        <td>${v.check_out_time ?? '-'}</td>
-                        <td>${v.spendTime ?? '-'}</td>
+                        <td>${statusBadge}</td>
                     </tr>
                 `);
             });
@@ -236,4 +385,167 @@ function exportTable() {
 }
 
 
+function openVisitorPopup(v_code) {
+
+    $.ajax({
+        url: "<?= base_url('/get-visitor-details') ?>",
+        type: "POST",
+        data: { v_code: v_code },
+        dataType: "json",
+        success: function (d) {
+// console.log(d)
+            // HEADER FIELDS
+            $("#h_code").text(d.header_code);
+            $("#h_requested_by").text(d.created_by_name);
+            $("#referred_by").text(d.referred_by_name ?? "-");
+            $("#h_company").text(d.company);
+            $("#h_department").text(d.department_name);
+            $("#h_count").text(d.total_visitors);
+            $("#h_email").text(d.visitor_email);
+            $("#h_purpose").text(d.purpose);
+            $("#h_date").text(d.visit_date + " " + d.visit_time);
+            $("#h_description").text(d.description);
+
+            $("#v_name").text(d.visitor_name);
+            $("#v_phone").text(d.visitor_phone);
+            $("#v_email").text(d.visitor_email);
+            $("#v_vehicle_no").text(d.vehicle_no);
+            $("#v_vehicle_type").text(d.vehicle_type);
+            $("#v_visit_date").text(d.visit_date);
+            $("#v_visit_time").text(d.visit_time);
+            $("#v_code").text(d.v_code);
+
+ let actionHTML = "";
+
+if (d.securityCheckStatus == 0) {
+    // NOT ENTERED → Allow Entry
+    actionHTML = `
+        <button class="btn btn-success btn-sm" onclick="allowEntry('${d.v_id}','${d.v_code}')">
+            <i class="bi bi-door-open"></i> Allow Entry
+        </button>
+    `;
+}
+else if (d.securityCheckStatus == 1) {
+    // INSIDE → Mark Exit
+    actionHTML = `
+        <button class="btn btn-warning btn-sm" onclick="markExit('${d.v_id}')">
+            <i class="bi bi-box-arrow-right"></i> Mark Exit
+        </button>
+    `;
+}
+else {
+    // COMPLETED → No buttons
+    actionHTML = `<span class="badge bg-success"><i class="bi bi-check-circle"></i> Completed</span>`;
+}
+
+
+$("#actionBtns").html(actionHTML);
+            // Open Modal
+            $("#visitorModal").modal("show");
+        }
+    });
+}
+
+
+
+
+
+// -----------------------------------------------------
+//  ALLOW ENTRY (CHECK-IN)
+// -----------------------------------------------------
+
+ function allowEntry(v_id,v_code){
+    $.ajax({
+        url: "<?= base_url('/security/checkin') ?>",
+        type: "POST",
+        data: {
+            visitor_request_id: v_id,
+            v_code: v_code
+        },
+        success: function (res) {
+
+            if (res.status === "invalid") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Entry Denied",
+                    text: res.message,
+                    confirmButtonText: "OK"
+                });
+                return;
+            }
+
+            if (res.status === "exists") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Already Checked In",
+                    text: "Visitor already entered",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                return;
+            }
+
+            if (res.status === "success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Entry Allowed",
+                    text: "Visitor checked in successfully",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+
+        }
+    });
+ }
+
+
+// -----------------------------------------------------
+//  MARK EXIT
+// -----------------------------------------------------
+
+ function markExit(v_id){
+    
+    $.ajax({
+        url: "<?= base_url('/security/checkout') ?>",
+        type: "POST",
+        data: { visitor_request_id: v_id },
+        success: function (res) {
+
+            if (res.status === "no_entry") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "No Entry",
+                    text: "Visitor has no entry record.",
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+                return;
+            }
+
+            if (res.status === "meeting_not_completed") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Visit Not Completed",
+                    text: "The meeting is not yet completed. Exit cannot be marked.",
+                    timer: 1800,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: "success",
+                title: "Recorded",
+                text: "Visitor exit recorded.",
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+        }
+    });
+
+ }
 </script>

@@ -11,6 +11,7 @@ class UserModel extends Model
 
     protected $allowedFields = [
     'name',
+    'priority',
     'company_name',
     'department_id',
     'email',
@@ -57,7 +58,8 @@ class UserModel extends Model
             $sql = "SELECT 
                         u.*, 
                         r.role_name, 
-                        d.department_name
+                        d.department_name,
+                        d.id as dep_id
                     FROM users u
                     LEFT JOIN roles r ON r.id = u.role_id
                     LEFT JOIN departments d ON d.id = u.department_id

@@ -3,7 +3,7 @@
       --sidebar-width: 220px;
       --sidebar-collapsed: 0;
       --topbar-height: 64px;
-      --footer-height: 45px;
+      --footer-height: 40px;
       --sidebar-bg: #0b2a57;
       --topbar-bg: #ffffff;
       --footer-bg: #f5f7fb;
@@ -23,10 +23,8 @@
 }
 
 .brand-area img {
-    width: 100%;        /* Make image take full width */
-     /* Maintain aspect ratio */
-    /* object-fit: contain; Ensure it doesn't stretch */
-height: 60px;
+    width: 100%;       
+    height: 62px;
 }
 
 
@@ -165,6 +163,7 @@ height: 60px;
       justify-content: center;
       transition: all 0.3s ease;
       border-top: 1px solid #ddd;
+      font-size: 12px;
     }
 
     .footer.expanded {
@@ -299,7 +298,7 @@ height: 60px;
     .pending-list { list-style:none; padding:0; margin:0; }
     .pending-list li { padding:12px 10px; border-radius:8px; margin-bottom:8px; background:#fbfbfd; border:1px solid #eef3fb; display:flex; justify-content:space-between; align-items:center; }
 
-    .quick-links a { display:block; padding:10px 8px; color:#0b2238; border-radius:8px; margin-bottom:8px; background:#fff; border:1px solid #f0f4fb; text-decoration:none; }
+    .quick-links a { display:block; padding:5px 8px; color:#0b2238; border-radius:8px; margin-bottom:5px; background:#fff; border:1px solid #f0f4fb; text-decoration:none; }
 
     .muted { color:#677a8a; font-size:13px; }
     .badge-pending { background:#ffefc6; color:#6a4b00; padding:6px 8px; border-radius:6px; font-weight:700; }
@@ -331,7 +330,17 @@ height: 60px;
 
 /* Body */
 #visitorModal .modal-body {
-    padding: 12px 30px !important;
+    padding: 10px 10px !important;
+}
+#visitorModal .modal-body label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+
+#visitorModal .modal-body .cardData {
+    font-size: 14px;
+    margin-bottom: 1px;
 }
 
 /* Table styling */
@@ -340,7 +349,7 @@ height: 60px;
 }
 
 #visitorModal table th {
-    width: 150px;
+    width: 100px;
     color: #6c757d;
     font-weight: 600;
     font-size: 14px;
@@ -973,4 +982,20 @@ input[type="file"] {
     font-weight: 600;
     /* color: rgba(19, 36, 189, 0.85); */
             color: rgb(217 41 44);
+}
+
+
+#visitorCardsContainer {
+    overflow-x: auto;   /* enable horizontal scrolling */
+    max-width: 100%;    /* prevent overflowing modal */
+}
+
+#visitorCardsContainer table {
+    min-width: 900px;   /* or adjust based on columns */
+    font-size: 0.85rem;
+}
+
+#visitorCardsContainer th,
+#visitorCardsContainer td {
+    white-space: nowrap; /* prevent text wrap */
 }

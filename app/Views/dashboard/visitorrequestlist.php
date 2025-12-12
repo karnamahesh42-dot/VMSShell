@@ -29,57 +29,64 @@
             <div class="modal-body">
 
                 <!-- HEADER INFO CARD -->
-                <div class="card mb-4 border-0 shadow-sm rounded-4">
+                <div class="card mb-2 border-0 shadow-sm rounded-4">
                     <div class="card-body visitor-card">
-                        <h5 class="fw-bold mb-3 text-primary">Request Header</h5>
+    
                         <div class="row g-2">
 
                             <div class="col-md-3">
-                                <label class="fw-semibold">Request Code:</label>
-                                <div id="h_code" class="text-dark fw-bold"></div>
+                                <label class="fw-semibold">Request ID:</label>
+                                <div id="h_code" class="text-primary  cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Requested By:</label>
-                                <div id="h_requested_by"></div>
+                                <div id="h_requested_by" class="cardData"></div>
                             </div>
+
+                             <div class="col-md-3">
+                                <label class="fw-semibold">Referred By:</label>
+                                <div id="referred_by" class="cardData"></div>
+                            </div>
+
+                            
                               
                             <div class="col-md-3">
                                 <label class="fw-semibold">Company:</label>
-                                <div id="h_company"></div>
+                                <div id="h_company" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Department</label>
-                                <div id="h_department"></div>
+                                <div id="h_department" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Visitors Count </label>
-                                <div id="h_count"></div>
+                                <div id="h_count" class="cardData"></div>
                             </div>
 
                              <div class="col-md-3">
                                 <label class="fw-semibold">Email</label>
-                                <div id="h_email"></div>
+                                <div id="h_email" class="cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Purpose </label>
-                                <div id="h_purpose">2</div>
+                                <div id="h_purpose" class="cardData"></div>
                             </div>
 
                             <div class="col-md-3">
                                 <label class="fw-semibold">Visit Date & Time </label>
-                                <div id="h_date">2</div>
+                                <div id="h_date" class="cardData"></div>
                             </div>
                             
                             <div class="col-md-6">
                                 <label class="fw-semibold">Description </label>
-                                <div id="h_description">2</div>
+                                <div id="h_description" class="cardData"></div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label class="fw-semibold">Actions</label>
                                 <?php if(session()->get('role_id') <= 2){ ?>
                                
@@ -95,7 +102,7 @@
 
                 <!-- VISITOR CARDS -->
              
-                <div class="row g-4" id="visitorCardsContainer"></div>
+                <div class="row mx-1" id="visitorCardsContainer"></div>
             </div>
             <!-- FOOTER -->
             <div class="modal-footer justify-content-between">
@@ -246,13 +253,13 @@ function view_visitor(id){
             let actionButtons = "";
             let h = res.data[0];
 
-            console.log(h)
+            console.log(res)
             console.log(h.status);
             
             if (h.status === "pending" ) {
 
                     actionButtons = `
-                        <button class="btn btn-success btn-sm me-2"
+                        <button class="btn btn-success btn-sm"
                             onclick="approvalProcess(${h.request_header_id}, 'approved', '${h.header_code}')">
                             <i class="fas fa-check-circle"></i> Approve
                         </button>
@@ -270,69 +277,95 @@ function view_visitor(id){
             $("#h_department").text(h.department);
             $("#h_email").text(h.email ?? "-");
             $("#h_company").text(h.company);
-            
             $("#h_count").text(h.total_visitors);
             $("#h_requested_by").text(h.visitor_created_by_name);
             $("#h_purpose").text(h.purpose);
             $("#h_date").text(h.requested_date +" & "+ h.requested_time);
             $("#h_description").text(h.description);
             $("#remarkLablle").text(h.remarks);
-                           
-            
-            let cardsHtml = "";
+            $("#referred_by").text(h.referred_by_name);
+        
+                        
+        let tableHtml = `
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>ID Type</th>
+                        <th>ID Number</th>
+                        <th>Action</th>
+                        <th>Meet Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
-            res.data.forEach(v => {
-
+            res.data.forEach((v, index) => {
                 let qrImg = v.qr_code 
-                    ? `<?= base_url('public/uploads/qr_codes/') ?>${v.qr_code}`
-                    : "";
-                let resendButton = " <span>--</span>";
+                    ? `<img src="<?= base_url('public/uploads/qr_codes/') ?>${v.qr_code}" class="visitor-qr" style="height:50px;">`
+                    : "--";
 
-                
-                if (v.status === "approved") {
-                    resendButton = `
-                        <button class="btn btn-warning btn-sm w-100"
-                            onclick="resendqr('${v.v_code}')">
-                            <i class="fas fa-paper-plane"></i> Re-send QR
-                        </button>`;
-                }
+                // let actionBtn = v.status === "approved" 
+                //     ? `<button class="btn btn-warning btn-sm" onclick="resendqr('${v.v_code}')">
+                //             <i class="fas fa-paper-plane"></i>
+                //     </button>`
+                //     : "--";
 
-                   cardsHtml += `<div class="col-md-6">
-                        <div class="card visitor-card p-4">
 
-                            <div class="row visitor-card-body">
+let actionBtn = "";
+let meetStatus = "";
+if (v.securityCheckStatus == 0) {
+    // Visitor not inside → Resend QR
+    actionBtn = `
+        <button class="btn btn-warning btn-sm" onclick="resendqr('${v.v_code}')">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    `;
+}
 
-                                <!-- Visitor Details -->
-                                <div class="col-8 visitor-details">
-                                    <h5 class="visitor-name">
-                                        <i class="fas fa-user text-primary me-2"></i> ${v.visitor_name}
-                                    </h5>
 
-                                    <p class="visitor-email">${v.visitor_email}</p>
-                                    <p class="visitor-code">Code: ${v.v_code}</p>
+if (v.securityCheckStatus == 1 && v.meeting_status == 0) {
+    // Visitor inside → Meeting pending (click to complete)
+    meetStatus = `
+        <span class="badge bg-danger cursor-pointer"
+              style="cursor:pointer"
+              onclick="markMeetingCompleted('${v.v_code}')">
+            <i class="fas fa-check-circle"></i> Pending
+        </span>
+    `;
+}
+else if (v.meeting_status == 1) {
+    meetStatus = `
+        <span class="badge bg-success">
+            <i class="fas fa-check-double"></i> Completed
+        </span>
+    `;
+}
 
-                                    <p class="visitor-info"><b>Phone:</b> ${v.visitor_phone}</p>
-                                    <p class="visitor-info"><b>ID Type:</b> ${v.proof_id_type}</p>
-                                    <p class="visitor-info"><b>ID Number:</b> ${v.proof_id_number}</p>
-                                    <p class="visitor-info"><b>Visit Date:</b> ${v.visit_date}</p>
-                                </div>
-
-                                <!-- QR & Resend -->
-                                <div class="col-4 text-center">
-                                    <img src="${qrImg}" class="visitor-qr mb-2">
-
-                                    ${v.status === "approved" ? `
-                                        <button class="btn btn-warning btn-sm w-100 resend-btn"
-                                            onclick="resendqr('${v.v_code}')">
-                                            <i class="fas fa-paper-plane"></i> Send QR
-                                        </button>` : ""}
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+                tableHtml += `
+                     <tr>
+                        <td>${v.v_code}</td>
+                        <td>${v.visitor_name}</td>
+                        <td>${v.visitor_email}</td>
+                        <td>${v.visitor_phone}</td>
+                        <td>${v.proof_id_type}</td>
+                        <td>${v.proof_id_number}</td>
+                        <td class="text-center">${actionBtn}</td>
+                        <td class="text-center">${meetStatus}</td>
+                    </tr>
+                `;
             });
 
-            $("#visitorCardsContainer").html(cardsHtml);
+            tableHtml += `
+                    </tbody>
+                </table>
+            `;
+
+
+            $("#visitorCardsContainer").html(tableHtml);
             $("#visitorModal").modal("show");
         }
     });
@@ -433,6 +466,41 @@ function resendqr(v_code) {
     });
 }
 
+
+
+function markMeetingCompleted(v_code) {
+    Swal.fire({
+        title: "Complete Meeting?",
+        text: "Confirm that the visitor meeting is completed.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Complete",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "<?= base_url('/visitor/complete-meeting') ?>",
+                type: "POST",
+                data: { v_code: v_code },
+                dataType: "json",
+                success: function (res) {
+                    if (res.status === "success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Meeting Completed",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        loadVisitorList(); // refresh table
+                    } else {
+                        Swal.fire("Error", res.message, "error");
+                    }
+                }
+            });
+        }
+    });
+}
 
 
 

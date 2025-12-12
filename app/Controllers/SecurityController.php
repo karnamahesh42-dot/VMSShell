@@ -122,6 +122,39 @@ public function verifyVisitor()
 }
 
     
+// public function checkIn() 
+// {
+//     date_default_timezone_set('Asia/Kolkata');
+
+//     $log = new \App\Models\SecurityGateLogModel();
+//     $visitorModel = new \App\Models\VisitorRequestModel();
+
+//     $visitorId = $this->request->getPost('visitor_request_id');
+//     $v_code = $this->request->getPost('v_code');
+
+//     // Check if already checked-in
+//     $existing = $log->where('visitor_request_id', $visitorId)->first();
+
+//     if ($existing && $existing['check_in_time']) {
+//         return $this->response->setJSON(['status' => 'exists', 'check_point' => 0]);
+//     }
+
+
+//     // Insert log entry
+//     $log->insert([
+//         'visitor_request_id' => $visitorId,
+//         'v_code'             => $v_code,
+//         'check_in_time'      => date('Y-m-d H:i:s'),
+//         'verified_by'        => session()->get('user_id'),
+//     ]);
+
+//     $visitorModel->update($visitorId, [
+//         'securityCheckStatus' => 1
+//     ]);
+
+//     return $this->response->setJSON(['status' => 'success', 'check_point' => 1]);
+// }
+
 public function checkIn() 
 {
     date_default_timezone_set('Asia/Kolkata');
@@ -130,16 +163,40 @@ public function checkIn()
     $visitorModel = new \App\Models\VisitorRequestModel();
 
     $visitorId = $this->request->getPost('visitor_request_id');
-    $v_code = $this->request->getPost('v_code');
+    $v_code    = $this->request->getPost('v_code');
 
-    // Check if already checked-in
-    $existing = $log->where('visitor_request_id', $visitorId)->first();
+    // 🔹 Fetch visitor details
+    $visitor = $visitorModel->find($visitorId);
 
-    if ($existing && $existing['check_in_time']) {
-        return $this->response->setJSON(['status' => 'exists', 'check_point' => 0]);
+    if (!$visitor) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Visitor not found'
+        ]);
     }
 
-    // Insert log entry
+    // 🔹 VALIDITY CHECK
+    if ($visitor['validity'] != 1) {
+        return $this->response->setJSON([
+            'status' => 'invalid',
+            'message' => 'Visitor pass expired / not valid'
+        ]);
+    }
+
+    // 🔹 Check if already checked-in
+    $existing = $log
+        ->where('visitor_request_id', $visitorId)
+        ->where('check_in_time IS NOT NULL', null, false)
+        ->first();
+
+    if ($existing) {
+        return $this->response->setJSON([
+            'status' => 'exists',
+            'check_point' => 0
+        ]);
+    }
+
+    // 🔹 Insert gate log
     $log->insert([
         'visitor_request_id' => $visitorId,
         'v_code'             => $v_code,
@@ -147,11 +204,15 @@ public function checkIn()
         'verified_by'        => session()->get('user_id'),
     ]);
 
+    // 🔹 Update visitor status
     $visitorModel->update($visitorId, [
         'securityCheckStatus' => 1
     ]);
 
-    return $this->response->setJSON(['status' => 'success', 'check_point' => 1]);
+    return $this->response->setJSON([
+        'status' => 'success',
+        'check_point' => 1
+    ]);
 }
 
 
@@ -166,11 +227,19 @@ public function checkIn()
 
             $visitorId = $this->request->getPost('visitor_request_id');
 
+
+
             // Fetch visitor
             $visitor = $visitorModel->find($visitorId);
 
             if (!$visitor || $visitor['securityCheckStatus'] != 1) {
                 return $this->response->setJSON(['status' => 'no_entry']);
+            }
+
+            if ($visitor['meeting_status'] != 1) {
+                return $this->response->setJSON([
+                  'status'  => 'meeting_not_completed'
+                ]);
             }
 
             // Fetch security log entry

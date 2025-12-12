@@ -28,6 +28,8 @@ class Dashboard extends BaseController
 
     public function index()
     {
+        
+        $session = session();
         // Dynamic counts from DB
         $totalVisitors = $this->visitorModel->countAll(); // total rows
 
@@ -64,7 +66,26 @@ class Dashboard extends BaseController
         ];
 
 
-            $pendingList = $this->VisitorRequestHeaderModel
+        // $pendingList = $this->VisitorRequestHeaderModel
+        //     ->select("
+        //         id,
+        //         header_code,
+        //         purpose,
+        //         requested_date,
+        //         requested_time,
+        //         total_visitors,
+        //         description,
+        //         status
+        //     ")
+        //     ->where('status', 'pending')
+        //     ->orderBy('id', 'DESC')
+        //     ->limit(5)
+        //     ->findAll();
+
+            $role_id = $session->get('role_id');
+            $user_id = $session->get('user_id');
+
+            $builder = $this->VisitorRequestHeaderModel
                 ->select("
                     id,
                     header_code,
@@ -75,13 +96,25 @@ class Dashboard extends BaseController
                     description,
                     status
                 ")
-                ->where('status', 'pending')
+                ->where('status', 'pending');
+
+            // Condition: Role wise filtering
+            if ($role_id == 2) {
+                // Department Admin → show requests referred to him
+                $builder->where('referred_by', $user_id);
+
+            } elseif ($role_id == 3) {
+                // Normal user → show only requests he created
+                $builder->where('requested_by', $user_id);
+            }
+            // role_id == 1 → no filter → show all
+
+            $pendingList = $builder
                 ->orderBy('id', 'DESC')
                 ->limit(5)
                 ->findAll();
 
             $data['pendingList'] = $pendingList;
-
 
 
         $recentAuthorized = $this->SecurityGateLogModel->getRecentAuthorized(10);

@@ -81,6 +81,13 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row mb-1">
+                                    <label class="col-sm-4 col-form-label">Priority</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="priority" value="10" class="form-control" placeholder="Enter Password" required>
+                                    </div>
+                                </div>
+
                                 <!-- Role -->
                                 <div class="form-group row mb-1">
                                     <label class="col-sm-4 col-form-label">Role</label>

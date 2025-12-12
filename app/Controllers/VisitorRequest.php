@@ -24,11 +24,46 @@ class VisitorRequest extends BaseController
         $this->VisitorRequestHeaderModel     = new VisitorRequestHeaderModel();
         $this->ExpiredVisitorPassModel     = new ExpiredVisitorPassModel();
 
+
     }
+
+    // public function index(): string
+    // {
+    //     return view('dashboard/visitorequest');
+    // }
 
     public function index(): string
     {
-        return view('dashboard/visitorequest');
+        $session = session();
+
+        $dep_id     = $session->get('dep_id');
+        $role_id    = $session->get('role_id');
+        $user_id    = $session->get('user_id');
+
+        $userModel = new \App\Models\UserModel();
+
+        // CASE 1: Super Admin (role_id = 1) → Show ALL Admins ordered by priority
+        if ($role_id == 1) {
+            $admins = $userModel
+                        ->where('role_id', 2)
+                        ->orderBy('priority', 'ASC')
+                        ->findAll();
+        }
+        // CASE 2: Admin (role_id = 2) → Show ONLY same department admins ordered by priority
+        else {
+            $admins = $userModel
+                        ->where('role_id', 2)
+                        ->where('department_id', $dep_id)
+                        ->orderBy('priority', 'ASC')
+                        ->findAll();
+        }
+
+        $data = [
+            'admins' => $admins,
+            'logged_user_id' => $user_id,
+        ];
+
+        return view('dashboard/visitorequest', $data);
     }
 
     public function groupVisitorRequestForm(): string
@@ -117,6 +152,7 @@ class VisitorRequest extends BaseController
         $headerData = [
             'header_code'     => $groupCode,
             'requested_by'    => session()->get('user_id'),
+            'referred_by'  => $this->request->getPost('referred_by'),
             'requested_date'  => $this->request->getPost('visit_date'),
             'requested_time'  => $this->request->getPost('visit_time'),
             'department'      => session()->get('department_name'),
@@ -356,21 +392,27 @@ public function groupSubmit()
 
     public function visitorData()
     {
-        $role = session()->get('role_id');
-        $uid  = session()->get('user_id');
-        $dep  = session()->get('department_name');
+       
+            $role = session()->get('role_id');
+            $uid  = session()->get('user_id');
 
-        $query = $this->visitorModel->orderBy('id', 'DESC');
-          $query = $this->VisitorRequestHeaderModel->orderBy('id', 'DESC');
-        
+            $query = $this->VisitorRequestHeaderModel
+                        ->orderBy('id', 'DESC');
 
-        if ($role == 3) {
-            $query->where('requested_by', $uid);
-        }elseif($role == 2){
-            $query->where('department', $dep);
-        }
+            // Role-wise conditions
+            if ($role == 2) {
+                // Department Admin → Requests referred to him
+                $query->where('referred_by', $uid);
 
-        return $this->response->setJSON($query->findAll());
+            } elseif ($role == 3) {
+                // Normal User → Requests created by him
+                $query->where('requested_by', $uid);
+            }
+
+            // Role 1 → Super Admin → No where condition
+            // Show everything
+
+            return $this->response->setJSON($query->findAll());
     }
 
        
@@ -390,6 +432,17 @@ public function groupSubmit()
             'data'   => $data
         ]);
     }
+
+    public function getVisitorRequastDataByVCode()
+    {
+        $v_code = $this->request->getPost('v_code');
+
+        $headerModel = new \App\Models\VisitorRequestHeaderModel();
+        $data = $headerModel->getHeaderWithVisitorsMailDataByVCode($v_code);
+
+        return $this->response->setJSON($data[0]);
+    }
+
 
 
         // downloadCsvTemplate
@@ -534,4 +587,39 @@ public function groupSubmit()
                     'message' => 'Expired visitor passes stored successfully'
                 ]);
         }
+
+
+
+public function completeMeeting()
+{
+    $v_code = $this->request->getPost('v_code');
+
+    $visitorModel = new \App\Models\VisitorRequestModel();
+
+    $visitor = $visitorModel->where('v_code', $v_code)->first();
+
+    if (!$visitor) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Visitor not found'
+        ]);
+    }
+
+    if ($visitor['securityCheckStatus'] != 1) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Visitor is not inside'
+        ]);
+    }
+
+    $visitorModel->update($visitor['id'], [
+        'meeting_status' => 1,
+        'meeting_completed_at' => date('Y-m-d H:i:s')
+    ]);
+
+    return $this->response->setJSON([
+        'status' => 'success'
+    ]);
+}
+
 }

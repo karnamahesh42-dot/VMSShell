@@ -88,6 +88,7 @@ class User extends BaseController
     // Insert Data
     $data = [
         'name'           => $this->request->getPost('name'),
+        'priority'       => $this->request->getPost('priority'),
         'company_name'   => $this->request->getPost('company_name'),
         'department_id'  => $this->request->getPost('department_id'),
         'email'          => $email,
@@ -217,6 +218,7 @@ class User extends BaseController
             'email'         => $this->request->getPost('email'),
             'employee_code' => $this->request->getPost('employee_code'),
             'name' => $this->request->getPost('name'),
+            'priority' => $this->request->getPost('priority'),
         ];
 
         (new UserModel())->update($id, $data);

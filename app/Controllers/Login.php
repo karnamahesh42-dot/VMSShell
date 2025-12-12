@@ -40,7 +40,9 @@ class Login extends BaseController
                 'email'           => $user->email,
                 'employee_code'   => $user->employee_code,
                 'company_name'    => $user->company_name,
+                'dep_id'          => $user->dep_id,
                 'isLoggedIn'      => true,
+                
             ]);
 
             // header("Location: " . base_url('/'));

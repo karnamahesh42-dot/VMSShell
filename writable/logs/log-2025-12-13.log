@@ -1,0 +1,567 @@
+DEBUG - 2025-12-13 00:00:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:00:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:01:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:01:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:01:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:01:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:02:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:02:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:04:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:10:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:11:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:15:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:16:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:16:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:17:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:19:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:20:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:21:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:22:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:22:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:23:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:23:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:29:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:46:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:47:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:48:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:49:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-13 00:49:41 --> ArgumentCountError: Too few arguments to function App\Controllers\VisitorRequest::getVisitorRequastDataByVCode(), 0 passed in C:\xampp\htdocs\VMSShell\system\CodeIgniter.php on line 933 and exactly 1 expected
+[Method: GET, Route: get-visitor-details]
+in APPPATH\Controllers\VisitorRequest.php on line 453.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-13 00:52:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:52:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:53:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:54:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:54:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-13 00:54:51 --> ArgumentCountError: Too few arguments to function App\Controllers\VisitorRequest::getVisitorRequastDataByVCode(), 0 passed in C:\xampp\htdocs\VMSShell\system\CodeIgniter.php on line 933 and exactly 1 expected
+[Method: POST, Route: get-visitor-details]
+in APPPATH\Controllers\VisitorRequest.php on line 453.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-13 00:57:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 00:58:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:00:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:00:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:05:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-13 01:05:22 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `vis...' at line 1 in C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor...', 0)
+#1 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor...')
+#2 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor...')
+#3 C:\xampp\htdocs\VMSShell\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor...', Array, false)
+#4 C:\xampp\htdocs\VMSShell\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VMSShell\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\VMSShell\app\Models\VisitorRequestHeaderModel.php(130): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\VMSShell\app\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+#8 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+#9 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+#10 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\VMSShell\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\VMSShell\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\VMSShell\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-13 01:05:23 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `vis...' at line 1
+[Method: POST, Route: get-visitor-details]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\VisitorRequestHeaderModel.php(130): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 01:05:23 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `vis...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\VisitorRequestHeaderModel.php(130): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 01:05:23 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `vis...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`name` AS `created_by_name`, `users`.`email` AS `created_by_email`, `refUser`.`name` AS `referred_by_name`, `-- GET REFERRED BY NAME` `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\VisitorRequestHeaderModel.php(130): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-13 01:06:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:14:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:17:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:18:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:20:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:21:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:22:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:23:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:24:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:25:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:25:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:26:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:26:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:27:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:28:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:29:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:30:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:30:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:48:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:50:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 01:56:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:00:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:02:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-12-13 02:02:16 --> mysqli_sql_exception: Unknown column 'users.securityCheckStatus' in 'field list' in C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor...', 0)
+#1 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor...')
+#2 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor...')
+#3 C:\xampp\htdocs\VMSShell\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor...', Array, false)
+#4 C:\xampp\htdocs\VMSShell\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VMSShell\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\VMSShell\app\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\VMSShell\app\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+#8 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+#9 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+#10 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\VMSShell\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\VMSShell\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\VMSShell\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-13 02:02:16 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'users.securityCheckStatus' in 'field list'
+[Method: POST, Route: get-visitor-details]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 02:02:16 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'users.securityCheckStatus' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 02:02:16 --> [Caused by] mysqli_sql_exception: Unknown column 'users.securityCheckStatus' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-13 02:02:18 --> mysqli_sql_exception: Unknown column 'users.securityCheckStatus' in 'field list' in C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\VMSShell\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor...', 0)
+#1 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor...')
+#2 C:\xampp\htdocs\VMSShell\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor...')
+#3 C:\xampp\htdocs\VMSShell\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor...', Array, false)
+#4 C:\xampp\htdocs\VMSShell\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VMSShell\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\VMSShell\app\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\VMSShell\app\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+#8 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+#9 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+#10 C:\xampp\htdocs\VMSShell\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\VMSShell\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\VMSShell\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\VMSShell\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-13 02:02:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'users.securityCheckStatus' in 'field list'
+[Method: POST, Route: get-visitor-details]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 02:02:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'users.securityCheckStatus' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-13 02:02:18 --> [Caused by] mysqli_sql_exception: Unknown column 'users.securityCheckStatus' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = \'V000001\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `visitor_request_header`.*, `visitors`.`visitor_name`, `visitors`.`visitor_email`, `visitors`.`visitor_phone`, `visitors`.`proof_id_type`, `visitors`.`proof_id_number`, `visitors`.`v_code`, `visitors`.`qr_code`, `visitors`.`vehicle_no`, `visitors`.`visit_date`, `visitors`.`visit_time`, `visitors`.`vehicle_type`, `users`.`securityCheckStatus`, `users`.`name` as `created_by_name`, `users`.`email` as `created_by_email`, `refUser`.`name` as `referred_by_name`, `departments`.`department_name`
+FROM `visitor_request_header`
+LEFT JOIN `visitors` ON `visitors`.`request_header_id` = `visitor_request_header`.`id`
+LEFT JOIN `users` ON `users`.`id` = `visitors`.`created_by`
+LEFT JOIN `users` AS `refUser` ON `refUser`.`id` = `visitor_request_header`.`referred_by`
+LEFT JOIN `departments` ON `departments`.`id` = `users`.`department_id`
+WHERE `visitors`.`v_code` = :visitors.v_code:', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\VisitorRequestHeaderModel.php(123): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\VisitorRequest.php(458): App\Models\VisitorRequestHeaderModel->getHeaderWithVisitorsMailDataByVCode('V000001')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->getVisitorRequastDataByVCode()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-13 02:02:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:06:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:13:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:14:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:14:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:20:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:20:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:20:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:20:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:34:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:35:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:43:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:43:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:44:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:44:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:45:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:51:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:51:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:53:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:53:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:54:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:54:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:54:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:58:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:58:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:58:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:58:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 02:58:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:00:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:00:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:01:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:01:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:05:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:05:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:11:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:11:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:14:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:14:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:18:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:18:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:19:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:19:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:20:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:20:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:20:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:20:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:26:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:26:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:26:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:27:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:27:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:27:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:27:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:31:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:31:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:34:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:35:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:35:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-12-13 03:35:17 --> Error: Class "App\Models\VisitorModel" not found
+[Method: POST, Route: visitor/complete-meeting]
+in APPPATH\Controllers\VisitorRequest.php on line 614.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VisitorRequest->completeMeeting()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VisitorRequest))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-12-13 03:36:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:36:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:36:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:36:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:37:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:37:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:38:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:38:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:38:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:38:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:41:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:44:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:45:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:46:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:46:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:49:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:53:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:55:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:55:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:55:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:56:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 03:56:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:00:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:01:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:01:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:05:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:07:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:09:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:09:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:09:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:16:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:17:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:18:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:19:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:19:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:19:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:20:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:21:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:21:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:22:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:23:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:23:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:23:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:23:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:23:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:34:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:35:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:35:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:35:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:36:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:36:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:36:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-12-13 04:36:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

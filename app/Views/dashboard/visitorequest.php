@@ -17,7 +17,7 @@
                             <h5 class="text-primary font-weight-bold">Visit Information</h5>
                             <div class="row">
 
-                                <div class="col-md-6 mb-2">
+                                <div class="col-md-3 mb-2">
                                     <label>Purpose</label>
                                     <select name="purpose" class="form-control" required>
                                         <option value="">-- Select Purpose --</option>
@@ -38,6 +38,22 @@
                                         <option>Other</option>
                                     </select>
                                 </div>
+
+                                                    
+                                <div class="col-md-3 mb-2">
+                                    <label>Referred By</label>
+                                    <select name="referred_by" class="form-control" required>
+                                        <option value="">--Select Admin --</option>
+                                        <?php if (!empty($admins)) : ?>
+                                            <?php foreach ($admins as $admin) : ?>
+                                                <option value="<?= $admin['id']; ?>">
+                                                    <?= $admin['name']; ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
+
 
                                 <div class="col-md-3 mb-2">
                                     <label>Date of Visit</label>

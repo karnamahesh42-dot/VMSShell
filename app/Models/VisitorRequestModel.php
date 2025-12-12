@@ -26,6 +26,8 @@ class VisitorRequestModel extends Model
         'qr_code',
         // New fields
         'vehicle_no',
+        'meeting_status',
+        'meeting_completed_at',
         'vehicle_type',
         'vehicle_id_proof',
         'visitor_id_proof',

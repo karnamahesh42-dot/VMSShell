@@ -20,6 +20,18 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="<?= base_url('public/dist/css/costomstyle.css') ?>">
+  
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Lato', sans-serif;
+}
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+}
+</style>
+
   <style>
 .sidebar::before {
     content: "";
@@ -48,7 +60,7 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
       color: #fff;
       transition: all 0.3s ease;
       overflow-y: auto;
-      padding: 5px 10px;
+      padding: 0px 10px;
       z-index: 1040;
     }
 </style>

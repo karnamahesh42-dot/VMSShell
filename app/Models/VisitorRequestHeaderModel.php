@@ -13,6 +13,7 @@ class VisitorRequestHeaderModel extends Model
     protected $allowedFields = [
         'header_code',
         'requested_by',
+        'referred_by',
         'description',
         'purpose',
         'requested_date',
@@ -38,16 +39,31 @@ class VisitorRequestHeaderModel extends Model
    
   public function getHeaderWithVisitors($headerId)
 {
+    // return $this->select("
+    //         visitor_request_header.*,
+    //         visitors.*,
+    //         users.name AS visitor_created_by_name,
+    //         users.email AS visitor_created_by_email
+    //     ")
+    //     ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
+    //     ->join('users', 'users.id = visitors.created_by', 'left') // 👈 corrected
+    //      ->join('users', 'users.id = visitor_request_header.referred_by', 'left') // 👈 corrected
+        
+    //     ->where('visitor_request_header.id', $headerId)
+    //     ->findAll();
     return $this->select("
-            visitor_request_header.*,
-            visitors.*,
-            users.name AS visitor_created_by_name,
-            users.email AS visitor_created_by_email
-        ")
-        ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
-        ->join('users', 'users.id = visitors.created_by', 'left') // 👈 corrected
-        ->where('visitor_request_header.id', $headerId)
-        ->findAll();
+        visitor_request_header.*,
+        visitors.*,
+        u1.name AS visitor_created_by_name,
+        u1.email AS visitor_created_by_email,
+        u2.name AS referred_by_name,
+        u2.email AS referred_by_email
+    ")
+    ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
+    ->join('users u1', 'u1.id = visitors.created_by', 'left')
+    ->join('users u2', 'u2.id = visitor_request_header.referred_by', 'left')
+    ->where('visitor_request_header.id', $headerId)
+    ->findAll();
 }
 
 
@@ -80,27 +96,32 @@ public function getHeaderWithVisitorsMailData($headerId)
 
 public function getHeaderWithVisitorsMailDataByVCode($vCode)
 {
-    return $this->select("
-            visitor_request_header.*,
-            visitors.visitor_name,
-            visitors.visitor_email,
-            visitors.visitor_phone,
-            visitors.proof_id_type, 
-            visitors.proof_id_number, 
-            visitors.v_code, 
-            visitors.qr_code, 
-            visitors.vehicle_no,
-            visitors.visit_date,
-            visitors.visit_time, 
-            visitors.vehicle_type,    
-            users.name AS created_by_name,
-            users.email AS created_by_email,
-            departments.department_name
-        ")
+    return $this->select([
+            'visitor_request_header.*',
+            'visitors.id as v_id',
+            'visitors.visitor_name',
+            'visitors.visitor_email',
+            'visitors.visitor_phone',
+            'visitors.proof_id_type',
+            'visitors.proof_id_number',
+            'visitors.v_code',
+            'visitors.qr_code',
+            'visitors.vehicle_no',
+            'visitors.visit_date',
+            'visitors.visit_time',
+            'visitors.vehicle_type',
+            'visitors.securityCheckStatus',
+            'users.name as created_by_name',
+            'users.email as created_by_email',
+            'refUser.name as referred_by_name',
+            'departments.department_name'
+        ])
         ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
         ->join('users', 'users.id = visitors.created_by', 'left')
+        ->join('users AS refUser', 'refUser.id = visitor_request_header.referred_by', 'left')
         ->join('departments', 'departments.id = users.department_id', 'left')
         ->where('visitors.v_code', $vCode)
         ->findAll();
 }
+
 }
