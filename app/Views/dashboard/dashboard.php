@@ -141,121 +141,133 @@
     <?php endforeach; ?>
 </section>
 
-        <!-- <button onclick="sendOTP()">Send OTP</button> -->
-          <!-- ROW 3: Pending + Quick Links -->
+          
 
           
-        <section class="dash-row row-large mb-3">
+        <section class="row row-large mb-3">
+            <!-- ROW 3: Pending  List -->
             <?php if($_SESSION['role_id'] != 4){?>
-            <div class="card-dash card-large">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <h5 class="mb-0">Pending Approvals</h5>
-                  <div class="muted">Requests that need action</div>
-                </div>
-                <div><a href="<?= base_url('visitorequestlist') ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-list"></i></a></div>
-              </div>
-                <ul class="pending-list mt-2">
-                    <?php if (!empty($pendingList)): ?>
-                        <?php foreach ($pendingList as $item): ?>
-                            <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
-                                <!-- <li onclick="testamile(<?= $item['id'] ?>)" style="cursor:pointer;"> -->
-                                
-                                <div>
-                                    <!-- GV Code -->
-                                    <div class="fw-600">
-                                        <?= $item['purpose'] ?> - <?= $item['description'] ?>
+                <div class="col-md-8"> 
+                    <div class="card-dash card-large">
+                    <div class="d-flex justify-content-between align-items-center mb-1 pending-header">
+                        <div>
+                            <h5 class="mb-0">Pending Approvals</h5>
+                            <div class="muted">Requests that need action</div>
+                        </div>
+                        <div><a href="<?= base_url('visitorequestlist') ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-list"></i></a></div>
+                    </div>
+
+
+
+                        <ul class="pending-list mt-2">
+                            <?php if (!empty($pendingList)): ?>
+                                <?php foreach ($pendingList as $item): ?>
+                                    <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
+                                        <!-- <li onclick="testamile(<?= $item['id'] ?>)" style="cursor:pointer;"> -->
                                         
-                                    </div>
-                                    <!-- Purpose + date + persons -->
-                                    <small class="muted">
-                                        <?= $item['header_code'] ?>  • 
-                                        <?= $item['requested_date'] ?> <?= $item['requested_time'] ?> •
-                                        <?= $item['total_visitors'] ?> Persons
-                                    </small>
-                                </div>
+                                        <div>
+                                            <!-- GV Code -->
+                                            <div class="fw-600">
+                                                <?= $item['purpose'] ?> - <?= $item['description'] ?>
+                                                
+                                            </div>
+                                            <!-- Purpose + date + persons -->
+                                            <small class="muted">
+                                                <?= $item['header_code'] ?>  • 
+                                                <?= $item['requested_date'] ?> <?= $item['requested_time'] ?> •
+                                                <?= $item['total_visitors'] ?> Persons
+                                            </small>
+                                        </div>
 
-                                <div class="text-end">
-                                    <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a>
-                                    <!-- <span class="badge-pending"> Pending </span> -->
-                                </div>
+                                        <div class="text-end">
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a>
+                                            <!-- <span class="badge-pending"> Pending </span> -->
+                                        </div>
 
-                            </li>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <li>
-                            <div class="text-center text-muted w-100">No pending requests</div>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li>
+                                    <div class="text-center text-muted w-100">No pending requests</div>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>
             <?php } ?>
-            <div class="card-dash card-large">
-              <h5 class="mb-3">Quick Links</h5>
-              <div class="quick-links">
-                <a href="<?= base_url('visitorequest') ?>"><i class="bi bi-person-plus me-2"></i> Create Visitor Request</a>
-                <a href="<?= base_url('group_visito_request') ?>"><i class="bi bi-people me-2"></i> Create Group Request</a>
-                <a href="<?= base_url('authorized_visitors_list') ?>"><i class="bi bi-card-checklist me-2"></i> Authorized Visitors</a>
-                <a href="<?= base_url('security_authorization') ?>"><i class="bi bi-shield-lock-fill me-2"></i> Security Authorization</a>
-                <a href="<?= base_url('userlist') ?>"><i class="bi bi-gear me-2"></i> User Management</a>
-              </div>
-            </div>
+                <!--  Pending List End  -->
+                <!-- Recent Entries Example Table -->
+                <?php if($_SESSION['role_id'] == 4){?>
+                <div class="col-md-8"> 
+                    <div class="card-dash mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="mb-0">Recent Authorized Entries</h5>
+                            <small class="muted">Latest 10</small>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Visitor</th>
+                                        <th>Phone</th>
+                                        <th>Purpose</th>
+                                        <th>V-Code</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Status</th> <!-- ⭐ Added -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($recentAuthorized as $row): ?>
+
+                                    <?php 
+                                        // STATUS LOGIC
+                                        if (!empty($row['check_in_time']) && empty($row['check_out_time'])) {
+                                            $status = "<span class='badge bg-info'>Inside</span>";
+                                        } 
+                                        elseif (!empty($row['check_in_time']) && !empty($row['check_out_time'])) {
+                                            $status = "<span class='badge bg-success'>Completed</span>";
+                                        } 
+                                        else {
+                                            $status = "<span class='badge bg-warning text-dark'>Pending</span>";
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td><?= $row['visitor_name'] ?></td>
+                                        <td><?= $row['visitor_phone'] ?></td>
+                                        <td><?= $row['purpose'] ?></td>
+                                        <td><?= $row['v_code'] ?></td>
+                                        <td><?= $row['check_in_time'] ?></td>
+                                        <td><?= $row['check_out_time'] ?></td>
+                                        <td><?= $status ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+                <!-- Recent Entries Example Table end -->
+                <!-- Quick Links -->
+                <div class="col-md-4"> 
+                    <div class="card-dash card-large">
+                    <h5 class="mb-1">Quick Links</h5>
+ <div class="title-underline">
+    <span></span>
+</div>
+                    <div class="quick-links">
+                        <a href="<?= base_url('visitorequest') ?>"><i class="bi bi-person-plus me-2"></i> Create Visitor Request</a>
+                        <a href="<?= base_url('group_visito_request') ?>"><i class="bi bi-people me-2"></i> Create Group Request</a>
+                        <a href="<?= base_url('authorized_visitors_list') ?>"><i class="bi bi-card-checklist me-2"></i> Authorized Visitors</a>
+                        <a href="<?= base_url('security_authorization') ?>"><i class="bi bi-shield-lock-fill me-2"></i> Security Authorization</a>
+                        <a href="<?= base_url('userlist') ?>"><i class="bi bi-gear me-2"></i> User Management</a>
+                    </div>
+                    </div>
+                </div>
+                <!-- Quick Links end -->
           </section>
-
-          <!-- Example Table -->
-      <div class="card-dash mb-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h5 class="mb-0">Recent Authorized Entries</h5>
-            <small class="muted">Latest 10</small>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Visitor</th>
-                        <th>Phone</th>
-                        <th>Purpose</th>
-                        <th>V-Code</th>
-                        <th>Check-In</th>
-                        <th>Check-Out</th>
-                        <th>Status</th> <!-- ⭐ Added -->
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php foreach($recentAuthorized as $row): ?>
-
-                    <?php 
-                        // STATUS LOGIC
-                        if (!empty($row['check_in_time']) && empty($row['check_out_time'])) {
-                            $status = "<span class='badge bg-info'>Inside</span>";
-                        } 
-                        elseif (!empty($row['check_in_time']) && !empty($row['check_out_time'])) {
-                            $status = "<span class='badge bg-success'>Completed</span>";
-                        } 
-                        else {
-                            $status = "<span class='badge bg-warning text-dark'>Pending</span>";
-                        }
-                    ?>
-
-                    <tr>
-                        <td><?= $row['visitor_name'] ?></td>
-                        <td><?= $row['visitor_phone'] ?></td>
-                        <td><?= $row['purpose'] ?></td>
-                        <td><?= $row['v_code'] ?></td>
-                        <td><?= $row['check_in_time'] ?></td>
-                        <td><?= $row['check_out_time'] ?></td>
-                        <td><?= $status ?></td>
-                    </tr>
-
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-     </div>
-
-<!-- <test></test> -->
         </div>
       </main>
 

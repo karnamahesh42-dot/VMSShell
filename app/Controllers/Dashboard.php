@@ -31,28 +31,77 @@ class Dashboard extends BaseController
          // Visits today
         $today = date('Y-m-d');
         $session = session();
+        $roleId       = $_SESSION['role_id'];
+        $userId       = $_SESSION['user_id'];
+        $departmentId = $_SESSION['department_id'];
         // Dynamic counts from DB
-        $totalVisitors = $this->visitorModel->countAll(); // total rows
+      
 
-        $pendingIndents = $this->visitorModel
-                            ->where('status', 'pending')
-                            ->where('visit_date', $today)
-                            ->countAllResults();
+        $pendingQuery = $this->visitorModel
+            ->where('status', 'pending')
+            ->where('visit_date', $today);
 
-        $approved = $this->visitorModel
-                            ->where('status', 'approved')
-                            ->where('visit_date', $today)
-                            ->countAllResults();
+        if ($roleId == 2) {
+            $pendingQuery->where('department_id', $departmentId);
+        } elseif ($roleId == 3) {
+            $pendingQuery->where('created_by', $userId);
+        }
 
-        $rejected = $this->visitorModel
-                            ->where('status', 'rejected')
-                            ->where('visit_date', $today)
-                            ->countAllResults();
+        $pendingIndents = $pendingQuery->countAllResults();
+
+        // $pendingIndents = $this->visitorModel
+        //                     ->where('status', 'pending')
+        //                     ->where('visit_date', $today)
+        //                     ->countAllResults();
 
 
-        $visitsToday = $this->visitorModel
-                            ->where('visit_date', $today)
-                            ->countAllResults();
+        $approvedQuery = $this->visitorModel
+        ->where('status', 'approved')
+        ->where('visit_date', $today);
+
+        if ($roleId == 2) {
+            $approvedQuery->where('department_id', $departmentId);
+        } elseif ($roleId == 3) {
+            $approvedQuery->where('created_by', $userId);
+        }
+
+        $approved = $approvedQuery->countAllResults();
+
+        // $approved = $this->visitorModel
+        //                     ->where('status', 'approved')
+        //                     ->where('visit_date', $today)
+        //                     ->countAllResults();
+        $rejectedQuery = $this->visitorModel
+        ->where('status', 'rejected')
+        ->where('visit_date', $today);
+
+        if ($roleId == 2) {
+            $rejectedQuery->where('department_id', $departmentId);
+        } elseif ($roleId == 3) {
+            $rejectedQuery->where('created_by', $userId);
+        }
+        $rejected = $rejectedQuery->countAllResults();
+
+
+        // $rejected = $this->visitorModel
+        //                     ->where('status', 'rejected')
+        //                     ->where('visit_date', $today)
+        //                     ->countAllResults();
+
+        $visitQuery = $this->visitorModel
+        ->where('visit_date', $today);
+
+        if ($roleId == 2) {
+            $visitQuery->where('department_id', $departmentId);
+        } elseif ($roleId == 3) {
+            $visitQuery->where('created_by', $userId);
+        }
+        $visitsToday = $visitQuery->countAllResults();
+
+
+        // $visitsToday = $this->visitorModel
+        //                     ->where('visit_date', $today)
+        //                     ->countAllResults();
 
         // Gate entries (from logs table?)
         $gateEntries = $this->SecurityGateLogModel->countAll();
@@ -64,11 +113,11 @@ class Dashboard extends BaseController
             ['title'=>'Waiting for approvals ','value'=>$pendingIndents,'icon'=>'fa-file-alt','color'=>'c2'],
             ['title'=>'Approved','value'=>$approved,'icon'=>'fa-check-circle','color'=>'c3'],
             ['title'=>'Rejected','value'=>$rejected,'icon'=>'fa-times-circle','color'=>'c4'],
-            ['title'=>'Total Visitors','value'=>$totalVisitors,'icon'=>'fa-user','color'=>'c1'],
         ];
 
-
-        // $pendingList = $this->VisitorRequestHeaderModel
+// ['title'=>'Total Visitors','value'=>$totalVisitors,'icon'=>'fa-user','color'=>'c1'],
+     
+// $pendingList = $this->VisitorRequestHeaderModel
         //     ->select("
         //         id,
         //         header_code,
@@ -123,6 +172,7 @@ class Dashboard extends BaseController
 
         // print_r ($recentAuthorized);
         // return;
+$totalVisitors = $this->visitorModel->countAll(); // total rows
 $weekStart = date('Y-m-d 00:00:00', strtotime('monday this week'));
 $weekEnd   = date('Y-m-d 23:59:59', strtotime('sunday this week'));
 
@@ -153,9 +203,9 @@ $monthVisitors = $this->SecurityGateLogModel
             ['title' => 'Today Visitors', 'count' => $todayVisitors, 'icon' => 'fa-users', 'desc' => $todayVisitors . ' people visited today.'],
             ['title' => 'This Week', 'count' => $weekVisitors, 'icon' => 'fa-calendar-week', 'desc' => $weekVisitors . ' visitors this week.'],
             ['title' => 'This Month', 'count' => $monthVisitors, 'icon' => 'fa-calendar', 'desc' => $monthVisitors . ' visitors this month.'],
-            ['title' => 'Alerts', 'count' => $alerts, 'icon' => 'fa-bell', 'desc' => $alerts == 0 ? 'No security alerts.' : $alerts . ' alerts pending.'],
+            ['title' => 'Total Visitors', 'count' => $totalVisitors, 'icon' => 'fa-user', 'desc' => $totalVisitors . ' visitors this Year.'],  
         ];
-
+// ['title' => 'Alerts', 'count' => $alerts, 'icon' => 'fa-bell', 'desc' => $alerts == 0 ? 'No security alerts.' : $alerts . ' alerts pending.'],
     
         $data['recentAuthorized'] = $recentAuthorized;
 

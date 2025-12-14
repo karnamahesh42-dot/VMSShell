@@ -206,7 +206,7 @@
         border-radius:10px;
         padding:18px; 
         box-shadow: 0 6px 20px rgba(3,16,46,0.06);
-        border-left:6px solid var(--rfc-blue); 
+        border-left:6px solid #398aaa; 
         display:flex; flex-direction:column; 
         justify-content:space-between; 
           min-height:110px; }
@@ -221,6 +221,9 @@
     margin-bottom: 20px;
     }
 
+    .card-dash h5{
+        color: #0575a1;
+    }
 
 /* Compact Card Base */
 .card-dash-sm {
@@ -230,8 +233,8 @@
     padding: 10px 12px;          /* Reduced padding */
     min-height: 70px;            /* Smaller height */
     /* background: #fff; */
-    background: linear-gradient(311deg, #e1e1d4, #80fbc2);
-   
+    background: linear-gradient(311deg, #a4d5e9, #5bd0ff);
+    
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);  /* Slightly stronger shadow */
     transition: all .25s ease;
@@ -247,8 +250,8 @@
 /* Text */
 .card-dash-sm .title {
     font-weight: 600;
-    font-size: 12px;        /* Small text */
-    color: #0b2238;
+    font-size: 14px;        /* Small text */
+    color: #195083;
 }
 
 .card-dash-sm .value {
@@ -305,6 +308,12 @@
     
     .card-medium { min-height:100px; }
     .card-large { min-height:300px; padding:22px; }
+
+    .card-large-quick-links {
+    min-height: 180px;   /* reduce height */
+    padding: 16px;       /* tighter padding */
+}
+    
 
     .pending-list { list-style:none; padding:0; margin:0; }
     .pending-list li { padding:12px 10px; border-radius:8px; margin-bottom:8px; background:#fbfbfd; border:1px solid #eef3fb; display:flex; justify-content:space-between; align-items:center; }
@@ -363,7 +372,7 @@
 
 #visitorModal table th {
     width: 100px;
-    color: #6c757d;
+    color: #1d1f20;
     font-weight: 600;
     font-size: 14px;
     padding: 6px 20px;
@@ -1013,3 +1022,26 @@ input[type="file"] {
 #visitorCardsContainer td {
     white-space: nowrap; /* prevent text wrap */
 }
+
+/* Title underline container */
+.title-underline {
+    width: 100%;
+    height: 2px;
+    margin-bottom: 3px;
+    background: #86bff1;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.pending-header{
+    border-bottom: solid 2px #86bff1;
+    
+}
+.pending-header::after {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;  /* underline width */
+}
+
+
+

@@ -1,13 +1,13 @@
 <?= $this->include('/dashboard/layouts/sidebar') ?>
 <?= $this->include('/dashboard/layouts/navbar') ?>
 <style>
-    #visitorModal .card {
+    /* #visitorModal .card {
         border-radius: 16px !important;
     }
     #visitorModal .table th, 
     #visitorModal .table td {
         vertical-align: middle;
-    }
+    } */
 </style>
 
 <main class="main-content" id="mainContent">

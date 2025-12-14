@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2025 at 12:46 PM
+-- Generation Time: Dec 14, 2025 at 08:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,7 +65,9 @@ CREATE TABLE `expired_visitor_passes` (
 
 INSERT INTO `expired_visitor_passes` (`id`, `visitor_request_id`, `v_code`, `header_code`, `expired_at`, `created_at`) VALUES
 (1, 2, NULL, 'GV000002', '2025-12-13 00:02:05', '2025-12-13 00:02:05'),
-(2, 3, NULL, 'GV000003', '2025-12-13 00:02:05', '2025-12-13 00:02:05');
+(2, 3, NULL, 'GV000003', '2025-12-13 00:02:05', '2025-12-13 00:02:05'),
+(3, 5, NULL, 'GV000004', '2025-12-14 12:00:26', '2025-12-14 12:00:26'),
+(4, 6, NULL, 'GV000005', '2025-12-14 12:00:26', '2025-12-14 12:00:26');
 
 -- --------------------------------------------------------
 
@@ -265,10 +267,10 @@ CREATE TABLE `visitors` (
 INSERT INTO `visitors` (`id`, `request_header_id`, `v_code`, `group_code`, `visitor_name`, `visitor_email`, `visitor_phone`, `purpose`, `visit_date`, `description`, `expected_from`, `expected_to`, `host_user_id`, `reference_id`, `status`, `meeting_status`, `meeting_completed_at`, `validity`, `securityCheckStatus`, `spendTime`, `created_by`, `created_at`, `updated_at`, `proof_id_type`, `proof_id_number`, `qr_code`, `vehicle_no`, `vehicle_type`, `vehicle_id_proof`, `visitor_id_proof`, `visit_time`) VALUES
 (1, 1, 'V000001', 'GV000001', 'Ravikumar', 'karnamahesh42@gmail.com', '8919146333', 'General Visit', '2025-12-13', 'Testing Purpose ', NULL, NULL, 1, NULL, 'approved', 1, '2025-12-13 03:36:28', 1, 2, '01:17:58', 1, '2025-12-12 22:19:39', '2025-12-13 03:38:49', 'Aadhar Card', '852369741123', 'visitor_V000001_qr.png', 'AP123AD52', 'Bike', '', '', '10:30:00'),
 (2, 2, 'V000002', 'GV000002', 'Rakesh', 'karnamahesh42@gmail.com', '7894561234', 'Meeting', '2025-12-12', 'Test Visit Purpose  ', NULL, NULL, 9, NULL, 'approved', 0, NULL, 0, 0, NULL, 9, '2025-12-12 22:34:33', '2025-12-13 04:01:35', 'Aadhar Card', '74185296388', 'visitor_V000002_qr.png', 'TS55DF5F5', 'Bike', '', '', '22:33:00'),
-(3, 3, 'V000003', 'GV000003', 'Rahul', 'karnamahesh42@gmail.com', '7894561237', 'Meeting', '2025-12-12', 'Test Meeting Visit', NULL, NULL, 9, NULL, 'pending', 0, NULL, 0, 0, NULL, 9, '2025-12-12 22:36:16', '2025-12-13 00:02:05', 'PAN Card', '1D55D54F8', '', '465SDD54', 'Bike', '', '', '22:35:00'),
+(3, 3, 'V000003', 'GV000003', 'Rahul', 'karnamahesh42@gmail.com', '7894561237', 'Meeting', '2025-12-12', 'Test Meeting Visit', NULL, NULL, 9, NULL, 'approved', 0, NULL, 0, 0, NULL, 9, '2025-12-12 22:36:16', '2025-12-14 12:04:28', 'PAN Card', '1D55D54F8', 'visitor_V000003_qr.png', '465SDD54', 'Bike', '', '', '22:35:00'),
 (4, 4, 'V000004', 'GV000004', 'Prakash', 'karnamahesh42@gmail.com', '9876543210', 'Vendor Visit', '2025-12-13', 'Test Visit', NULL, NULL, 9, NULL, 'approved', 0, NULL, 1, 1, NULL, 9, '2025-12-13 10:48:10', '2025-12-13 11:13:39', 'Aadhaar Card', '123456789012', 'visitor_V000004_qr.png', 'TN10AB1234', 'Car', '', '', '10:50:00'),
-(5, 4, 'V000005', 'GV000004', 'Sharath', 'karnamahesh42@gmail.com', '9876501234', 'Vendor Visit', '2025-12-13', 'Test Visit', NULL, NULL, 9, NULL, 'approved', 0, NULL, 1, 0, NULL, 9, '2025-12-13 10:48:10', '2025-12-13 10:54:30', 'PAN Card', 'ABCDE1234F', 'visitor_V000005_qr.png', 'TN10AB1234', 'Car', '', '', '10:50:00'),
-(6, 5, 'V000006', 'GV000005', 'Tarun Tota', 'ukmledp@ramojifilmcity.com', '6789543256', 'Event Visit', '2025-12-13', 'Client Planning For Event', NULL, NULL, 9, NULL, 'pending', 0, NULL, 1, 0, NULL, 9, '2025-12-13 13:57:28', '2025-12-13 13:57:28', 'Aadhar Card', '234567890', '', 'TS26EF4567', 'Car', '', '', '14:30:00'),
+(5, 4, 'V000005', 'GV000004', 'Sharath', 'karnamahesh42@gmail.com', '9876501234', 'Vendor Visit', '2025-12-13', 'Test Visit', NULL, NULL, 9, NULL, 'approved', 0, NULL, 0, 0, NULL, 9, '2025-12-13 10:48:10', '2025-12-14 12:00:26', 'PAN Card', 'ABCDE1234F', 'visitor_V000005_qr.png', 'TN10AB1234', 'Car', '', '', '10:50:00'),
+(6, 5, 'V000006', 'GV000005', 'Tarun Tota', 'ukmledp@ramojifilmcity.com', '6789543256', 'Event Visit', '2025-12-13', 'Client Planning For Event', NULL, NULL, 9, NULL, 'pending', 0, NULL, 0, 0, NULL, 9, '2025-12-13 13:57:28', '2025-12-14 12:00:26', 'Aadhar Card', '234567890', '', 'TS26EF4567', 'Car', '', '', '14:30:00'),
 (7, 6, 'V000007', 'GV000006', 'Raja', 'karnamahesh42@gmail.com', '8919146333', 'Location Recci', '2025-12-13', 'Test Description ', NULL, NULL, 9, NULL, 'approved', 1, '2025-12-13 15:19:19', 1, 2, '00:03:25', 9, '2025-12-13 14:54:13', '2025-12-13 15:19:43', 'Aadhar Card', 'AP3524685', 'visitor_V000007_qr.png', 'AS545788S', 'Bike', '', '', '15:53:00');
 
 -- --------------------------------------------------------
@@ -303,7 +305,8 @@ INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_stat
 (8, 5, 'approved', 'pending', 'approved', NULL, 11, '2025-12-13 10:54:30'),
 (9, 6, 'Created', NULL, 'pending', '--', 9, '2025-12-13 13:57:28'),
 (10, 7, 'Created', NULL, 'pending', '--', 9, '2025-12-13 14:54:13'),
-(11, 7, 'approved', 'pending', 'approved', NULL, 16, '2025-12-13 15:13:47');
+(11, 7, 'approved', 'pending', 'approved', NULL, 16, '2025-12-13 15:13:47'),
+(12, 3, 'approved', 'pending', 'approved', NULL, 1, '2025-12-14 12:04:28');
 
 -- --------------------------------------------------------
 
@@ -338,7 +341,7 @@ CREATE TABLE `visitor_request_header` (
 INSERT INTO `visitor_request_header` (`id`, `header_code`, `requested_by`, `referred_by`, `requested_date`, `requested_time`, `department`, `purpose`, `description`, `email`, `total_visitors`, `status`, `updated_by`, `remarks`, `created_at`, `updated_at`, `company`) VALUES
 (1, 'GV000001', '1', 5, '2025-12-13', '10:30:00', 'IT', 'General Visit', 'Testing Purpose ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, '', '2025-12-12 22:19:39', '2025-12-12 22:19:39', 'UKMPL'),
 (2, 'GV000002', '9', 11, '2025-12-12', '22:33:00', 'Finance', 'Meeting', 'Test Visit Purpose  ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, NULL, '2025-12-12 22:34:33', '2025-12-13 04:01:35', 'UKMPL'),
-(3, 'GV000003', '9', 16, '2025-12-12', '22:35:00', 'Finance', 'Meeting', 'Test Meeting Visit', 'karnamahesh42@gmail.com', 1, 'pending', NULL, '', '2025-12-12 22:36:16', '2025-12-12 22:36:16', 'UKMPL'),
+(3, 'GV000003', '9', 16, '2025-12-12', '22:35:00', 'Finance', 'Meeting', 'Test Meeting Visit', 'karnamahesh42@gmail.com', 1, 'approved', NULL, NULL, '2025-12-12 22:36:16', '2025-12-14 12:04:28', 'UKMPL'),
 (4, 'GV000004', '9', 11, '2025-12-13', '10:50:00', 'Finance', 'Vendor Visit', 'Test Visit', 'karnamahesh42@gmail.com', 2, 'approved', NULL, NULL, '2025-12-13 10:48:10', '2025-12-13 10:54:30', 'UKMPL'),
 (5, 'GV000005', '9', 16, '2025-12-13', '14:30:00', 'Finance', 'Event Visit', 'Client Planning For Event', 'ukmledp@ramojifilmcity.com', 1, 'pending', NULL, '', '2025-12-13 13:57:28', '2025-12-13 13:57:28', 'UKMPL'),
 (6, 'GV000006', '9', 16, '2025-12-13', '15:53:00', 'Finance', 'Location Recci', 'Test Description ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, NULL, '2025-12-13 14:54:13', '2025-12-13 15:13:47', 'UKMPL');
@@ -442,7 +445,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `expired_visitor_passes`
 --
 ALTER TABLE `expired_visitor_passes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `reference`
@@ -490,7 +493,7 @@ ALTER TABLE `visitors`
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `visitor_request_header`
