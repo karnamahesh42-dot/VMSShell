@@ -24,7 +24,7 @@ class SecurityController extends BaseController
 
 /// ..........Visitor Photo Upload  Start.............. ///
 
-      public function uploadPhoto()
+public function uploadPhoto()
 {
     $file   = $this->request->getFile('photo');
     $v_code = $this->request->getPost('v_code');
@@ -36,7 +36,7 @@ class SecurityController extends BaseController
         ]);
     }
 
-    // 🔐 Check security status
+    // 🔐 Security check
     $visitorModel = new \App\Models\VisitorRequestModel();
     $visitor = $visitorModel->where('v_code', $v_code)->first();
 
@@ -47,32 +47,45 @@ class SecurityController extends BaseController
         ]);
     }
 
-    // Validate image type
-    $allowedTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-    if (!in_array($file->getMimeType(), $allowedTypes)) {
+    // 🔍 Validate MIME
+    if (!in_array($file->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg'])) {
         return $this->response->setJSON([
             'status' => 'error',
-            'message' => 'Only JPG/PNG allowed'
+            'message' => 'Only JPG or PNG images are allowed'
         ]);
     }
 
-    // Create upload directory
+    // 📁 Upload path
     $uploadPath = FCPATH . 'public/uploads/visitor_photos/';
     if (!is_dir($uploadPath)) {
         mkdir($uploadPath, 0777, true);
     }
 
-    // Generate file name
-    $newName = 'v_pic_' . $v_code . '_' . time() . '.jpg';
+    // 🏷️ File name
+    $newName  = 'v_pic_' . $v_code . '_' . time() . '.jpg';
     $fullPath = $uploadPath . $newName;
 
-    // Compress & resize image
-    $image = \Config\Services::image()
-        ->withFile($file)
-        ->resize(800, 800, true, 'auto') // max 800px
-        ->save($fullPath, 75); // 🔥 75% quality (compression)
+    // 🖼️ Image processing
+    $image = \Config\Services::image('gd');
+    if (!$image) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Image service unavailable'
+        ]);
+    }
 
-    // Save file path in DB
+    $image->withFile($file->getTempName());
+
+    // Fix mobile rotation
+    if (method_exists($image, 'orientate')) {
+        $image->orientate();
+    }
+
+    // 🔥 Resize smartly (mobile optimized)
+    $image->resize(1024, 1024, true, 'auto')
+          ->save($fullPath, 70); // 70% = great balance
+
+    // 💾 Save to DB
     $visitorModel->where('v_code', $v_code)
                  ->set(['v_phopto_path' => $newName])
                  ->update();
@@ -223,6 +236,64 @@ public function verifyVisitor()
         }
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+public function  todayVisitorListOfDashboard()
+{
+     $user_id  = session()->get('user_id');
+     $role_id  = session()->get('role_id');
+
+    $db = \Config\Database::connect();
+    $builder = $db->table('visitors vr');
+    $builder->select("
+        vr.id,
+        vr.v_code,
+        vr.visitor_name,
+        vr.visitor_email,
+        vr.visitor_phone,
+        vr.purpose,
+        vr.visit_time,
+        vr.visit_date,
+        vr.description,
+        vr.vehicle_no,
+        vr.vehicle_type,
+        vr.validity,
+        vr.proof_id_type,
+        vr.proof_id_number,
+        vr.meeting_status,
+        vr.securityCheckStatus,
+        vr.spendTime,
+        log.check_in_time,
+        log.check_out_time,
+        log.verified_by,
+        hr.header_code,
+        hr.department AS department_name,
+        hr.company,
+        hr.requested_by,
+        hr.requested_date,
+        hr.requested_time,
+        u.name AS created_by_name,
+        usr.name AS referred_by_name,
+        usr2.name AS check_in_by,
+        usr3.name AS check_out_by
+
+    ");
+
+    $builder->join('security_gate_logs log', 'log.visitor_request_id = vr.id', 'left');
+    $builder->join('visitor_request_header hr', 'hr.id = vr.request_header_id', 'left');
+    $builder->join('users u', 'u.id = vr.created_by', 'left');
+    $builder->join('users usr', 'usr.id = hr.referred_by', 'left');
+    $builder->join('users usr2', 'usr2.id = log.verified_by', 'left');
+    $builder->join('users usr3', 'usr3.id = log.updated_by', 'left');
+    $builder->where('vr.status', 'approved');
+    $builder->where('vr.visit_date', date('Y-m-d'));
+    $builder->orderBy('vr.id', 'DESC');
+
+    return $this->response->setJSON($builder->get()->getResultArray());
+}
+
+    /////////////////////////////////////////////////////////////////////////////////////
    
     public function securityAction()
     {
@@ -250,6 +321,17 @@ public function verifyVisitor()
             ->first();
 
 
+                // 1️⃣ Check visit date first
+        $today = date('Y-m-d');
+        $visitDate = date('Y-m-d', strtotime($visitor['visit_date']));
+
+        if ($visitDate !== $today) {
+            return $this->response->setJSON([
+                'status'  => 'invalid',
+                'message' => 'Your visit is not scheduled for today'
+            ]);
+        }
+        
 
         if ($visitor['validity'] != 1) {
             return $this->response->setJSON([
@@ -257,6 +339,9 @@ public function verifyVisitor()
                 'message' => 'Visitor pass expired / not valid'
             ]);
         }
+
+        
+
 
         /* =====================================================
         CHECK-IN (if no log exists)

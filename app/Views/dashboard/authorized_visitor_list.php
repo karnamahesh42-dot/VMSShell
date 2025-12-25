@@ -414,7 +414,7 @@ function processSecurity(vCode) {
                 Swal.fire("Error", res.message || "Something went wrong", "error");
             }
            
-            $("#visitorModal").modal("hide");
+            // $("#visitorModal").modal("hide");
             loadAuthorizedVisitors();
         }
     });
@@ -454,6 +454,7 @@ function processSecurity(vCode) {
     //               // console.error(err);
     //         });
     // });
+
 const scanBtn = document.getElementById("scanBtnMblPic");
 const fileInput = document.getElementById("qrImageInput");
 
@@ -488,7 +489,8 @@ fileInput.addEventListener("change", async () => {
     }
 });
 
-/* 🔧 FIX IMAGE FOR MOBILE CAMERA */
+/*  FIX IMAGE FOR MOBILE CAMERA */
+
 function preprocessImage(file) {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -502,7 +504,7 @@ function preprocessImage(file) {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
 
-            // 🔽 Resize (very important)
+            // Resize (very important)
             const maxSize = 1200;
             let width = img.width;
             let height = img.height;
@@ -582,7 +584,7 @@ function loadAuthorizedVisitors() {
                     statusBadge = `
                         <span class="badge bg-primary warning text-lite p-2">
                              Inside <br>
-                             Session Not Yet Completed <br>
+                ${v.purpose} Not Yet Completed <br>
                             In: ${v.check_in_time ?? '-'} <br>
                         </span>
                     `;
@@ -591,10 +593,8 @@ function loadAuthorizedVisitors() {
                       statusBadge = `
                         <span class="badge bg-warning text-dark p-2">
                              Inside <br>
-                             Session Completed <br>
+                               ${v.purpose} Completed <br>
                             In: ${v.check_in_time ?? '-'} <br>
-                          
-                          
                         </span>
                     `;
                 }else {
@@ -696,117 +696,122 @@ function openVisitorPopup(v_code){
         data: { v_code: v_code },
         dataType: "json",
         success: function (d) {
-            console.log(d)
+            // console.log(d)
+        if(d.status == 'success'){
+                    // HEADER FIELDS
+                    $("#h_code").text(d.data.header_code);
+                    $("#h_requested_by").text(d.data.created_by_name);
+                    $("#referred_by").text(d.data.referred_by_name ?? "-");
+                    $("#h_company").text(d.data.company);
+                    $("#h_department").text(d.data.department_name);
+                    $("#h_count").text(d.data.total_visitors);
+                    $("#h_email").text(d.data.visitor_email);
+                    $("#h_purpose").text(d.data.purpose);
+                    $("#h_date").text(d.data.visit_date + " " + d.data.visit_time);
+                    $("#h_description").text(d.data.description);
+                    $("#v_name").text(d.data.visitor_name);
+                    $("#v_phone").text(d.data.visitor_phone);
+                    $("#v_email").text(d.data.visitor_email);
+                    $("#v_vehicle_no").text(d.data.vehicle_no);
+                    $("#v_vehicle_type").text(d.data.vehicle_type);
+                    $("#v_visit_date").text(d.data.visit_date);
+                    $("#v_visit_time").text(d.data.visit_time);
+                    $("#v_code").text(d.data.v_code);
 
-            // HEADER FIELDS
-            $("#h_code").text(d.header_code);
-            $("#h_requested_by").text(d.created_by_name);
-            $("#referred_by").text(d.referred_by_name ?? "-");
-            $("#h_company").text(d.company);
-            $("#h_department").text(d.department_name);
-            $("#h_count").text(d.total_visitors);
-            $("#h_email").text(d.visitor_email);
-            $("#h_purpose").text(d.purpose);
-            $("#h_date").text(d.visit_date + " " + d.visit_time);
-            $("#h_description").text(d.description);
-            $("#v_name").text(d.visitor_name);
-            $("#v_phone").text(d.visitor_phone);
-            $("#v_email").text(d.visitor_email);
-            $("#v_vehicle_no").text(d.vehicle_no);
-            $("#v_vehicle_type").text(d.vehicle_type);
-            $("#v_visit_date").text(d.visit_date);
-            $("#v_visit_time").text(d.visit_time);
-            $("#v_code").text(d.v_code);
+                    // console.log(d.data.v_phopto_path);
+                    window.BASE_URL = "<?= base_url() ?>";
+                    if (d.data.v_phopto_path && d.data.v_phopto_path !== '') {
+                        const imgPath =
+                        window.BASE_URL +
+                        'public/uploads/visitor_photos/' +
+                        d.data.v_phopto_path;
+                    $('#visitorPhotoPreview').attr('src', imgPath);
+                    $('.camera-upload').hide();
 
-            // console.log(d.v_phopto_path);
-            window.BASE_URL = "<?= base_url() ?>";
-            if (d.v_phopto_path && d.v_phopto_path !== '') {
-                const imgPath =
-                window.BASE_URL +
-                'public/uploads/visitor_photos/' +
-                d.v_phopto_path;
-            $('#visitorPhotoPreview').attr('src', imgPath);
-            $('.camera-upload').hide();
+                    } else {
 
-} else {
+                        $('#visitorPhotoPreview').attr(
+                            'src',
+                            window.BASE_URL + 'public/dist/User_Profile.png'
+                        );
 
-    $('#visitorPhotoPreview').attr(
-        'src',
-        window.BASE_URL + 'public/dist/User_Profile.png'
-    );
+                        $('.camera-upload').show();
+                    }
 
-    $('.camera-upload').show();
-}
+                    let statusTrackerData ="";
+                        statusTrackerData = `
+                        <div class="status-tracker-horizontal"
+                            style="--progress: ${
+                                d.data.securityCheckStatus >= 2 ? '100%' :
+                                d.data.meeting_status >= 1 ? '75%' :
+                                d.data.securityCheckStatus >= 1 ? '50%' :
+                                d.data.status >= 'approved' ? '25%' : '0%'
+                            };">
 
-            let statusTrackerData ="";
-                statusTrackerData = `
-                <div class="status-tracker-horizontal"
-                    style="--progress: ${
-                        d.securityCheckStatus >= 2 ? '100%' :
-                        d.meeting_status >= 1 ? '75%' :
-                        d.securityCheckStatus >= 1 ? '50%' :
-                        d.status >= 'approved' ? '25%' : '0%'
-                    };">
+                            <div class="step ${d.data.status >= 'approved' ? 'active' : ''}">
+                                <span class="circle">
+                                    <i class="fa-solid fa-file-circle-check"></i>
+                                </span>
+                                <span class="label">Request Approved</span>
+                            </div>
 
-                    <div class="step ${d.status >= 'approved' ? 'active' : ''}">
-                        <span class="circle">
-                            <i class="fa-solid fa-file-circle-check"></i>
-                        </span>
-                        <span class="label">Request Approved</span>
-                    </div>
+                            <div class="step ${d.data.securityCheckStatus >= 1 ? 'active' : ''}">
+                                <span class="circle">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                </span>
+                                <span class="label">Check In</span>
+                            </div>
 
-                    <div class="step ${d.securityCheckStatus >= 1 ? 'active' : ''}">
-                        <span class="circle">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                        </span>
-                        <span class="label">Check In</span>
-                    </div>
+                            <div class="step ${d.data.meeting_status >= 1 ? 'active' : ''}">
+                                <span class="circle">
+                                    <i class="fa-solid fa-people-arrows"></i>
+                                </span>
+                                <span class="label">Session Complete</span>
+                            </div>
 
-                    <div class="step ${d.meeting_status >= 1 ? 'active' : ''}">
-                        <span class="circle">
-                            <i class="fa-solid fa-people-arrows"></i>
-                        </span>
-                        <span class="label">Session Complete</span>
-                    </div>
+                            <div class="step ${d.data.securityCheckStatus >= 2 ? 'active' : ''}">
+                                <span class="circle">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </span>
+                                <span class="label">Check Out</span>
+                            </div>
 
-                    <div class="step ${d.securityCheckStatus >= 2 ? 'active' : ''}">
-                        <span class="circle">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </span>
-                        <span class="label">Check Out</span>
-                    </div>
+                        </div>`;
 
-                </div>`;
+                    $("#statusTraker").html(statusTrackerData);
 
-             $("#statusTraker").html(statusTrackerData);
+                let actionHTML = "";
 
-        let actionHTML = "";
-
-        if (d.securityCheckStatus == 0) {
-            // NOT ENTERED → Allow Entry
-            actionHTML = `
-                <button class="btn btn-success btn-sm" onclick="processSecurity('${d.v_code}')">
-                    <i class="bi bi-door-open"></i> Allow Entry
-                </button>
-            `;
-        }
-        else if (d.securityCheckStatus == 1) {
-            // INSIDE → Mark Exit
-            actionHTML = `
-                <button class="btn btn-warning btn-sm" onclick="processSecurity('${d.v_code}')" >
-                    <i class="bi bi-box-arrow-right"></i> Mark Exit
-                </button>
-            `;
-        }
-        else {
-            // COMPLETED → No buttons
-            actionHTML = `<span class="badge bg-success"><i class="bi bi-check-circle"></i> Completed</span>`;
-        }
-
-        $("#actionBtns").html(actionHTML);
-                    // Open Modal
-                    $("#visitorModal").modal("show");
+                if (d.data.securityCheckStatus == 0) {
+                    // NOT ENTERED → Allow Entry
+                    actionHTML = `
+                        <button class="btn btn-success btn-sm" onclick="processSecurity('${d.data.v_code}')">
+                            <i class="bi bi-door-open"></i> Allow Entry
+                        </button>
+                    `;
                 }
+                else if (d.data.securityCheckStatus == 1) {
+                    // INSIDE → Mark Exit
+                    actionHTML = `
+                        <button class="btn btn-warning btn-sm" onclick="processSecurity('${d.data.v_code}')" >
+                            <i class="bi bi-box-arrow-right"></i> Mark Exit
+                        </button>
+                    `;
+                }
+                else {
+                    // COMPLETED → No buttons
+                    actionHTML = `<span class="badge bg-success"><i class="bi bi-check-circle"></i> Completed</span>`;
+                }
+
+                $("#actionBtns").html(actionHTML);
+                            // Open Modal
+                            $("#visitorModal").modal("show");
+                
+                }else{
+
+                 Swal.fire("Error", d.message, "error");
+                }
+            }
         });
 }
 

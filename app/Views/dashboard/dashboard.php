@@ -112,7 +112,7 @@
                   <div class="card-dash-sm <?= $c['color'] ?>">
                       <div class="left">
                           <div class="title"><?= esc($c['title']) ?></div>
-                          <div class="value"><?= esc($c['value']) ?><span class="subtitle"><?= esc($c['subtitle']) ?></span></div>
+                          <div class="value"><?= esc($c['value']) ?></div>
                       </div>
                       <div class="right">
                           <i class="fa <?= esc($c['icon']) ?> fa-2x"></i>
@@ -160,7 +160,7 @@
                             //   print_r($pendingList);
                               if (!empty($pendingList)): ?>
                                 <?php foreach ($pendingList as $item): ?>
-                                    <li onclick="view_visitor(<?= $item['id'] ?>)" style="cursor:pointer;">
+                                    <li style="cursor:pointer;">
                                         <!-- <li onclick="testamile(<?= $item['id'] ?>)" style="cursor:pointer;"> -->
                                         
                                         <div>
@@ -182,7 +182,17 @@
                                         </div>
 
                                         <div class="text-end">
-                                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye"></i></a>
+                                             <?php if (in_array($_SESSION['role_id'], [1, 2])) { ?>
+                                                <!-- Accept -->
+                                                <a href="#" class="btn btn-sm btn-outline-success" title="Accept"   onclick="approvalProcess(<?= $item['id'] ?>, 'approved', '<?= $item['header_code'] ?>')" >
+                                                    <i class="fas fa-check"></i>
+                                                </a>
+                                                <!-- Reject -->
+                                                <a href="#" class="btn btn-sm btn-outline-danger" title="Reject"   onclick="rejectComment(<?= $item['id'] ?>, 'rejected', '<?= $item['header_code'] ?>')">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                                     <?php }?>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"  onclick="view_visitor(<?= $item['id'] ?>)" ><i class="fa fa-eye"></i></a>
                                             <!-- <span class="badge-pending"> Pending </span> -->
                                         </div>
                                     </li>
@@ -200,16 +210,16 @@
                 <!-- Recent Entries Example Table -->
                 <?php if($_SESSION['role_id'] == 4){?>
                   <div class="col-md-9 mt-2"> 
-                    <div class="card visitor-list-card">
+                    <div class="card visitor-list-card" >
                             <div class="card-header text-white d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-users"></i>Recent Authorized Visitor List
+                                    <i class="fas fa-users"></i>  Today Visitor List
                                 </h5>
-                             <div><a href="<?= base_url('authorized_visitors_list') ?>" class="btn btn-sm btn-light"><i class="bi bi-list"></i></a></div>
+                             <div><a href="<?= base_url('authorized_visitors_list') ?>" class="btn btn-light"><i class="bi bi-card-checklist"></i></a></div>
                             </div>
-
-                        <div class="table-responsive" style="font-size: 14px;">
-                            <table class="table table-hover mb-0  table-bordered">
+                        <div class="card-body p-2">
+                              <div class="table-responsive" style="font-size: 14px;">
+                            <table class="table mb-0  table-bordered">
                                 <thead class="table-light" id="authorizedVisitorTablehead">
                                     <tr>
                                         <!-- <th>S.No</th> -->
@@ -227,9 +237,11 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="authorizedVisitorTable" ></tbody>
+                                <tbody id="todayVisitorsList" style="table-scroll "></tbody>
                             </table>
                         </div>
+                        </div>
+                      
                     </div>
                 </div>
                 <?php } ?>
@@ -245,7 +257,6 @@
                         <a href="<?= base_url('visitorequest') ?>"><i class="bi bi-person-plus me-2"></i> Create Visitor Request</a>
                         <a href="<?= base_url('group_visito_request') ?>"><i class="bi bi-people me-2"></i> Create Group Request</a>
                         <a href="<?= base_url('visitorequestlist') ?>"><i class="bi bi-people me-2"></i> Visitor Request List</a>
-                      
                         <a href="<?= base_url('authorized_visitors_list') ?>"><i class="bi bi-card-checklist me-2"></i>Authorized Visitors</a>
                         <!-- <a href="<?= base_url('security_authorization') ?>"><i class="bi bi-shield-lock-fill me-2"></i> Security Authorization</a> -->
                         <a href="<?= base_url('userlist') ?>"><i class="bi bi-gear me-2"></i>User Management</a>
@@ -295,7 +306,6 @@
                                                 <th>Purpose</th>
                                                 <th>QR Validity</th>
                                                 <th>Status</th>
-                                               
                                             </tr>
                                         </thead>
                                         <tbody id="authorizedVisitorTable" ></tbody>
@@ -306,7 +316,7 @@
                         </div>
                         <!-- AUTHORIZED VISITOR LIST  Card End -->
                    </div>
-                <!--///////////////////// Recent Otherisation List To the User End  ///////////////  -->    
+                 <!--///////////////////// Recent Otherisation List To the User End  ///////////////  -->    
                 <?php } ?>
 
           </section>
@@ -515,6 +525,7 @@ function sendMail(head_id) {
 $(document).ready(function () {
     updateVisitorValidity();
     loadAuthorizedVisitors();
+    todayVisitorsList()
 });
 
 function updateVisitorValidity() {
@@ -530,6 +541,115 @@ function updateVisitorValidity() {
         }
     });
 }
+
+
+function todayVisitorsList() {
+
+    $.ajax({
+        url: "<?= base_url('/security/todayVisitorListOfDashboard') ?>",
+        type: "GET",
+        dataType: "json",
+        data: {
+            company: $("#filterCompany").val(),
+            department: $("#filterDepartment").val(),
+            securityCheckStatus: $("#filterSecurity").val(),
+            requestcode:  $("#requestcode").val(),
+            v_code:   $("#f_v_code").val()
+        },
+        success: function(res) {
+
+            // console.log(res[0].meeting_status);
+            
+            let tbody = $("#todayVisitorsList");
+            tbody.empty();
+
+            if (!res.length) {
+                tbody.append(`
+                    <tr>
+                        <td colspan='13' class='text-center text-muted'> No authorized visitors scheduled for today.</td>
+                    </tr>
+                `);
+                return;
+            }
+
+            res.forEach((v, index) => {
+         
+                let statusBadge = "";
+                if (v.securityCheckStatus == 0) {
+                    statusBadge = `
+                        <span class="badge bg-secondary">
+                            Not Entered
+                        </span>
+                    `;
+                } else if (v.securityCheckStatus == 1 && v.meeting_status == 0) {
+
+                           <?php if($_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '1'){?>
+                            statusBadge = ` <span class="btn meetingCmpleteBtn cursor-pointer" onclick="markMeetingCompleted('${v.v_code}')">
+                                        Inside <br>
+                                        Session Not Yet Completed <br>
+                                    In: ${v.check_in_time ?? '-'} <br>
+                                    Out: ${v.check_out_time ?? '-'} <br>
+                                </span> `;
+                             
+                          <?php }else{ ?>
+                                statusBadge = `<span class="badge bg-primary text-lite" >
+                                        Inside <br>
+                                        Session Not Yet Completed <br>
+                                        In: ${v.check_in_time ?? '-'} <br>
+                                        Out: ${v.check_out_time ?? '-'} <br>
+                                      </span>`;
+                          <?php } ?>
+                } 
+                else if (v.securityCheckStatus == 1 && v.meeting_status == 1){
+                      statusBadge = `
+                        <span class="badge bg-warning text-dark" >
+                             Inside <br>
+                             Session Completed <br>
+                            In: ${v.check_in_time ?? '-'} <br>
+                            Out: ${v.check_out_time ?? '-'} <br>
+                          
+                        </span>
+                    `;
+                }else {
+                    statusBadge = `
+                        <span class="badge bg-success">
+                            Completed <br>
+                            In: ${v.check_in_time ?? '-'} <br>
+                            Out: ${v.check_out_time ?? '-'} <br>
+                          
+                        </span>
+                    `;
+                }
+                let validityBadge = "";
+           
+                if (v.validity == 1) {
+                     validityBadge = `<i class="bi bi-check-circle text-success" style="font-size: large; font-weight: bold;"></i>`;
+                } 
+                else {
+                   validityBadge = `<i class="bi bi-x-circle text-danger" style="font-size: large; font-weight: bold;"></i>`;
+                }
+
+
+                tbody.append(`
+                    <tr>
+                        <td>${v.visit_date}</td>
+                        <td>${v.company}</td>
+                        <td>${v.department_name}</td>
+                        <td>${v.referred_by_name}</td>
+                        <td>${v.created_by_name}</td>
+                        <td>${v.visitor_name}</td>
+                        <td>${v.visitor_phone}</td>
+                        <td>${v.purpose}</td>
+                        <td>${validityBadge}</td>
+                        <td>${statusBadge}</td>
+                    </tr>
+                `);
+            });
+        }
+    });
+}
+
+
 
 
 

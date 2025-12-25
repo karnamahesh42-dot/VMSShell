@@ -71,6 +71,8 @@ $routes->get('rvr_details_sheet', 'RVRDetailsController::rvr_details_sheet');
 $routes->get('/security_authorization', 'SecurityController::index');
 $routes->get('/authorized_visitors_list', 'SecurityController::View_authorized_visitor_list');
 $routes->get('/security/authorized_visitors_list_data', 'SecurityController::authorized_visitors_list_data');
+$routes->get('/security/todayVisitorListOfDashboard', 'SecurityController::todayVisitorListOfDashboard');
+
 $routes->post('/security/verify', 'SecurityController::verifyVisitor');
 // $routes->post('/security/checkin', 'SecurityController::checkIn');
 // $routes->post('/security/checkout', 'SecurityController::checkOut');

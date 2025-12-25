@@ -33,7 +33,6 @@ class VisitorRequest extends BaseController
     public function index(): string
     {
         $session = session();
-
         $dep_id     = $session->get('dep_id');
         $role_id    = $session->get('role_id');
         $user_id    = $session->get('user_id');
@@ -479,7 +478,23 @@ public function groupSubmit()
         $headerModel = new \App\Models\VisitorRequestHeaderModel();
         $data = $headerModel->getHeaderWithVisitorsMailDataByVCode($v_code);
 
-        return $this->response->setJSON($data[0]);
+        //  If no record found
+        if (empty($data)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Invalid V-Code or visitor not found',
+                'data'    => null
+            ]);
+        }
+
+        // Success response
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Visitor details fetched successfully',
+            'data'    => $data[0]
+        ]);
+
+        // return $this->response->setJSON($data[0]);
     }
 
 

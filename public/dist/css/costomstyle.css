@@ -183,8 +183,9 @@
         box-shadow: 0 6px 20px rgba(3,16,46,0.06);
         border-left:6px solid #398aaa; 
         display:flex; flex-direction:column; 
-        justify-content:space-between; 
-          min-height:110px; }
+      
+        min-height:110px;
+         }
     .card-dash .title { font-weight:700; color:#216cb8;; font-size:14px; }
     .card-dash .value { font-size:22px; color:var(--rfc-red); font-weight:800; margin-top:8px; }
 
@@ -311,9 +312,8 @@
     padding: 12px 10px;
     border-radius: 8px;
     margin-bottom: 8px;
-    background: #fbfbfd;
-    border: 1px solid #eef3fb;
-
+    background: #fafaff;
+    border: 1px solid #c0e4ec;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -450,14 +450,19 @@
 .visitor-list-card thead th {
     position: sticky;
     top: 0;
-    background: #f8f9fa !important;
+    background: #cee8ff !important;
     z-index: 5;
-    font-weight: 600;
+    font-weight: 700;
+    color:  #0673b3 !important;;
+}
+
+.visitor-list-card thead{
+    border: 1px solid #056094   ;
 }
 
 /* Scrollable table body */
 .visitor-list-card .table-responsive {
-    max-height: 680px; /* Adjust height as needed */
+    max-height: 550px; /* Adjust height as needed */
     overflow-y: auto;
 }
 
@@ -967,7 +972,9 @@ input[type="file"] {
     color: #216cb8;
 }
 
-
+.form-label{
+    color: #0056b3 !important;
+}
 /* ////////////////////////// */
 
 .pending-list {
@@ -1051,7 +1058,7 @@ input[type="file"] {
 .title-underline {
     width: 100%;
     height: 2px;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
     background: #86bff1;
     border-radius: 2px;
     overflow: hidden;
