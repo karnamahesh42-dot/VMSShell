@@ -117,7 +117,7 @@
                 <div class="col-12">
                     <div class="card  visitor-list-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Visitor Request List</h5>
+                            <h5 class="mb-0">Visitor Request Management</h5>
 
                             <div class="card-header-actions">
                                 <a href="<?= base_url('group_visito_request') ?>" class="btn btn-warning mx-1">
@@ -144,7 +144,7 @@
                                             <th>Visitors Count</th>
                                             <th>Status</th>
                                             <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){?>
-                                            <th style="width:150px;">Actions</th>
+                                            <th style="width:150px;" colspan="2">Actions</th>
                                              <?php }?>
                                         </tr>
                                     </thead>
@@ -333,7 +333,8 @@ if (v.securityCheckStatus == 0 && v.status == 'approved') {
             <span class="btn cursor-pointer meetingCmpleteBtn"
                 style="cursor:pointer "
                 onclick="markMeetingCompleted('${v.v_code}')">
-                <i class="fas fa-check-circle"></i> In Meeting
+                ${v.purpose} <br>
+                Not Yet Completed
             </span>
         `;
     }
@@ -490,6 +491,7 @@ function resendqr(v_code) {
 
 
 function markMeetingCompleted(v_code) {
+   
     Swal.fire({
         title: "Complete Meeting?",
         text: "Confirm that the visitor meeting is completed.",
@@ -513,6 +515,7 @@ function markMeetingCompleted(v_code) {
                             showConfirmButton: false
                         });
 
+                        view_visitor(res.id);
                         loadVisitorList(); // refresh table
                     } else {
                         Swal.fire("Error", res.message, "error");

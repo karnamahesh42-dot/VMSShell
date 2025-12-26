@@ -58,8 +58,6 @@ $routes->get('/rvr_list', 'ReferenceVisitorRequestController::getAllReferenceVis
 $routes->get('/get_reference_list', 'ReferenceVisitorRequestController::getAllReference'); // get list Of reference Data  (AJAX)
 $routes->get('rvr_request_by_id/(:num)', 'ReferenceVisitorRequestController::getReferenceVisitorRequestById/$1'); //reference Request Data By id 
 
-
-
 // Redirect using RVR code
 $routes->get('rvr_redirect/(:any)', 'RVRDetailsController::rvr_redirect/$1');
 

@@ -672,7 +672,8 @@ public function completeMeeting()
         ]);
 
         return $this->response->setJSON([
-            'status' => 'success'
+            'status' => 'success',
+            'id' => $visitor['request_header_id']
         ]);
 }
 

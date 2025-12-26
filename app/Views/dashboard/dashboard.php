@@ -256,10 +256,17 @@
                     <div class="quick-links">
                         <a href="<?= base_url('visitorequest') ?>"><i class="bi bi-person-plus me-2"></i> Create Visitor Request</a>
                         <a href="<?= base_url('group_visito_request') ?>"><i class="bi bi-people me-2"></i> Create Group Request</a>
-                        <a href="<?= base_url('visitorequestlist') ?>"><i class="bi bi-people me-2"></i> Visitor Request List</a>
+                        <a href="<?= base_url('visitorequestlist') ?>"><i class="bi bi-people me-2"></i> Request Management</a>
+                     <?php if (in_array($_SESSION['role_id'], [1,4])) { ?>
                         <a href="<?= base_url('authorized_visitors_list') ?>"><i class="bi bi-card-checklist me-2"></i>Authorized Visitors</a>
-                        <!-- <a href="<?= base_url('security_authorization') ?>"><i class="bi bi-shield-lock-fill me-2"></i> Security Authorization</a> -->
+                     <?php } ?>
+                     
+                     <?php if (in_array($_SESSION['role_id'], [1])) { ?>
                         <a href="<?= base_url('userlist') ?>"><i class="bi bi-gear me-2"></i>User Management</a>
+                     <?php } ?>
+                      
+                        <!-- <a href="<?= base_url('security_authorization') ?>"><i class="bi bi-shield-lock-fill me-2"></i> Security Authorization</a> -->
+                      
                     </div>
                     </div>
                 </div>
@@ -698,7 +705,7 @@ function loadAuthorizedVisitors() {
                            <?php if($_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '1'){?>
                             statusBadge = ` <span class="btn meetingCmpleteBtn cursor-pointer" onclick="markMeetingCompleted('${v.v_code}')">
                                         Inside <br>
-                                        Session Not Yet Completed <br>
+                                        ${v.purpose} Not Yet Completed <br>
                                     In: ${v.check_in_time ?? '-'} <br>
                                     Out: ${v.check_out_time ?? '-'} <br>
                                 </span> `;
@@ -706,7 +713,7 @@ function loadAuthorizedVisitors() {
                           <?php }else{ ?>
                                 statusBadge = `<span class="badge bg-primary text-lite" >
                                         Inside <br>
-                                        Session Not Yet Completed <br>
+                                        ${v.purpose} Not Yet Completed <br>
                                         In: ${v.check_in_time ?? '-'} <br>
                                         Out: ${v.check_out_time ?? '-'} <br>
                                       </span>`;
@@ -716,7 +723,7 @@ function loadAuthorizedVisitors() {
                       statusBadge = `
                         <span class="badge bg-warning text-dark" >
                              Inside <br>
-                             Session Completed <br>
+                ${v.purpose} Completed <br>
                             In: ${v.check_in_time ?? '-'} <br>
                             Out: ${v.check_out_time ?? '-'} <br>
                           

@@ -23,7 +23,6 @@ class SecurityController extends BaseController
 
 
 /// ..........Visitor Photo Upload  Start.............. ///
-
 public function uploadPhoto()
 {
     $file   = $this->request->getFile('photo');
@@ -65,27 +64,48 @@ public function uploadPhoto()
     $newName  = 'v_pic_' . $v_code . '_' . time() . '.jpg';
     $fullPath = $uploadPath . $newName;
 
-    // 🖼️ Image processing
+    $tempPath = $file->getTempName();
+
+    /**
+     * ✅ STEP 1: FIX ROTATION USING EXIF (IMPORTANT)
+     */
+    if (function_exists('exif_read_data') && in_array($file->getMimeType(), ['image/jpeg', 'image/jpg'])) {
+
+        $exif = @exif_read_data($tempPath);
+
+        if (!empty($exif['Orientation'])) {
+
+            $source = imagecreatefromjpeg($tempPath);
+
+            switch ($exif['Orientation']) {
+                case 3:
+                    $source = imagerotate($source, 180, 0);
+                    break;
+                case 6:
+                    $source = imagerotate($source, -90, 0); // RIGHT
+                    break;
+                case 8:
+                    $source = imagerotate($source, 90, 0);  // LEFT
+                    break;
+            }
+
+            imagejpeg($source, $tempPath, 100);
+            imagedestroy($source);
+        }
+    }
+
+    /**
+     * ✅ STEP 2: RESIZE & COMPRESS (Mobile optimized)
+     */
     $image = \Config\Services::image('gd');
-    if (!$image) {
-        return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Image service unavailable'
-        ]);
-    }
 
-    $image->withFile($file->getTempName());
+    $image->withFile($tempPath)
+          ->resize(1024, 1024, true, 'auto')
+          ->save($fullPath, 70); // 70% quality = sharp + small size
 
-    // Fix mobile rotation
-    if (method_exists($image, 'orientate')) {
-        $image->orientate();
-    }
-
-    // 🔥 Resize smartly (mobile optimized)
-    $image->resize(1024, 1024, true, 'auto')
-          ->save($fullPath, 70); // 70% = great balance
-
-    // 💾 Save to DB
+    /**
+     * 💾 STEP 3: SAVE PATH
+     */
     $visitorModel->where('v_code', $v_code)
                  ->set(['v_phopto_path' => $newName])
                  ->update();
@@ -137,7 +157,6 @@ public function authorized_visitors_list_data()
         usr.name AS referred_by_name,
         usr2.name AS check_in_by,
         usr3.name AS check_out_by
-
     ");
 
     $builder->join('security_gate_logs log', 'log.visitor_request_id = vr.id', 'left');
@@ -431,7 +450,8 @@ public function  todayVisitorListOfDashboard()
                     'status'            => 'meeting_not_completed',
                     'name'         => $host['name'] ?? '--',
                     'company_name'  => $host['company_name'] ?? '--',
-                    'email'        => $host['email'] ?? '--'
+                    'email'        => $host['email'] ?? '--',
+                    'purpose'      =>  $visitor['purpose'] ?? '--'
                 ]);
          }
 

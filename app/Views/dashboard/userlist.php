@@ -23,17 +23,19 @@
 
                 <div class="modal-body">
 
+                 <div class="row">
+
                     <input type="hidden" id="edit_id" name="id">
 
                     <!-- Company -->
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label fw-medium">Company</label>
                         <input type="text" id="edit_company" name="company_name"
                                class="form-control p-2" readonly>
                     </div>
 
                     <!-- Department -->
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label fw-medium">Department</label>
                         <select id="edit_department" name="department_id"
                                 class="form-control p-2">
@@ -42,7 +44,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-
+   </div>
                     <!-- Row 1 -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -66,6 +68,26 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-medium">Employee Code</label>
                             <input type="text" id="edit_empcode" name="employee_code" class="form-control p-2">
+                        </div>
+                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-medium">Username</label>
+                            <input type="text" id="edit_usename" name="edit_usename" class="form-control p-2" readonly>
+                        </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-medium">Password</label>
+
+                        <div class="input-group">
+                            <input type="password"
+                                    id="edit_password"
+                                    name="new_password"
+                                    class="form-control p-2"
+                                    required>
+
+                            <span class="input-group-text" style="cursor:pointer"
+                                    onclick="togglePassword()">
+                                <i id="toggleEye" class="fa fa-eye"></i>
+                            </span>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -236,7 +258,9 @@ $(document).on("click", ".editUserBtn", function () {
             $("#edit_email").val(res.email);
             $("#edit_empcode").val(res.employee_code);
             $("#name").val(res.name);
-             $("#priority").val(res.priority);
+            $("#priority").val(res.priority);
+            $("#edit_usename").val(res.username);
+            $("#edit_password").val(res.password_enc ?? '' );
             $("#editUserModal").modal("show");
 
             
@@ -314,29 +338,20 @@ $(".toggleStatusBtn").on("click", function () {
     });
 });
 
-// $(".toggleStatusBtn").on("click", function () {
-//     let userId = $(this).data("id");
+function togglePassword() {
+    const passwordInput = document.getElementById("edit_password");
+    const eyeIcon = document.getElementById("toggleEye");
 
-//     $.ajax({
-//         url: "<?= base_url('user/toggleStatus') ?>",
-//         type: "POST",
-//         data: {
-//             id: userId,
-//             <?= csrf_token() ?>: "<?= csrf_hash() ?>"
-//         },
-//         dataType: "json",
-//         success: function(res){
-//             Swal.fire({
-//                 icon: "success",
-//                 title: res.message,
-//                 timer: 1200,
-//                 showConfirmButton: false
-//             });
-//             setTimeout(() => location.reload(), 1200);
-//         }
-//     });
-// });
-
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    }
+}
 
 </script>
 

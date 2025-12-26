@@ -98,7 +98,7 @@ h1, h2, h3, h4, .card-title {
       <?php if(in_array($_SESSION['role_id'], ['1','2','3'])){ ?>
       <li><a class="nav-link <?= (uri_string()=='visitorequestlist') ? 'active' : '' ?>" 
              href="<?= base_url('visitorequestlist') ?>">
-             <i class="bi bi-person-check-fill"></i> Visitor Request List
+             <i class="bi bi-person-check-fill"></i> Request Management
       </a></li>
       <?php } ?>
 

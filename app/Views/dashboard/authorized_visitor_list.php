@@ -115,6 +115,11 @@
                                                     capture="environment"
                                                     style="display:none"
                                                     onchange="uploadVisitorPhoto(this)">
+
+                                        <div class="photo-loader text-center" style="display:none;">
+                                        <div class="spinner-border text-primary" role="status"></div>
+                                        <div class="mt-2">Uploading photo...</div>
+                                        </div>
                                             </div>
 
                                             <!-- VISITOR DETAILS (9 columns) -->
@@ -395,7 +400,7 @@ function processSecurity(vCode) {
                     icon: 'warning',
                     title: 'Action Restricted',
                     html: `
-                        <p>The session has not been completed by the host.</p>
+                        <p><b class="text-primary">${res.purpose ?? '--'}</b> has not been completed by the host.</p>
                         <p><b>Please contact the host to complete the session.</b></p>
                         <hr>
                         ${hostDetails}
@@ -828,14 +833,20 @@ function uploadVisitorPhoto(input) {
         return;
     }
 
-    // Preview instantly
+    // 🔴 Hide camera icon
+    $('.camera-upload').fadeOut(300);
+
+    // 🟡 Show loader
+    $('.photo-loader').fadeIn(200);
+
+    // 🔍 Preview instantly
     const reader = new FileReader();
     reader.onload = e => {
         document.getElementById('visitorPhotoPreview').src = e.target.result;
     };
     reader.readAsDataURL(file);
 
-    // Prepare upload
+    // 📦 Prepare upload
     const formData = new FormData();
     formData.append('photo', file);
     formData.append('v_code', document.getElementById('v_code').innerText);
@@ -846,18 +857,33 @@ function uploadVisitorPhoto(input) {
     })
     .then(res => res.json())
     .then(res => {
+
+        // 🟢 Hide loader
+        $('.photo-loader').fadeOut(200);
+
         if (res.status === 'success') {
-          
+
             $('#visitorPhotoPreview').attr('src', res.path);
+
+            // Hide camera permanently after success
             $('.camera-upload').fadeOut(300);
 
-            // console.log("Saved Path:", res.path);
         } else {
+
+            // 🔁 Restore camera on error
+            $('.camera-upload').fadeIn(300);
+
             Swal.fire("Error", res.message, "error");
         }
     })
     .catch(() => {
+
+        // 🔴 Hide loader & restore camera
+        $('.photo-loader').fadeOut(200);
+        $('.camera-upload').fadeIn(300);
+
         Swal.fire("Error", "Upload failed", "error");
     });
 }
+
 </script>

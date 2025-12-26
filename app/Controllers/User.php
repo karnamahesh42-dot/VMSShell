@@ -17,47 +17,6 @@ class User extends BaseController
     }
 
 
-
-
-    // // Create User Function 
-    // public function create()
-    // {
-    //     if (!$this->request->isAJAX()) {
-    //         return redirect()->back();
-    //     }
-
-    //     $data = [
-            
-    //         'name'   => $this->request->getPost('name'),
-    //         'company_name'   => $this->request->getPost('company_name'),
-    //         'department_id'  => $this->request->getPost('department_id'),
-    //         'email'          => $this->request->getPost('email'),
-    //         'employee_code'  => $this->request->getPost('employee_code'),
-    //         'username'       => $this->request->getPost('username'),
-    //         'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
-    //         'role_id'        => $this->request->getPost('role_id'),
-    //         'hash_key'       => "HASHKEY123",
-    //         'active'         => 1,
-    //         'created_by'     => session()->get('user_id')
-    //     ];
-
-    //     $userModel = new \App\Models\UserModel();
-
-    //     if ($userModel->insert($data)) {
-    //         return $this->response->setJSON([
-    //             'status'  => 'success',
-    //             'message' => 'User created successfully'
-    //         ]);
-    //     }
-
-    //     return $this->response->setJSON([
-    //         'status'  => 'error',
-    //         'message' => 'Failed to create user'
-    //     ]);
-    // }
-
-
-
     public function create()
 {
     if (!$this->request->isAJAX()) {
@@ -66,7 +25,7 @@ class User extends BaseController
 
     $username = $this->request->getPost('username');
     $email = $this->request->getPost('email');
-
+    $password = $this->request->getPost('password'); 
     $userModel = new \App\Models\UserModel();
 
     // 🔍 Check if username already exists
@@ -94,82 +53,44 @@ class User extends BaseController
         'email'          => $email,
         'employee_code'  => $this->request->getPost('employee_code'),
         'username'       => $username,
-        'password'       => md5($this->request->getPost('password') . "HASHKEY123"),
+        'password'       => md5($password . "HASHKEY123"),
         'role_id'        => $this->request->getPost('role_id'),
         'hash_key'       => "HASHKEY123",
         'active'         => 1,
         'created_by'     => session()->get('user_id')
     ];
 
-    if ($userModel->insert($data)) {
+    if (!$userModel->insert($data)) {
+       
         return $this->response->setJSON([
-            'status' => 'success',
-            'message' => 'User created successfully'
+            'status'  => 'error',
+            'message' => 'Failed to create user'
         ]);
     }
 
+    // Save encrypted password in vault table
+    $userId = $userModel->getInsertID();
+    $db = \Config\Database::connect();
+    $db->table('user_password_vault')->insert([
+        'user_id'      => $userId,
+        'password_enc' => $password
+    ]);
+
     return $this->response->setJSON([
-        'status'  => 'error',
-        'message' => 'Failed to create user'
+        'status' => 'success',
+        'message' => 'User created successfully'
     ]);
 }
-    
-    // public function userListData()
-    // {
-
-    //     $deptModel = new DepartmentModel();
-    //     $userModel = new UserModel();
-
-    //     $data['users'] = $userModel
-    //         ->select('users.*, departments.department_name, roles.role_name')
-    //         ->join('departments', 'departments.id = users.department_id')
-    //         ->join('roles', 'roles.id = users.role_id')
-    //         ->findAll();
-    //     $data['departments'] = $deptModel->findAll();
-    //     return view('dashboard/userlist', $data);
-
-        
-    // }
 
 
-    // public function userListData()
-    // {
-    //     $session = session();
-    //     $deptModel = new DepartmentModel();
-    //     $userModel = new UserModel();
-
-    //     $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
-    //     $userDept = $session->get('department_id');    // Logged user's department
-
-    //     // Base Query
-    //     $userModel
-    //         ->select('users.*, departments.department_name, roles.role_name')
-    //         ->join('departments', 'departments.id = users.department_id')
-    //         ->join('roles', 'roles.id = users.role_id');
-
-    //     // Apply filter ONLY if role is 2
-    //     if ($userRole == 2) {
-    //         $userModel->where('users.department_id', $userDept);
-    //     }
-
-    //     $data['users'] = $userModel->findAll();
-    //     $data['departments'] = $deptModel->findAll();
-
-    //     return view('dashboard/userlist', $data);
-    // }
-
-    public function userListData()
+public function userListData()
 {
     $session = session();
     $deptModel = new DepartmentModel();
     $roleModel = new RoleModel();
     $userModel = new UserModel();
-
-    // Logged-in user info
     $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
     $userDept = $session->get('department_id');    // Logged user's dept
-
-    // Filters from GET
     $company    = $this->request->getGet('company');
     $department = $this->request->getGet('department');
     $role       = $this->request->getGet('role');
@@ -202,7 +123,6 @@ class User extends BaseController
     $data['users']       = $userModel->findAll();
     $data['departments'] = $deptModel->findAll();
     $data['roles']       = $roleModel->findAll();
-
     return view('dashboard/userlist', $data);
 }
 
@@ -211,6 +131,11 @@ class User extends BaseController
     public function update()
     {
         $id = $this->request->getPost('id');
+        $new_password = $this->request->getPost('new_password');
+        
+        if(!$new_password){
+             return $this->response->setJSON(['status'=>'error','message'=>'User Password Required']);
+        }
 
         $data = [
             'company_name'  => $this->request->getPost('company_name'),
@@ -219,9 +144,30 @@ class User extends BaseController
             'employee_code' => $this->request->getPost('employee_code'),
             'name' => $this->request->getPost('name'),
             'priority' => $this->request->getPost('priority'),
+            'password' =>  md5($new_password . "HASHKEY123"),
         ];
 
         (new UserModel())->update($id, $data);
+
+        $db = \Config\Database::connect();
+        $vault = $db->table('user_password_vault');
+
+        // check if row exists
+        $exists = $vault->where('user_id', $id)->get()->getRow();
+
+        if ($exists) {
+            //UPDATE
+            $vault->where('user_id', $id)->update([
+                'password_enc' => $new_password
+            ]);
+        } else {
+            // INSERT
+            $vault->insert([
+                'user_id'      => $id,
+                'password_enc' => $new_password
+            ]);
+        }
+
 
         return $this->response->setJSON(['status'=>'success','message'=>'User Updated']);
     }
@@ -229,9 +175,25 @@ class User extends BaseController
 
     public function get($id)
     {
-        $model = new UserModel();
-        return $this->response->setJSON($model->find($id));
+      
+        $db = \Config\Database::connect();
+        $user = $db->table('users u')
+        ->select('
+            u.*,
+            v.password_enc
+        ')
+        ->join('user_password_vault v', 'v.user_id = u.id', 'left')
+        ->where('u.id', $id)
+        ->get()
+        ->getRowArray();
+
+        return $this->response->setJSON($user);
+
     }
+
+
+
+    
 
 
     public function toggleStatus()
