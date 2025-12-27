@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2025 at 09:48 AM
+-- Generation Time: Dec 27, 2025 at 02:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,12 +37,23 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `department_name`) VALUES
+(14, 'Agro'),
+(11, 'CMD Secretariat'),
+(13, 'Director Secretariat'),
+(9, 'Events'),
+(10, 'Films'),
 (2, 'Finance'),
+(15, 'GMHK'),
 (3, 'HR'),
 (1, 'IT'),
+(7, 'Maya'),
+(12, 'MD Secretariat'),
+(17, 'Priya Dairy'),
 (4, 'Procurement'),
 (6, 'Security'),
-(5, 'Stores');
+(16, 'Staff Canteen'),
+(5, 'Stores'),
+(8, 'Tourism');
 
 -- --------------------------------------------------------
 
@@ -58,6 +69,14 @@ CREATE TABLE `expired_visitor_passes` (
   `expired_at` datetime NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expired_visitor_passes`
+--
+
+INSERT INTO `expired_visitor_passes` (`id`, `visitor_request_id`, `v_code`, `header_code`, `expired_at`, `created_at`) VALUES
+(1, 3, NULL, 'GV000002', '2025-12-27 14:27:36', '2025-12-27 14:27:36'),
+(2, 4, NULL, 'GV000003', '2025-12-27 14:27:36', '2025-12-27 14:27:36');
 
 -- --------------------------------------------------------
 
@@ -178,6 +197,15 @@ CREATE TABLE `security_gate_logs` (
   `updated_by` int(5) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `security_gate_logs`
+--
+
+INSERT INTO `security_gate_logs` (`id`, `visitor_request_id`, `v_code`, `check_in_time`, `check_out_time`, `verified_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 1, 'V000001', '2025-12-26 14:54:23', NULL, 13, '2025-12-26 14:54:23', NULL, NULL),
+(2, 2, 'V000002', '2025-12-26 14:57:20', '2025-12-26 14:59:10', 13, '2025-12-26 14:57:20', NULL, '2025-12-26 09:29:10'),
+(3, 5, 'V000005', '2025-12-26 17:50:28', '2025-12-26 17:53:22', 13, '2025-12-26 17:50:28', NULL, '2025-12-26 12:23:22');
 
 -- --------------------------------------------------------
 
@@ -301,6 +329,17 @@ CREATE TABLE `visitors` (
   `v_phopto_path` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `request_header_id`, `v_code`, `group_code`, `visitor_name`, `visitor_email`, `visitor_phone`, `purpose`, `visit_date`, `description`, `expected_from`, `expected_to`, `host_user_id`, `reference_id`, `status`, `meeting_status`, `meeting_completed_at`, `validity`, `securityCheckStatus`, `spendTime`, `created_by`, `created_at`, `updated_at`, `proof_id_type`, `proof_id_number`, `qr_code`, `vehicle_no`, `vehicle_type`, `vehicle_id_proof`, `visitor_id_proof`, `visit_time`, `v_phopto_path`) VALUES
+(1, 1, 'V000001', 'GV000001', 'Sivakumar', 'karnamahesh42@gmail.com', '7894561234', 'Interview', '2025-12-26', 'Interview Purpose ', NULL, NULL, 9, NULL, 'approved', 0, NULL, 1, 1, NULL, 9, '2025-12-26 14:37:02', '2025-12-26 14:55:20', 'Aadhar Card', '51984841144', 'visitor_V000001_qr.png', ' AP25TST232', 'Bike', '', '', '14:45:00', 'v_pic_V000001_1766741118.jpg'),
+(2, 2, 'V000002', 'GV000002', 'Prakash', 'karnamahesh42@gmail.com', '9876543210', 'Location Recce', '2025-12-26', 'Location Recce Purpose', NULL, NULL, 9, NULL, 'approved', 1, '2025-12-26 14:58:57', 1, 2, '00:01:50', 9, '2025-12-26 14:38:39', '2025-12-26 14:59:10', 'Aadhaar Card', '123456789012', 'visitor_V000002_qr.png', 'TN10AB1234', 'Bike', '', '', '14:37:00', 'v_pic_V000002_1766741279.jpg'),
+(3, 2, 'V000003', 'GV000002', 'Sharath', 'karnamahesh42@gmail.com', '9876501234', 'Location Recce', '2025-12-26', 'Location Recce Purpose', NULL, NULL, 9, NULL, 'approved', 0, NULL, 0, 0, NULL, 9, '2025-12-26 14:38:39', '2025-12-27 14:27:36', 'PAN Card', 'ABCDE1234F', 'visitor_V000003_qr.png', 'TN09XY9876', 'Bike', '', '', '14:37:00', ''),
+(4, 3, 'V000004', 'GV000003', 'Kamesh', 'karnamahesh42@gmail.com', '8919146333', 'Delivery', '2025-12-26', 'Delivery Visit', NULL, NULL, 9, NULL, 'approved', 0, NULL, 0, 0, NULL, 9, '2025-12-26 14:40:22', '2025-12-27 14:27:36', 'Aadhar Card', '535168435468', 'visitor_V000004_qr.png', 'AP25DF6536', 'Car', '', '', '14:39:00', ''),
+(5, 4, 'V000005', 'GV000004', 'Surya Kumar', 'pothina.surya@gmail.com', '8919146336', 'General Visit', '2025-12-26', 'Test Visit ', NULL, NULL, 9, NULL, 'approved', 1, '2025-12-26 17:52:30', 1, 2, '00:02:54', 9, '2025-12-26 17:48:00', '2025-12-26 17:53:22', 'Aadhar Card', '12346578969', 'visitor_V000005_qr.png', 'AP123456', 'Bike', '', '', '17:46:00', 'v_pic_V000005_1766751671.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -317,6 +356,22 @@ CREATE TABLE `visitor_logs` (
   `performed_by` int(11) NOT NULL,
   `performed_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `visitor_logs`
+--
+
+INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_status`, `new_status`, `remarks`, `performed_by`, `performed_at`) VALUES
+(1, 1, 'Created', NULL, 'pending', '--', 9, '2025-12-26 14:37:02'),
+(2, 2, 'Created', NULL, 'pending', '--', 9, '2025-12-26 14:38:39'),
+(3, 3, 'Created', NULL, 'pending', '--', 9, '2025-12-26 14:38:39'),
+(4, 4, 'Created', NULL, 'pending', '--', 9, '2025-12-26 14:40:22'),
+(5, 4, 'approved', 'pending', 'approved', NULL, 18, '2025-12-26 14:43:34'),
+(6, 1, 'approved', 'pending', 'approved', NULL, 18, '2025-12-26 14:44:12'),
+(7, 2, 'approved', 'pending', 'approved', NULL, 11, '2025-12-26 14:50:46'),
+(8, 3, 'approved', 'pending', 'approved', NULL, 11, '2025-12-26 14:50:47'),
+(9, 5, 'Created', NULL, 'pending', '--', 9, '2025-12-26 17:48:00'),
+(10, 5, 'approved', 'pending', 'approved', NULL, 18, '2025-12-26 17:49:01');
 
 -- --------------------------------------------------------
 
@@ -343,6 +398,16 @@ CREATE TABLE `visitor_request_header` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `company` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `visitor_request_header`
+--
+
+INSERT INTO `visitor_request_header` (`id`, `header_code`, `requested_by`, `referred_by`, `requested_date`, `requested_time`, `department`, `purpose`, `description`, `email`, `total_visitors`, `status`, `updated_by`, `remarks`, `created_at`, `updated_at`, `company`) VALUES
+(1, 'GV000001', '9', 18, '2025-12-26', '14:45:00', 'Finance', 'Interview', 'Interview Purpose ', 'karnamahesh42@gmail.com', 1, 'approved', NULL, NULL, '2025-12-26 14:37:02', '2025-12-26 14:44:12', 'UKMPL'),
+(2, 'GV000002', '9', 11, '2025-12-26', '14:37:00', 'Finance', 'Location Recce', 'Location Recce Purpose', 'karnamahesh42@gmail.com', 2, 'approved', NULL, NULL, '2025-12-26 14:38:39', '2025-12-26 14:50:47', 'UKMPL'),
+(3, 'GV000003', '9', 18, '2025-12-26', '14:39:00', 'Finance', 'Delivery', 'Delivery Visit', 'karnamahesh42@gmail.com', 1, 'approved', NULL, NULL, '2025-12-26 14:40:22', '2025-12-26 14:43:34', 'UKMPL'),
+(4, 'GV000004', '9', 18, '2025-12-26', '17:46:00', 'Finance', 'General Visit', 'Test Visit ', 'pothina.surya@gmail.com', 1, 'approved', NULL, NULL, '2025-12-26 17:48:00', '2025-12-26 17:49:01', 'UKMPL');
 
 --
 -- Indexes for dumped tables
@@ -450,13 +515,13 @@ ALTER TABLE `visitor_request_header`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `expired_visitor_passes`
 --
 ALTER TABLE `expired_visitor_passes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `purposes`
@@ -486,7 +551,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `security_gate_logs`
 --
 ALTER TABLE `security_gate_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -510,19 +575,19 @@ ALTER TABLE `user_password_vault`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `visitor_request_header`
 --
 ALTER TABLE `visitor_request_header`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

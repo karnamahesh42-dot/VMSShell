@@ -76,7 +76,7 @@ h1, h2, h3, h4, .card-title {
 <nav class="sidebar" id="sidebar">
   
   <div class="brand-area">
-      <img src="<?= base_url('public/dist/ramoji-logo-3.png') ?>" alt="Logo">
+      <img src="<?= base_url('public/dist/RFC_GuestFlow_White.PNG') ?>" alt="Logo">
   </div>
 
   <ul class="nav flex-column">

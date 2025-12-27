@@ -22,7 +22,7 @@
             width: 400px;
             padding: 30px;
             border-radius: 18px;
-            background: #faf3f3ff;
+            background: #fdfdfd;
             /* box-shadow: 0 10px 25px rgba(0,0,0,0.15); */
             box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.6);
             position: relative;
@@ -35,7 +35,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
+            width: 60%;
             height: 6px;
             background: linear-gradient(to right, #ff5f6d, #ffc371, #4facfe, #00f2fe);
         }
@@ -72,8 +72,18 @@
         margin-bottom: 0px;
         }
 
+        .logo {
+        text-align: center;
+        margin-bottom: 0px;
+        }
+
+         .logo img {
+        width: 250px;     /* Adjust size */
+        height: auto;
+        }
+
         .login-logo img {
-        width: 150px;     /* Adjust size */
+        width: 100px;     /* Adjust size */
         height: auto;
         }
 
@@ -130,7 +140,10 @@
         <img src="<?= base_url('public/dist/ramoji-logo.png') ?>" alt="Logo">
     </div>
     
-    <div class="project-title">VMS Portal</div>
+    <div class="logo">
+        <img src="<?= base_url('public/dist/RFC_GuestFlow_White.PNG') ?>" alt="Logo">
+    </div>
+
     <hr>
     <div class="login-title">Access Your Account</div>
 

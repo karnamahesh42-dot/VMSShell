@@ -28,6 +28,19 @@
 }
 
 
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand-logo {
+    height: 60px;          /* adjust as needed */
+    width: auto;
+    object-fit: contain;
+}
+
+
     html, body {
       height: 100%;
       margin: 0;

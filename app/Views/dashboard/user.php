@@ -24,9 +24,15 @@
                                             <option value="UKMPL">UKMPL</option>
                                             <option value="DHPL">DHPL</option>
                                             <option value="ETPL">ETPL</option>
+                                            <option value="Eenadu">Eenadu</option>
+                                            <option value="ETV Bharat">ETV Bharat</option>
+                                             <option value="Priya Foods">Priya Foods</option>
+                                             <option value="Wellness Center">Wellness Center</option>
+                                             <option value="Ramoji Foundation">Ramoji Foundation</option>
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <!-- Department -->
                                 <div class="form-group row mb-1">
