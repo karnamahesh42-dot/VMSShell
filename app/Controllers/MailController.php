@@ -94,4 +94,123 @@ class MailController extends Controller
             }
         }
 
+
+
+
+        /////////////////////////////group QR ////////////////////////////////
+
+        public function sendGroupQrMail()
+        {
+            try {
+
+                $head_id = $this->request->getPost('head_id');
+                $email = $this->request->getPost('email');
+
+
+                if (!$head_id) {
+                    return $this->response->setJSON([
+                        'status' => 'error',
+                        'message' => 'Head ID is required'
+                    ]);
+                }
+
+                // 📦 Fetch visitors under head_id
+                $headerModel = new \App\Models\VisitorRequestHeaderModel();
+                $visitors = $headerModel->getHeaderWithVisitorsMailData($head_id);
+
+                if (empty($visitors)) {
+                    return $this->response->setJSON([
+                        'status' => 'error',
+                        'message' => 'No visitors found'
+                    ]);
+                }
+
+                // 📁 Directories
+                $pdfDir = FCPATH . 'public/uploads/group_qr/';
+                if (!is_dir($pdfDir)) {
+                    mkdir($pdfDir, 0755, true);
+                }
+
+                /**
+                 * ==================================================
+                 * 1️⃣ LOAD GROUP QR HTML (MULTIPLE CARDS)
+                 * ==================================================
+                 */
+                $html = view('emails/group_gatepass_layout', [
+                    'visitors' => $visitors
+                ]);
+
+                /**
+                 * ==================================================
+                 * 2️⃣ GENERATE PDF
+                 * ==================================================
+                 */
+                $options = new Options();
+                $options->set('isRemoteEnabled', true); // IMPORTANT (local images)
+                $options->set('defaultFont', 'DejaVu Sans');
+
+                $dompdf = new Dompdf($options);
+                $dompdf->loadHtml($html);
+                $dompdf->setPaper('A4', 'portrait');
+                $dompdf->render();
+
+                /**
+                 * ==================================================
+                 * 3️⃣ SAVE PDF
+                 * ==================================================
+                 */
+                $pdfFile = $pdfDir . 'Group_QR_' .$visitors[0]['header_code']. '.pdf';
+
+                if (file_exists($pdfFile)) {
+                    unlink($pdfFile);
+                }
+
+                file_put_contents($pdfFile, $dompdf->output());
+
+                /**
+                 * ==================================================
+                 * 4️⃣ SEND MAIL (SAME AS SINGLE QR STYLE)
+                 * ==================================================
+                 */
+                $emailService = \Config\Services::email();
+                $emailService->clear(true);
+
+                $emailService->setFrom(
+                    env('app.email.fromEmail'),
+                    env('app.email.fromName')
+                );
+
+                // 👉 Change TO if required
+                // $emailService->setTo($visitors[0]['visitor_email']);
+                $emailService->setTo($email);
+
+                $emailService->setSubject('Group Visitor Gate Pass');
+                $emailService->setMessage(
+                    "Dear Team,<br><br>
+                    Please find attached the group visitor gate passes.<br><br>
+                    Regards,<br>Security Team"
+                );
+
+                $emailService->attach($pdfFile);
+
+                if (!$emailService->send()) {
+                    return $this->response->setJSON([
+                        'status' => 'error',
+                        'message' => $emailService->printDebugger()
+                    ]);
+                }
+
+                return $this->response->setJSON([
+                    'status'  => 'success',
+                    'message' => 'Group QR mail sent successfully',
+                    'file'    => base_url('public/uploads/group_qr/' . basename($pdfFile))
+                ]);
+
+            } catch (\Exception $e) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ]);
+            }
+        }
 }

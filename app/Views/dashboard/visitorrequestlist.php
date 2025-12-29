@@ -190,14 +190,23 @@ function loadVisitorList() {
 
                 // Action buttons only for pending
                 let actions = "";
+                let shareMail="";
                 if (item.status === "pending") {
                     actions = `
                         <button class="btn btn-success btn-sm approvalBtn mx-1" onclick = approvalProcess(${item.id},'approved','${item.header_code}','') ><i class="fa-solid fa-check"></i></button>
                         <button class="btn btn-danger btn-sm approvalBtn mx-1" onclick = rejectComment(${item.id},'rejected','${item.header_code}','') ><i class="fa-solid fa-xmark"></i></button>
                     `;
                 } else {
-                    actions = `<span class="text-muted">--</span>`;
+                    actions = ``;
+                    shareMail = `
+                    <i class="bi bi-envelope-fill text-warning fs-5"
+                    role="button"
+                    title="Resend Mail"
+                    onclick="confirmResendMail('${item.email}','${item.id}')">
+                    </i>`;
                 }
+
+
 
                 rows += `
                     <tr> 
@@ -210,10 +219,14 @@ function loadVisitorList() {
                         <td onclick="view_visitor(${item.id})">${item.total_visitors ?? ''}</td>
                         <td onclick="view_visitor(${item.id})">${statusBadge}</td>
                         </a>
-                         <?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){?>
-                        <td>${actions}</td>
-                        <?php } ?>
-                        <td>
+                        
+                        <td style="text-align:center"><?php if($_SESSION['role_id'] == '1' || $_SESSION['role_id'] == '2'){ ?> 
+                            ${actions} 
+                            <?php } ?>
+                        ${shareMail}
+                        </td>
+                        
+                        <td style="text-align:center">
                         <button class="btn btn-info btn-sm " onclick="view_visitor(${item.id})" >
                         <i class="fa-solid fa-eye"></i>
                         </button>
@@ -253,8 +266,8 @@ function view_visitor(id){
             let actionButtons = "";
             let h = res.data[0];
 
-            console.log(res)
-            console.log(h.status);
+           // console.log(res)
+           // console.log(h.status);
             
             if (h.status === "pending" ) {
 
@@ -364,7 +377,6 @@ if (v.securityCheckStatus == 0 && v.status == 'approved') {
                     </tbody>
                 </table>
             `;
-
 
             $("#visitorCardsContainer").html(tableHtml);
             $("#visitorModal").modal("show");
@@ -525,6 +537,97 @@ function markMeetingCompleted(v_code) {
         }
     });
 }
+
+
+
+function confirmResendMail(mailId, header_id) {
+    Swal.fire({
+        title: "Resend Gate Pass..?",
+        html: `
+            <input id="resendEmail"
+                   type="email"
+                   class="swal2-input"
+                   value="${mailId || ''}"
+                   placeholder="Enter email address">
+        `,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Send",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#198754",
+        cancelButtonColor: "#dc3545",
+        focusConfirm: false,
+
+        preConfirm: () => {
+            const email = document.getElementById("resendEmail").value.trim();
+
+            if (!email) {
+                Swal.showValidationMessage("Email is required");
+                return false;
+            }
+
+            // basic email validation
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                Swal.showValidationMessage("Enter a valid email");
+                return false;
+            }
+
+            return email;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            re_send_group_qr(result.value, header_id);
+        }
+    });
+}
+
+
+function re_send_group_qr(email, header_id) {
+
+    // Swal.fire({
+    //     title: 'Sending Group QR...',
+    //     text: 'Please wait',
+    //     allowOutsideClick: false,
+    //     didOpen: () => Swal.showLoading()
+    // });
+
+    $.ajax({
+        url: "<?= base_url('mail/group-qr') ?>",
+        type: "POST",
+        data: {
+            head_id: header_id,
+            email: email
+        },
+        dataType: "json",
+
+        success: function (res) {
+            
+            if (res.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Mail Sent',
+                    text: 'Group QR mail sent successfully'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: res.message || 'Something went wrong'
+                });
+            }
+        },
+
+        error: function () {
+           
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error',
+                text: 'Unable to send mail'
+            });
+        }
+    });
+}
+
 
 
 

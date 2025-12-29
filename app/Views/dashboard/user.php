@@ -19,16 +19,11 @@
                                 <div class="form-group row mb-1">
                                     <label class="col-sm-4 col-form-label">Company</label>
                                     <div class="col-sm-8">
-                                        <select name="company_name" class="form-control" required>
-                                            <option value="">Select Company</option>
-                                            <option value="UKMPL">UKMPL</option>
-                                            <option value="DHPL">DHPL</option>
-                                            <option value="ETPL">ETPL</option>
-                                            <option value="Eenadu">Eenadu</option>
-                                            <option value="ETV Bharat">ETV Bharat</option>
-                                             <option value="Priya Foods">Priya Foods</option>
-                                             <option value="Wellness Center">Wellness Center</option>
-                                             <option value="Ramoji Foundation">Ramoji Foundation</option>
+                                          <select name="company_name" class="form-control" required>
+                                            <option value="">Select Department</option>
+                                            <?php foreach ($companies as $comp): ?>
+                                                <option value="<?= $comp['company_name'] ?>"><?= esc($comp['company_name']) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>

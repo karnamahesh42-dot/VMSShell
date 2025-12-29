@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\DepartmentModel;
 use App\Models\VisitorRequestModel;
+use App\Models\CompanyModel;
 
 class SecurityController extends BaseController
 {
@@ -16,13 +17,108 @@ class SecurityController extends BaseController
      public function View_authorized_visitor_list()
     {
           $deptModel = new DepartmentModel();
+          $companyModel = new CompanyModel();
           $data['departments'] = $deptModel->findAll();
+           $data['companies'] = $companyModel->findAll();
           return view('dashboard/authorized_visitor_list',$data);
     }
 
 
 
-/// ..........Visitor Photo Upload  Start.............. ///
+// /// ..........Visitor Photo Upload  Start.............. ///
+// public function uploadPhoto()
+// {
+//     $file   = $this->request->getFile('photo');
+//     $v_code = $this->request->getPost('v_code');
+
+//     if (!$file || !$file->isValid()) {
+//         return $this->response->setJSON([
+//             'status' => 'error',
+//             'message' => 'Invalid image'
+//         ]);
+//     }
+
+//     // 🔐 Security check
+//     $visitorModel = new \App\Models\VisitorRequestModel();
+//     $visitor = $visitorModel->where('v_code', $v_code)->first();
+
+//     if (!$visitor || $visitor['securityCheckStatus'] == 0) {
+//         return $this->response->setJSON([
+//             'status' => 'error',
+//             'message' => 'Photo upload not allowed at this stage'
+//         ]);
+//     }
+
+//     // 🔍 Validate MIME
+//     if (!in_array($file->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg'])) {
+//         return $this->response->setJSON([
+//             'status' => 'error',
+//             'message' => 'Only JPG or PNG images are allowed'
+//         ]);
+//     }
+
+//     // 📁 Upload path
+//     $uploadPath = FCPATH . 'public/uploads/visitor_photos/';
+//     if (!is_dir($uploadPath)) {
+//         mkdir($uploadPath, 0777, true);
+//     }
+
+//     // 🏷️ File name
+//     $newName  = 'v_pic_' . $v_code . '_' . time() . '.jpg';
+//     $fullPath = $uploadPath . $newName;
+
+//     $tempPath = $file->getTempName();
+
+//     /**
+//      * ✅ STEP 1: FIX ROTATION USING EXIF (IMPORTANT)
+//      */
+//     if (function_exists('exif_read_data') && in_array($file->getMimeType(), ['image/jpeg', 'image/jpg'])) {
+
+//         $exif = @exif_read_data($tempPath);
+
+//         if (!empty($exif['Orientation'])) {
+
+//             $source = imagecreatefromjpeg($tempPath);
+
+//             switch ($exif['Orientation']) {
+//                 case 3:
+//                     $source = imagerotate($source, 180, 0);
+//                     break;
+//                 case 6:
+//                     $source = imagerotate($source, -90, 0); // RIGHT
+//                     break;
+//                 case 8:
+//                     $source = imagerotate($source, 90, 0);  // LEFT
+//                     break;
+//             }
+
+//             imagejpeg($source, $tempPath, 100);
+//             imagedestroy($source);
+//         }
+//     }
+
+//     /**
+//      * ✅ STEP 2: RESIZE & COMPRESS (Mobile optimized)
+//      */
+//     $image = \Config\Services::image('gd');
+
+//     $image->withFile($tempPath)
+//           ->resize(1024, 1024, true, 'auto')
+//           ->save($fullPath, 70); // 70% quality = sharp + small size
+
+//     /**
+//      * 💾 STEP 3: SAVE PATH
+//      */
+//     $visitorModel->where('v_code', $v_code)
+//                  ->set(['v_phopto_path' => $newName])
+//                  ->update();
+
+//     return $this->response->setJSON([
+//         'status' => 'success',
+//         'path'   => base_url('public/uploads/visitor_photos/' . $newName)
+//     ]);
+// }
+
 public function uploadPhoto()
 {
     $file   = $this->request->getFile('photo');
@@ -30,50 +126,52 @@ public function uploadPhoto()
 
     if (!$file || !$file->isValid()) {
         return $this->response->setJSON([
-            'status' => 'error',
+            'status'  => 'error',
             'message' => 'Invalid image'
         ]);
     }
 
-    // 🔐 Security check
+    // 🔐 Security validation
     $visitorModel = new \App\Models\VisitorRequestModel();
     $visitor = $visitorModel->where('v_code', $v_code)->first();
 
     if (!$visitor || $visitor['securityCheckStatus'] == 0) {
         return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Photo upload not allowed at this stage'
+            'status'  => 'error',
+            'message' => 'Photo upload not allowed'
         ]);
     }
 
-    // 🔍 Validate MIME
-    if (!in_array($file->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg'])) {
+    // 🔍 MIME validation
+    $mime = $file->getMimeType();
+    if (!in_array($mime, ['image/jpeg', 'image/jpg', 'image/png'])) {
         return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Only JPG or PNG images are allowed'
+            'status'  => 'error',
+            'message' => 'Only JPG and PNG images allowed'
         ]);
     }
 
-    // 📁 Upload path
+    // 📁 Upload directory
     $uploadPath = FCPATH . 'public/uploads/visitor_photos/';
     if (!is_dir($uploadPath)) {
-        mkdir($uploadPath, 0777, true);
+        mkdir($uploadPath, 0755, true);
     }
 
-    // 🏷️ File name
-    $newName  = 'v_pic_' . $v_code . '_' . time() . '.jpg';
+    // 🏷 File naming
+    $newName  = 'v_pic_' . $v_code . '.jpg';
     $fullPath = $uploadPath . $newName;
-
     $tempPath = $file->getTempName();
 
     /**
-     * ✅ STEP 1: FIX ROTATION USING EXIF (IMPORTANT)
+     * ==================================================
+     * 🔁 STEP 1: FIX IMAGE ROTATION (ONCE & BEFORE RESIZE)
+     * ==================================================
      */
-    if (function_exists('exif_read_data') && in_array($file->getMimeType(), ['image/jpeg', 'image/jpg'])) {
+    if ($mime !== 'image/png' && function_exists('exif_read_data')) {
 
         $exif = @exif_read_data($tempPath);
 
-        if (!empty($exif['Orientation'])) {
+        if (!empty($exif['Orientation']) && $exif['Orientation'] != 1) {
 
             $source = imagecreatefromjpeg($tempPath);
 
@@ -82,29 +180,41 @@ public function uploadPhoto()
                     $source = imagerotate($source, 180, 0);
                     break;
                 case 6:
-                    $source = imagerotate($source, -90, 0); // RIGHT
+                    $source = imagerotate($source, -90, 0);
                     break;
                 case 8:
-                    $source = imagerotate($source, 90, 0);  // LEFT
+                    $source = imagerotate($source, 90, 0);
                     break;
             }
 
-            imagejpeg($source, $tempPath, 100);
+            imagejpeg($source, $tempPath, 85);
             imagedestroy($source);
         }
     }
 
     /**
-     * ✅ STEP 2: RESIZE & COMPRESS (Mobile optimized)
+     * ====================================
+     * ⚡ STEP 2: FAST PATH FOR SMALL IMAGES
+     * ====================================
      */
-    $image = \Config\Services::image('gd');
+    if ($file->getSize() < 500 * 1024) { // < 500 KB
+        copy($tempPath, $fullPath);
+    } else {
 
-    $image->withFile($tempPath)
-          ->resize(1024, 1024, true, 'auto')
-          ->save($fullPath, 70); // 70% quality = sharp + small size
+        /**
+         * ===============================
+         * ⚡ STEP 3: RESIZE & COMPRESS
+         * ===============================
+         */
+        $image = \Config\Services::image('gd');
+
+        $image->withFile($tempPath)
+              ->resize(800, 800, true, 'auto')
+              ->save($fullPath, 65);
+    }
 
     /**
-     * 💾 STEP 3: SAVE PATH
+     * 💾 STEP 4: SAVE FILE PATH
      */
     $visitorModel->where('v_code', $v_code)
                  ->set(['v_phopto_path' => $newName])

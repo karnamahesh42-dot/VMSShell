@@ -225,7 +225,7 @@ $thisYearQuery = $this->SecurityGateLogModel
 
 if ($roleId == 2) {
     $thisYearQuery->where('visitor_request_header.department', $departmentName);
-} elseif ($roleId == 3) {
+} else if ($roleId == 3) {
     $thisYearQuery->where('visitors.created_by', $userId);
 }
 
@@ -280,7 +280,7 @@ $thisYearVisitors = $thisYearQuery->countAllResults();
 
         if ($roleId == 2) {
             $todayQuery->where('visitor_request_header.department', $departmentName);
-        } elseif ($roleId == 3) {
+        } else if ($roleId == 3) {
             $todayQuery->where('visitors.created_by', $userId);
         }
 
@@ -308,10 +308,9 @@ $thisYearVisitors = $thisYearQuery->countAllResults();
     ->where('security_gate_logs.check_in_time >=', $monthStart)
     ->where('security_gate_logs.check_in_time <=', $monthEnd);
 
-
         if ($roleId == 2) {
             $monthQuery->where('visitor_request_header.department', $departmentName);
-        } elseif ($roleId == 3) {
+        } else if ($roleId == 3) {
             $monthQuery->where('visitors.created_by', $userId);
         }
 

@@ -20,11 +20,18 @@
                                 <form method="get" class="row g-2 mb-3">
                                     <div class="col-md-2">
                                     <label>Company</label>
-                                     <select name="company" class="form-control" required>
+                                     <!-- <select name="company" class="form-control" required>
                                             <option value=""> -- Select Company --</option>
                                             <option value="UKMPL">UKMPL</option>
                                             <option value="DHPL">DHPL</option>
                                             <option value="ETPL">ETPL</option>
+                                        </select> -->
+
+                                         <select name="company" class="form-control" required>
+                                            <option value="">Select Department</option>
+                                            <?php foreach ($companies as $comp): ?>
+                                                <option value="<?= $comp['company_name'] ?>"><?= esc($comp['company_name']) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
 

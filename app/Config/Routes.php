@@ -43,7 +43,10 @@ $routes->post('/visitor/complete-meeting', 'VisitorRequest::completeMeeting');
 
 // $routes->get('send-email', 'MailController::sendMail');
 $routes->post('send-email', 'MailController::sendMail');
+$routes->post('mail/group-qr', 'MailController::sendGroupQrMail');
+
 // $routes->post('send-email', 'MailController::sendMailTwo');
+
 
 
 $routes->get('reference', 'ReferenceControllere::index');

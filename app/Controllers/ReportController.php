@@ -3,6 +3,8 @@
 namespace App\Controllers;
 use App\Models\DepartmentModel;
 use App\Models\PurposeModel;
+use App\Models\CompanyModel;
+
 class ReportController extends BaseController
 {
 
@@ -71,18 +73,18 @@ public function dailyVisitorReport()
         'left'
     );
 
-    // 🔍 Date filter
+    //  Date filter
     if ($fromDate && $toDate) {
         $builder->where('DATE(vr.visit_date) >=', $fromDate);
         $builder->where('DATE(vr.visit_date) <=', $toDate);
     }
 
-    // 🔍 Company filter
+    //  Company filter
     if (!empty($company)) {
         $builder->where('vrh.company', $company);
     }
 
-    // 🔍 Department filter
+    //  Department filter
     if (!empty($department)) {
         $builder->where('vrh.department', $department);
     }
@@ -102,6 +104,7 @@ public function dailyVisitorReport()
 
         // 🔹 Fetch distinct departments
     $deptBuilder = $db->table('visitor_request_header');
+
     $departments = $deptBuilder
         ->select('DISTINCT(department) as department')
         ->where('department IS NOT NULL')
@@ -119,8 +122,6 @@ public function dailyVisitorReport()
     return view('dashboard/reports/daily_visitor_report', $data);
 }
 
-
-        
 
 public function requestToCheckoutReport()
 {
@@ -199,6 +200,12 @@ public function requestToCheckoutReport()
     $data['departments'] = $departmentModel
         ->orderBy('department_name', 'ASC')
         ->findAll();
+
+
+  $companyModel = new CompanyModel();
+  $data['companies'] = $companyModel->orderBy('company_name', 'ASC')->findAll();
+   
+       
 
 
     

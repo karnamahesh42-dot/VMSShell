@@ -44,7 +44,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-   </div>
+              </div>
                     <!-- Row 1 -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -127,11 +127,22 @@
 
             <!-- Company Filter -->
             <div class="col-md-3 mb-2">
-                <select name="company" class="form-control" onchange="this.form.submit()">
+                <!-- <select name="company" class="form-control" onchange="this.form.submit()">
                     <option value="">All Companies</option>
                     <option value="UKMPL" <?= (isset($_GET['company']) && $_GET['company']=="UKMPL")?'selected':'' ?>>UKMPL</option>
                     <option value="DHPL" <?= (isset($_GET['company']) && $_GET['company']=="DHPL")?'selected':'' ?>>DHPL</option>
                     <option value="ETPL" <?= (isset($_GET['company']) && $_GET['company']=="ETPL")?'selected':'' ?>>ETPL</option>
+                </select> -->
+
+
+            <select name="company" class="form-control" required>
+                    <option value="">All Companies</option>
+                    <?php foreach ($companies as $comp): ?>
+                            <option value="<?= $comp['company_name'] ?>" 
+                                <?= (isset($_GET['company_name']) && $_GET['company_name']==$comp['company_name'])?'selected':'' ?>>
+                                <?= $comp['company_name'] ?>
+                            </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 

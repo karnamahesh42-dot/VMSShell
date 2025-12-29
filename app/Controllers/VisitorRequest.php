@@ -36,6 +36,7 @@ class VisitorRequest extends BaseController
         $dep_id     = $session->get('dep_id');
         $role_id    = $session->get('role_id');
         $user_id    = $session->get('user_id');
+        $company    = $session->get('company_name');
 
         $userModel = new \App\Models\UserModel();
 
@@ -51,6 +52,7 @@ class VisitorRequest extends BaseController
             $admins = $userModel
                         ->where('role_id', 2)
                         ->where('department_id', $dep_id)
+                        ->where('company_name', $company)
                         ->orderBy('priority', 'ASC')
                         ->findAll();
         }
@@ -75,6 +77,7 @@ class VisitorRequest extends BaseController
         $dep_id     = $session->get('dep_id');
         $role_id    = $session->get('role_id');
         $user_id    = $session->get('user_id');
+        $company    = $session->get('company_name');
 
         $userModel = new \App\Models\UserModel();
 
@@ -90,10 +93,13 @@ class VisitorRequest extends BaseController
             $admins = $userModel
                         ->where('role_id', 2)
                         ->where('department_id', $dep_id)
+                        ->where('company_name', $company)
                         ->orderBy('priority', 'ASC')
                         ->findAll();
         }
 
+
+        
         $data = [
             'admins' => $admins,
             'logged_user_id' => $user_id,

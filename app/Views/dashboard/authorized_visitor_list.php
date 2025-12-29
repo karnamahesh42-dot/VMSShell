@@ -227,11 +227,18 @@
 
                                     <div class="col-md-2">
                                         <label class="form-label">Company</label>
-                                        <select id="filterCompany" class="form-select">
+                                        <!-- <select id="filterCompany" class="form-select">
                                             <option value="">All</option>
                                             <option value="UKMPL">UKMPL</option>
                                             <option value="DHPL">DHPL</option>
                                             <option value="ETPL">ETPL</option>
+                                        </select> -->
+
+                                        <select name="filterCompany" id="filterCompany" class="form-control" >
+                                            <option value="">--Select Department--</option>
+                                            <?php foreach ($companies as $comp): ?>
+                                                <option value="<?= $comp['company_name'] ?>"><?= esc($comp['company_name']) ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
 

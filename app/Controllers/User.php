@@ -5,13 +5,19 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\DepartmentModel;
 use App\Models\RoleModel;
+use App\Models\CompanyModel;
+
+
 
 class User extends BaseController
 {
     public function index()
     {   
         $deptModel = new DepartmentModel();
+        $companyModel = new CompanyModel();
+
         $data['departments'] = $deptModel->findAll();
+        $data['companies'] = $companyModel->findAll();
 
         return view('dashboard/user', $data);
     }
@@ -89,6 +95,8 @@ public function userListData()
     $deptModel = new DepartmentModel();
     $roleModel = new RoleModel();
     $userModel = new UserModel();
+    $companyModel = new CompanyModel();
+    
     $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
     $userDept = $session->get('department_id');    // Logged user's dept
     $company    = $this->request->getGet('company');
@@ -123,6 +131,7 @@ public function userListData()
     $data['users']       = $userModel->findAll();
     $data['departments'] = $deptModel->findAll();
     $data['roles']       = $roleModel->findAll();
+    $data['companies'] = $companyModel->findAll();
     return view('dashboard/userlist', $data);
 }
 
