@@ -22,6 +22,7 @@ class UserModel extends Model
     'active',
     'hash_key',
     'created_by',
+    'last_login_at',
     'created_at'
     ];
 

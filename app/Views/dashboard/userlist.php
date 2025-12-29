@@ -112,7 +112,7 @@
                     <div class="col-md-12">
                         <div class="card visitor-list-card">
                             <div class="card-header d-flex justify-content-between align-items-center card-header-actions">
-                                <h5 class="mb-0">User List</h5>
+                                <h5 class="mb-0">User Management</h5>
 
                                 <a href="<?= base_url('user') ?>" class="btn btn-warning">
                                     <i class="bi bi-person-plus-fill"></i> New User

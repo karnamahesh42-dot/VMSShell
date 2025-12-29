@@ -41,6 +41,8 @@ class Dashboard extends BaseController
         $userId       = $_SESSION['user_id'];
         $departmentId = $_SESSION['department_id'];
         $departmentName = $_SESSION['department_name'];
+        $compenyName = $_SESSION['company_name'];
+
         // Dynamic counts from DB
     
         $pendingQuery = $this->visitorModel
@@ -206,115 +208,92 @@ $data['pendingList'] = $pendingList;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
- $yearStart = date('Y-01-01 00:00:00');
-$yearEnd   = date('Y-12-31 23:59:59');
+$visitorsModel = new VisitorRequestModel();
 
-$thisYearQuery = $this->SecurityGateLogModel
-    ->join(
-        'visitors',
-        'visitors.request_header_id = security_gate_logs.visitor_request_id',
-        'inner'
-    )
+$yearStart = date('Y-01-01');
+$yearEnd   = date('Y-12-31');
+
+$yearQuery = $visitorsModel
     ->join(
         'visitor_request_header',
         'visitor_request_header.id = visitors.request_header_id',
         'inner'
     )
-    ->where('security_gate_logs.check_in_time >=', $yearStart)
-    ->where('security_gate_logs.check_in_time <=', $yearEnd);
+    ->where('visitors.securityCheckStatus !=', 0)
+    ->where('visitors.visit_date >=', $yearStart)
+    ->where('visitors.visit_date <=', $yearEnd);
 
 if ($roleId == 2) {
-    $thisYearQuery->where('visitor_request_header.department', $departmentName);
-} else if ($roleId == 3) {
-    $thisYearQuery->where('visitors.created_by', $userId);
+    $yearQuery
+        ->where('visitor_request_header.department', $departmentName)
+        ->where('visitor_request_header.company', $compenyName);
+} elseif ($roleId == 3) {
+    $yearQuery->where('visitors.created_by', $userId);
 }
 
-$thisYearVisitors = $thisYearQuery->countAllResults();
+$thisYearVisitors = $yearQuery->countAllResults();
+/////-----------------------------------------------------/////////
+
+$monthStart = date('Y-m-01');
+$monthEnd   = date('Y-m-t');
+
+$monthQuery = $visitorsModel
+    ->join('visitor_request_header', 'visitor_request_header.id = visitors.request_header_id')
+    ->where('visitors.securityCheckStatus !=', 0)
+    ->where('visitors.visit_date >=', $monthStart)
+    ->where('visitors.visit_date <=', $monthEnd);
+
+if ($roleId == 2) {
+    $monthQuery
+        ->where('visitor_request_header.department', $departmentName)
+        ->where('visitor_request_header.company', $compenyName);
+} elseif ($roleId == 3) {
+    $monthQuery->where('visitors.created_by', $userId);
+}
+
+$monthVisitors = $monthQuery->countAllResults();
+
+///////////-------------------------------------------------------///////////////
+
+$weekStart = date('Y-m-d', strtotime('monday this week'));
+$weekEnd   = date('Y-m-d', strtotime('sunday this week'));
+
+$weekQuery = $visitorsModel
+    ->join('visitor_request_header', 'visitor_request_header.id = visitors.request_header_id')
+    ->where('visitors.securityCheckStatus !=', 0)
+    ->where('visitors.visit_date >=', $weekStart)
+    ->where('visitors.visit_date <=', $weekEnd);
+
+if ($roleId == 2) {
+    $weekQuery
+        ->where('visitor_request_header.department', $departmentName)
+        ->where('visitor_request_header.company', $compenyName);
+} elseif ($roleId == 3) {
+    $weekQuery->where('visitors.created_by', $userId);
+}
+
+$weekVisitors = $weekQuery->countAllResults();
+
+////////////////-------------------------------------------------////////////////
+$today = date('Y-m-d');
+
+$todayQuery = $visitorsModel
+    ->join('visitor_request_header', 'visitor_request_header.id = visitors.request_header_id')
+    ->where('visitors.securityCheckStatus !=', 0)
+    ->where('visitors.visit_date', $today);
+
+if ($roleId == 2) {
+    $todayQuery
+        ->where('visitor_request_header.department', $departmentName)
+        ->where('visitor_request_header.company', $compenyName);
+} elseif ($roleId == 3) {
+    $todayQuery->where('visitors.created_by', $userId);
+}
+
+$todayVisitors = $todayQuery->countAllResults();
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
 
-        $weekStart = date('Y-m-d 00:00:00', strtotime('monday this week'));
-        $weekEnd   = date('Y-m-d 23:59:59', strtotime('sunday this week'));
-
-        $weekQuery = $this->SecurityGateLogModel
-             ->join(
-        'visitors',
-        'visitors.id = security_gate_logs.visitor_request_id',
-        'inner'
-    )
-    ->join(
-        'visitor_request_header',
-        'visitor_request_header.id = visitors.request_header_id',
-        'inner'
-    )
-    ->where('security_gate_logs.check_in_time >=', $weekStart)
-    ->where('security_gate_logs.check_in_time <=', $weekEnd);
-
-        if ($roleId == 2) {
-            $weekQuery->where('visitor_request_header.department', $departmentName);
-        } elseif ($roleId == 3) {
-            $weekQuery->where('visitors.created_by', $userId);
-        }
-
-        $weekVisitors = $weekQuery->countAllResults();
-//////////////////////////////////////////////////////////////////////////////////////////
-
-        $todayStart = date('Y-m-d 00:00:00');
-        $todayEnd   = date('Y-m-d 23:59:59');
-
-        $todayQuery = $this->SecurityGateLogModel
-            ->join(
-        'visitors',
-        'visitors.id = security_gate_logs.visitor_request_id',
-        'inner'
-    )
-    ->join(
-        'visitor_request_header',
-        'visitor_request_header.id = visitors.request_header_id',
-        'inner'
-    )
-    ->where('security_gate_logs.check_in_time >=', $todayStart)
-    ->where('security_gate_logs.check_in_time <=', $todayEnd);
-
-
-        if ($roleId == 2) {
-            $todayQuery->where('visitor_request_header.department', $departmentName);
-        } else if ($roleId == 3) {
-            $todayQuery->where('visitors.created_by', $userId);
-        }
-
-        $todayVisitors = $todayQuery->countAllResults();
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
-        $monthStart = date('Y-m-01 00:00:00');
-        $monthEnd   = date('Y-m-t 23:59:59');
-
-        $monthQuery = $this->SecurityGateLogModel
-            // ->join('visitors', 'visitors.request_header_id = security_gate_logs.visitor_request_id')
-            // ->where('check_in_time >=', $monthStart)
-            // ->where('check_in_time <=', $monthEnd);
-        ->join(
-        'visitors',
-        'visitors.id = security_gate_logs.visitor_request_id',
-        'inner'
-    )
-    ->join(
-        'visitor_request_header',
-        'visitor_request_header.id = visitors.request_header_id',
-        'inner'
-    )
-    ->where('security_gate_logs.check_in_time >=', $monthStart)
-    ->where('security_gate_logs.check_in_time <=', $monthEnd);
-
-        if ($roleId == 2) {
-            $monthQuery->where('visitor_request_header.department', $departmentName);
-        } else if ($roleId == 3) {
-            $monthQuery->where('visitors.created_by', $userId);
-        }
-
-        $monthVisitors = $monthQuery->countAllResults();
 //////////////////////////////////////////////////////////////////////////////////////////
 
                 // Security alerts — example (0 for now, or fetch from DB)

@@ -20,6 +20,10 @@ class Login extends BaseController
             if (!$user) {
                 return redirect()->to('login')->with('error', 'Invalid username or password');
             }
+            $userModel
+                ->where('username', $username)
+                ->set('last_login_at', date('Y-m-d H:i:s'))
+                ->update();
 
             // session()->set([
             //     'user_id'    => $user->id,

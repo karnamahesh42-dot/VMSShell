@@ -91,7 +91,7 @@ h1, h2, h3, h4, .card-title {
       <?php if($_SESSION['role_id'] == '1'){ ?>
       <li><a class="nav-link <?= (uri_string()=='userlist') ? 'active' : '' ?>" 
              href="<?= base_url('userlist') ?>">
-             <i class="bi bi-people-fill"></i> Users
+             <i class="bi bi-people-fill"></i> User Management
       </a></li>
       <?php } ?>
 
