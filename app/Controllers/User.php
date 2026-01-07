@@ -17,7 +17,7 @@ class User extends BaseController
         $companyModel = new CompanyModel();
 
         $data['departments'] = $deptModel->findAll();
-        $data['companies'] = $companyModel->findAll();
+        $data['companies']   = $companyModel->findAll();
 
         return view('dashboard/user', $data);
     }
@@ -83,7 +83,7 @@ class User extends BaseController
     ]);
 
     return $this->response->setJSON([
-        'status' => 'success',
+        'status'  => 'success',
         'message' => 'User created successfully'
     ]);
 }
@@ -91,17 +91,17 @@ class User extends BaseController
 
 public function userListData()
 {
-    $session = session();
-    $deptModel = new DepartmentModel();
-    $roleModel = new RoleModel();
-    $userModel = new UserModel();
+    $session      = session();
+    $deptModel    = new DepartmentModel();
+    $roleModel    = new RoleModel();
+    $userModel    = new UserModel();
     $companyModel = new CompanyModel();
     
-    $userRole = $session->get('role_id');          // 1 = Admin, 2 = Department Head
-    $userDept = $session->get('department_id');    // Logged user's dept
-    $company    = $this->request->getGet('company');
-    $department = $this->request->getGet('department');
-    $role       = $this->request->getGet('role');
+    $userRole     = $session->get('role_id');          // 1 = Admin, 2 = Department Head
+    $userDept     = $session->get('department_id');    // Logged user's dept
+    $company      = $this->request->getGet('company');
+    $department   = $this->request->getGet('department');
+    $role         = $this->request->getGet('role');
 
     // Base Query
     $userModel
@@ -131,7 +131,7 @@ public function userListData()
     $data['users']       = $userModel->findAll();
     $data['departments'] = $deptModel->findAll();
     $data['roles']       = $roleModel->findAll();
-    $data['companies'] = $companyModel->findAll();
+    $data['companies']   = $companyModel->findAll();
     return view('dashboard/userlist', $data);
 }
 
@@ -151,9 +151,9 @@ public function userListData()
             'department_id' => $this->request->getPost('department_id'),
             'email'         => $this->request->getPost('email'),
             'employee_code' => $this->request->getPost('employee_code'),
-            'name' => $this->request->getPost('name'),
-            'priority' => $this->request->getPost('priority'),
-            'password' =>  md5($new_password . "HASHKEY123"),
+            'name'          => $this->request->getPost('name'),
+            'priority'      => $this->request->getPost('priority'),
+            'password'      =>  md5($new_password . "HASHKEY123"),
         ];
 
         (new UserModel())->update($id, $data);

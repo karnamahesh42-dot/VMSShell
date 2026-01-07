@@ -7,6 +7,7 @@ use App\Models\VisitorLogModel;
 use App\Models\VisitorRequestHeaderModel;
 use App\Models\ExpiredVisitorPassModel;
 use App\Models\PurposeModel;
+use App\Models\RecceDetailsModel;
   
 
 class VisitorRequest extends BaseController
@@ -15,14 +16,16 @@ class VisitorRequest extends BaseController
     protected $logModel;
     protected $VisitorRequestHeaderModel;
     protected $ExpiredVisitorPassModel;
+    protected $RecceDetailsModel;
 
 
     public function __construct()
     {
-        $this->visitorModel = new VisitorRequestModel();
-        $this->logModel     = new VisitorLogModel();
-        $this->VisitorRequestHeaderModel     = new VisitorRequestHeaderModel();
-        $this->ExpiredVisitorPassModel     = new ExpiredVisitorPassModel();
+        $this->visitorModel                 = new VisitorRequestModel();
+        $this->logModel                     = new VisitorLogModel();
+        $this->VisitorRequestHeaderModel    = new VisitorRequestHeaderModel();
+        $this->ExpiredVisitorPassModel      = new ExpiredVisitorPassModel();
+         $this->recceDetailsModel           = new RecceDetailsModel();
     }
 
     // public function index(): string
@@ -68,6 +71,14 @@ class VisitorRequest extends BaseController
             ->orderBy('purpose_name', 'ASC')
             ->findAll();
 
+        $db = \Config\Database::connect();
+
+        $data['recceTypes'] = $db->table('recce_master')
+            ->where('status', 1)
+            ->orderBy('name', 'ASC')
+            ->get()
+            ->getResultArray();
+
         return view('dashboard/visitorequest', $data);
     }
 
@@ -97,8 +108,6 @@ class VisitorRequest extends BaseController
                         ->orderBy('priority', 'ASC')
                         ->findAll();
         }
-
-
         
         $data = [
             'admins' => $admins,
@@ -110,6 +119,13 @@ class VisitorRequest extends BaseController
             ->where('status', 1)
             ->orderBy('purpose_name', 'ASC')
             ->findAll();
+
+        $db = \Config\Database::connect();
+        $data['recceTypes'] = $db->table('recce_master')
+        ->where('status', 1)
+        ->orderBy('name', 'ASC')
+        ->get()
+        ->getResultArray(); 
 
         return view('dashboard/group_visitor_request',$data);
     }
@@ -215,7 +231,7 @@ class VisitorRequest extends BaseController
         ======================================================= */
 
         $visitorData = [
-            'request_header_id'         => $headerId,   // NEW IMPORTANT LINK
+            'request_header_id' => $headerId,   // NEW IMPORTANT LINK
             'v_code'            => $vCode,
             'group_code'        => $groupCode,
             'visitor_name'      => $this->request->getPost('visitor_name'),
@@ -238,6 +254,22 @@ class VisitorRequest extends BaseController
         ];
 
         $visitorId = $this->visitorModel->insert($visitorData);
+
+        if ($headerId && $this->request->getPost('purpose') == 'Recce') {
+
+            $recceData = [
+                'header_id'      => $headerId,
+                'recce_type'     => $this->request->getPost('recce_type'),
+                'art_director'   => $this->request->getPost('art_director'),
+                'company'        => $this->request->getPost('company'),
+                'contact_person' => $this->request->getPost('contact_person'),
+                'shooting_date'  => $this->request->getPost('shooting_date'),
+                'created_at'     => date('Y-m-d H:i:s'),
+                'created_by'     => session()->get('user_id'),
+            ];
+
+            $this->recceDetailsModel->insert($recceData);
+        }
 
         // Log entry
         $this->insertLog($visitorId, 'Created', null, $status);
@@ -272,19 +304,19 @@ class VisitorRequest extends BaseController
 public function groupSubmit()
 {
     if (!$this->request->isAJAX()) return;
-    $codeGen = new GenerateCodesController();
-    $groupCode = $codeGen->generateGroupVisitorsCode();
-    $names  = $this->request->getPost('visitor_name');
-    $head_email = $this->request->getPost('email');
-    $phones = $this->request->getPost('visitor_phone');
-    $visit_time   = $this->request->getPost('visit_time');
-    $visit_date   = $this->request->getPost('visit_date');
-    $purpose   = $this->request->getPost('purpose');
-    $description   = $this->request->getPost('description');
-    $autoApprove = (session()->get('role_id') <= 2);
-    $vehicleFiles = $this->request->getFileMultiple('vehicle_id_proof');
-    $visitorFiles = $this->request->getFileMultiple('visitor_id_proof');
-    $mailDataList = []; // Collect mail data
+        $codeGen = new GenerateCodesController();
+        $groupCode = $codeGen->generateGroupVisitorsCode();
+        $names  = $this->request->getPost('visitor_name');
+        $head_email = $this->request->getPost('email');
+        $phones = $this->request->getPost('visitor_phone');
+        $visit_time   = $this->request->getPost('visit_time');
+        $visit_date   = $this->request->getPost('visit_date');
+        $purpose   = $this->request->getPost('purpose');
+        $description   = $this->request->getPost('description');
+        $autoApprove = (session()->get('role_id') <= 2);
+        $vehicleFiles = $this->request->getFileMultiple('vehicle_id_proof');
+        $visitorFiles = $this->request->getFileMultiple('visitor_id_proof');
+        $mailDataList = []; // Collect mail data
 
     // 1️ Insert Header Record
     $headerData = [
@@ -305,6 +337,24 @@ public function groupSubmit()
     ];
 
       $headerId = $this->VisitorRequestHeaderModel->insert($headerData);
+
+
+    
+    if ($headerId && $this->request->getPost('purpose') == 'Recce') {
+
+        $recceData = [
+            'header_id'      => $headerId,
+            'recce_type'     => $this->request->getPost('recce_type'),
+            'art_director'   => $this->request->getPost('art_director'),
+            'company'        => $this->request->getPost('company'),
+            'contact_person' => $this->request->getPost('contact_person'),
+            'shooting_date'  => $this->request->getPost('shooting_date'),
+            'created_at'     => date('Y-m-d H:i:s'),
+            'created_by'     => session()->get('user_id'),
+        ];
+
+        $this->recceDetailsModel->insert($recceData);
+    }
 
     // 2️ Loop through visitors
     foreach ($names as $i => $name)
@@ -375,9 +425,9 @@ public function groupSubmit()
                 ]);
             }
 
-            // // ------------------------------
+            // // ------------------------------------
             // // 2. UPDATE EACH VISITOR + ADD LOG
-            // // ------------------------------
+            // // ------------------------------------
                 $mail_data = [];  
                 foreach ($visitors as $v) {
 

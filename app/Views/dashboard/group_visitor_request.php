@@ -17,18 +17,18 @@
                             <!-- ********* COMMON HEADER FIELDS ********* -->
                           <div class="row">
                                 <div class="col-md-2 mb-2">
-                                    <label>Company</label>
+                                    <label class="form-label">Company</label>
                                     <input type="text" name="company" class="form-control" value="<?= session()->get('company_name')?>" placeholder="Enter Company" required readonly>
                                 </div>
 
                                 <div class="col-md-2 mb-2">
-                                    <label>Department</label>
+                                    <label class="form-label">Department</label>
                                     <input type="text" name="department" class="form-control input-readonly-dark" value="<?= session()->get('department_name')?>" placeholder="Enter Department" required readonly>
                                 </div>
 
                                 <div class="col-md-2 mb-2">
-                                    <label>Purpose</label>
-                                   <select name="purpose" class="form-control" required>
+                                    <label class="form-label">Purpose</label>
+                                   <select name="purpose" id="purpose" class="form-control" onchange="recceDetails()" required >
                                             <option value="">-- Select Purpose --</option>
                                             <?php foreach ($purposes as $p): ?>
                                                 <option value="<?= esc($p['purpose_name']) ?>"
@@ -40,23 +40,23 @@
                                 </div>
                                 
                                 <div class="col-md-2 mb-2">
-                                    <label>Visit Date</label>
+                                    <label class="form-label">Visit Date</label>
                                     <input type="date" name="visit_date" class="form-control idNumberField" placeholder="Select Date" required>
                                 </div>
 
                                 <div class="col-md-2 mb-2">
-                                    <label>Visit Time</label>
+                                    <label class="form-label">Visit Time</label>
                                     <input type="time" name="visit_time" class="form-control" placeholder="Select Time" required>
                                 </div>
                                 
                                 <div class="col-md-2 mb-2">
-                                    <label>Email</label>
+                                    <label class="form-label">Email</label>
                                     <input type="email" name="email"  class="form-control" placeholder=" Please Enter Email" required>
                                 </div>
 
                                                      
                                 <div class="col-md-2 mb-2">
-                                    <label>Referred By</label>
+                                    <label class="form-label">Referred By</label>
                                     <select name="referred_by" class="form-control" required>
                                         <option value="">--Select Admin --</option>
                                         <?php if (!empty($admins)) : ?>
@@ -70,7 +70,7 @@
                                 </div>
 
                                 <div class="col-md-6 mb-2">
-                                    <label>Description</label>
+                                    <label class="form-label">Description</label>
                                     <textarea name="description"  id="description" class="form-control" rows="1" placeholder="Please Enter Description"></textarea>
                                 </div>
 
@@ -90,6 +90,60 @@
                                     </label>
                                 </div>
                             </div>
+                            
+                                 <div class="row" id="recceData" style="display:none">
+                                    <h5 class="text-primary font-weight-bold m-2">Recce Details</h5>
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Type of Recce</label>
+
+                                            <select class="form-control" name="recce_type" id="recce_type">
+                                                <option value="">Select Recce Type</option>
+
+                                                <?php foreach ($recceTypes as $recce): ?>
+                                                    <option value="<?= esc($recce['name']) ?>">
+                                                        <?= esc($recce['name']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                    <!-- <select class="form-control" name="recce_type" >
+                                        <option value="">Select Recce Type</option>
+                                        <option value="Film Shooting">Film Shooting</option>
+                                        <option value="AD Film Shooting">AD Film Shooting</option>
+                                    </select> -->
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Art Director / Director</label>
+                                        <input type="text" 
+                                            name="art_director" 
+                                            class="form-control" 
+                                            placeholder="Enter Art Director / Director Name">
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Company / Production</label>
+                                        <input type="text" 
+                                            name="company" 
+                                            class="form-control" 
+                                            placeholder="Enter Production / Company Name">
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Contact Person</label>
+                                        <input type="text" 
+                                            name="contact_person" 
+                                            class="form-control" 
+                                            placeholder="Enter Contact Person Name">
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Tentative Shooting Date</label>
+                                        <input type="date" 
+                                            name="shooting_date" 
+                                            class="form-control" 
+                                            placeholder="Select Tentative Shooting Date">
+                                    </div>
+                                </div>
 
                             <hr>
 
@@ -313,12 +367,24 @@ let isGroupSubmitting = false;
 $("#visitorForm").submit(function(e){
     e.preventDefault();
 
-    // ❌ prevent double submit
-    if (isGroupSubmitting) {
+    let purpose = $('#purpose').val();  
+    let receeType = $('#recce_type').val();  
+
+    if(purpose == 'Recce' && receeType == ''){
+        Swal.fire({
+        icon: 'error',
+        title: 'Missing Information',
+        text: 'Recce Type is mandatory when Purpose is Recce',
+        confirmButtonColor: '#3085d6'
+        });
+        return;
+    }
+
+    if(isGroupSubmitting){
         return false;
     }
 
-    isGroupSubmitting = true; // 🔒 lock
+    isGroupSubmitting = true; // lock
 
     let $btn = $("#visitorForm button[type=submit]");
     $btn.prop("disabled", true).text("Submitting...");
@@ -501,6 +567,13 @@ $("#excelUpload").change(function () {
         this.value = val;
     });
 
-
+  function recceDetails() {
+        let purpose = $('#purpose').val();
+        if (purpose === "Recce") {
+         $('#recceData').show();   // show section
+        }else{
+          $('#recceData').hide();   // show section
+        }
+    }
 
 </script>

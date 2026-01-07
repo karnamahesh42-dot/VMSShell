@@ -54,6 +54,11 @@ class VisitorRequestHeaderModel extends Model
     return $this->select("
         visitor_request_header.*,
         visitors.*,
+        recce_details.recce_type,
+        recce_details.art_director,
+        recce_details.company as productio,
+        recce_details.contact_person,
+        recce_details.shooting_date,
         u1.name AS visitor_created_by_name,
         u1.email AS visitor_created_by_email,
         u2.name AS referred_by_name,
@@ -62,6 +67,7 @@ class VisitorRequestHeaderModel extends Model
     ->join('visitors', 'visitors.request_header_id = visitor_request_header.id', 'left')
     ->join('users u1', 'u1.id = visitors.created_by', 'left')
     ->join('users u2', 'u2.id = visitor_request_header.referred_by', 'left')
+    ->join('recce_details', 'recce_details.header_id = visitor_request_header.id', 'left')
     ->where('visitor_request_header.id', $headerId)
     ->findAll();
 }

@@ -3,8 +3,15 @@
 
 <main class="main-content" id="mainContent">
     <div class="container-fluid">
+
+
+
+  
+
+
+
         <div class="row d-flex justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-11">
                 <div class="card card-primary">
                     <div class="card-header py-2">
                         <h5 class="m-0">Visitor Request</h5>
@@ -18,8 +25,8 @@
                             <div class="row">
 
                                 <div class="col-md-3 mb-2">
-                                    <label>Purpose</label>
-                                    <select name="purpose" class="form-control" required>
+                                    <label class="form-label">Purpose</label>
+                                    <select name="purpose" class="form-control" id="purpose" onchange="recceDetails()" required >
                                         <option value="">-- Select Purpose --</option>
                                         <?php foreach ($purposes as $p): ?>
                                             <option value="<?= esc($p['purpose_name']) ?>"
@@ -29,66 +36,106 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-
-                                                    
+                                                  
                                 <div class="col-md-3 mb-2">
-                                    <label>Referred By</label>
-                                    <select name="referred_by" class="form-control" required title="Select Referred By">
-                                        <!-- <option value="">--Select Admin --</option> -->
-                                        <?php if (!empty($admins)) : ?>
-                                            <?php foreach ($admins as $admin) : ?>
-                                                <option value="<?= $admin['id']; ?>">
-                                                    <?= $admin['name']; ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </select>
+                                    <label class="form-label">Referred By</label>
+                                        <select name="referred_by" class="form-control" required title="Select Referred By">
+                                            <!-- <option value="">--Select Admin --</option> -->
+                                            <?php if (!empty($admins)) : ?>
+                                                <?php foreach ($admins as $admin) : ?>
+                                                    <option value="<?= $admin['id']; ?>">
+                                                        <?= $admin['name']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    </div>
+                                        
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Date of Visit</label>
+                                        <input type="date" name="visit_date" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-3 mb-2">
+                                        <label class="form-label">Time of Visit</label>
+                                        <input type="time" name="visit_time" class="form-control" required>
+                                    </div>  
                                 </div>
+                            
+                            
+                                <div class="row" id="recceData" style="display:none">
+                                        <h5 class="text-primary font-weight-bold m-2">Recce Details</h5>
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label">Type of Recce</label>
+                                            <select class="form-control" name="recce_type" id="recce_type">
+                                                <option value="">-Select Recce Type-</option>
+                                                <?php foreach ($recceTypes as $recce): ?>
+                                                    <option value="<?= esc($recce['name']) ?>">
+                                                        <?= esc($recce['name']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
 
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label">Art Director / Director</label>
+                                            <input type="text" 
+                                                name="art_director" 
+                                                class="form-control" 
+                                                placeholder="Enter Art Director / Director Name">
+                                        </div>
 
-                                <div class="col-md-3 mb-2">
-                                    <label>Date of Visit</label>
-                                    <input type="date" name="visit_date" class="form-control" required>
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label">Company / Production</label>
+                                            <input type="text" 
+                                                name="company" 
+                                                class="form-control" 
+                                                placeholder="Enter Production / Company Name">
+                                        </div>
+
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label">Contact Person</label>
+                                            <input type="text" 
+                                                name="contact_person" 
+                                                class="form-control" 
+                                                placeholder="Enter Contact Person Name">
+                                        </div>
+
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label">Tentative Shooting Date</label>
+                                            <input type="date" 
+                                                name="shooting_date" 
+                                                class="form-control" 
+                                                placeholder="Select Tentative Shooting Date">
+                                        </div>
                                 </div>
-
-                                <div class="col-md-3 mb-2">
-                                    <label>Time of Visit</label>
-                                    <input type="time" name="visit_time" class="form-control" required>
-                                </div>
-
-                                <div class="col-md- mb-2">
-                                    <label>Description</label>
-                                    <textarea name="description" id="description" class="form-control" rows="2"
-                                              placeholder="Enter visit purpose details (optional)"></textarea>
-                                </div>
-
-                            </div>
+                    
 
                             <!-- Visitor Details -->
                             <h5 class="text-primary font-weight-bold">Visitor Details</h5>
                             <div class="row">
 
-                                <div class="col-md-6 mb-2">
-                                    <label>Visitor Name</label>
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Visitor Name</label>
                                     <input type="text" name="visitor_name" id="visitorName"
                                            class="form-control" placeholder="Enter visitor full name" required>
                                 </div>
 
-                                <div class="col-md-6 mb-2">
-                                    <label>Email</label>
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Email</label>
                                     <input type="email" name="visitor_email" class="form-control"
                                            placeholder="Enter email address" required>
                                 </div>
 
-                                <div class="col-md-6 mb-2">
-                                    <label>Phone</label>
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Phone</label>
                                     <input type="text" name="visitor_phone" id="phone"
                                            class="form-control" maxlength="10"
                                            placeholder="Enter phone number" required>
                                 </div>
 
                                 <div class="col-md-3 mb-2">
-                                    <label>ID Proof Type</label>
+                                    <label class="form-label">ID Proof Type</label>
                                     <select name="proof_id_type" class="form-control" required>
                                         <option value="">-- Select ID Type --</option>
                                         <option>Aadhar Card</option>
@@ -102,26 +149,31 @@
                                 </div>
 
                                 <div class="col-md-3 mb-2">
-                                    <label>ID Number</label>
+                                    <label class="form-label">ID Number</label>
                                     <input type="text" name="proof_id_number" id="idNumber"
                                            class="form-control" placeholder="Enter ID card number" required>
                                 </div>
 
+                                 <div class="col-md-9 mb-2">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" id="description" class="form-control" rows="2" placeholder="Enter visit purpose details (optional)"></textarea>
+                                </div>
                             </div>
 
-
-                            <!-- Vehicle Details -->
-                            <h5 class="text-primary font-weight-bold">Vehicle Information</h5>
-                            <div class="row">
-
-                                <div class="col-md-6 mb-2">
-                                    <label>Vehicle Number</label>
+                        <!-- Vehicle Details -->
+                          <h5 class="text-primary font-weight-bold">Vehicle Details & Attachments </h5>                       
+                        <div class="row">
+                    
+                              
+                            
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Vehicle Number</label>
                                     <input type="text" name="vehicle_no" id="vehicleNo"
                                            class="form-control" placeholder="Enter vehicle number (optional)">
                                 </div>
 
-                                <div class="col-md-6 mb-2">
-                                    <label>Vehicle Type</label>
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Vehicle Type</label>
                                     <select name="vehicle_type" class="form-control">
                                         <option value="">-- Select Vehicle Type --</option>
                                         <option>Bike</option>
@@ -132,24 +184,18 @@
                                         <option>Truck</option>
                                     </select>
                                 </div>
-
-                            </div>
-
-                            <!-- Attachments -->
-                            <h5 class="text-primary font-weight-bold">Attachments</h5>
-                            <div class="row">
-
-                                <div class="col-md-6 mb-2">
-                                    <label>Vehicle ID Proof</label>
+                        
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Vehicle ID Proof</label>
                                     <input type="file" name="vehicle_id_proof" class="form-control">
                                 </div>
 
-                                <div class="col-md-6 mb-2">
-                                    <label>Visitor ID Proof</label>
+                                <div class="col-md-3 mb-2">
+                                    <label class="form-label">Visitor ID Proof</label>
                                     <input type="file" name="visitor_id_proof" class="form-control">
                                 </div>
 
-                            </div>
+                          </div>
 
                             <input type="hidden" name="host_user_id" value="<?= $_SESSION['user_id']; ?>">
 
@@ -266,8 +312,26 @@ let isSubmitting = false;
 $("#visitorForm").submit(function(e){
     e.preventDefault();
 
+
+    
+    let purpose = $('#purpose').val();  
+    let receeType = $('#recce_type').val();  
+
+    if(purpose == 'Recce' && receeType == ''){
+        Swal.fire({
+        icon: 'error',
+        title: 'Missing Information',
+        text: 'Recce Type is mandatory when Purpose is Recce',
+        confirmButtonColor: '#3085d6'
+        });
+        return;
+    }
+
+
+
+
     if (isSubmitting) {
-        return false; // ❌ block second submit
+        return false; // block second submit
     }
 
     // Phone check
@@ -282,7 +346,7 @@ $("#visitorForm").submit(function(e){
         return;
     }
 
-    isSubmitting = true; // 🔒 lock submit
+    isSubmitting = true; // lock submit
 
     let $btn = $("#visitorForm button[type=submit]");
     $btn.prop("disabled", true).text("Submitting...");
@@ -325,7 +389,7 @@ $("#visitorForm").submit(function(e){
         },
 
         complete: function(){
-            isSubmitting = false;     // 🔓 unlock
+            isSubmitting = false;     // unlock
             $btn.prop("disabled", false).text("Submit");
         }
     });
@@ -349,13 +413,23 @@ function sendMail(head_id) {
         $.ajax({
         url: "<?= base_url('/send-email') ?>",
         type: "POST",
-        data: { head_id: head_id },   // 🔥 single variable
+        data: { head_id: head_id },   // single variable
         success: function(res) {
         console.log(res);
         }
         });
 }
 
+
+
+    function recceDetails() {
+        let purpose = $('#purpose').val();
+        if (purpose === "Recce") {
+         $('#recceData').show();   // show section
+        }else{
+          $('#recceData').hide();   // show section
+        }
+    }
 
 
 // function sendMail(maildata) {

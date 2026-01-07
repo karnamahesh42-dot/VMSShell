@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  const sidebar = document.getElementById('sidebar');
+const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
 const mobileToggle = document.getElementById('mobileSidebarToggle');
 const collapseBtn = document.getElementById('sidebarCollapse');
@@ -19,10 +19,7 @@ const mainContent = document.getElementById('mainContent');
 const topbar = document.getElementById('topbar');
 const footer = document.getElementById('footer');
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
-
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
     const topbar = document.getElementById('topbar');
@@ -35,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             mainContent.classList.add('expanded');
             topbar.classList.add('collapsed');
             footer.classList.add('expanded');
-            document.body.classList.remove('sidebar-open'); // ✅ important
+            document.body.classList.remove('sidebar-open'); // important
         }
     }
 
@@ -53,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         topbar.classList.toggle('collapsed');
         footer.classList.toggle('expanded');
 
-        // ✅ ADD THIS
         if (!sidebar.classList.contains('closed') && window.innerWidth <= 768) {
             document.body.classList.add('sidebar-open');
         } else {
@@ -66,12 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
     const fullScreenBtn = document.getElementById('fullScreenBtn');
     fullScreenBtn?.addEventListener('click', function () {
         // Desktop only
         if (window.innerWidth <= 425) return;
-
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen().catch(err => {
                 console.error('Fullscreen error:', err);
@@ -80,8 +74,44 @@ document.addEventListener('DOMContentLoaded', function () {
             document.exitFullscreen();
         }
     });
-
 });
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const fullScreenBtn = document.getElementById('fullScreenBtn');
+//     // Restore fullscreen on reload
+//     if (
+//         localStorage.getItem('isFullscreen') === 'true' &&
+//         window.innerWidth > 425
+//     ) {
+//         document.documentElement.requestFullscreen().catch(() => {});
+//     }
+//     fullScreenBtn?.addEventListener('click', function () {
+//         // Desktop only
+//         if (window.innerWidth <= 425) return;
+//         if (!document.fullscreenElement) {
+//             document.documentElement.requestFullscreen()
+//                 .then(() => {
+//                     localStorage.setItem('isFullscreen', 'true');
+//                 })
+//                 .catch(err => console.error('Fullscreen error:', err));
+//         } else {
+//             document.exitFullscreen()
+//                 .then(() => {
+//                     localStorage.setItem('isFullscreen', 'false');
+//                 });
+//         }
+//     });
+
+//     // Sync state if user exits fullscreen manually (ESC)
+//     document.addEventListener('fullscreenchange', () => {
+//         localStorage.setItem(
+//             'isFullscreen',
+//             document.fullscreenElement ? 'true' : 'false'
+//         );
+//     });
+// });
+
 
 overlay?.addEventListener('click', () => {
   sidebar.classList.remove('open');

@@ -84,7 +84,8 @@ $routes->get('/daily_visitor_report', 'ReportController::dailyVisitorReport');
 $routes->get('/request_to_checkout', 'ReportController::requestToCheckoutReport');
 
 ///////////////////////////////////// Reports  End /////////////////////////////////////////////////////////////
-
+$routes->get('/masterdata', 'MasterDataController::index');
+$routes->post('master/save', 'MasterDataController::save');
 
 // $routes->get('/', 'VisitorController::create');
 // $routes->get('/visitor/create','VisitorController::create');

@@ -449,26 +449,13 @@ public function  todayVisitorListOfDashboard()
             ->where('check_out_time IS NULL', null, false)
             ->first();
 
-
-                // 1️⃣ Check visit date first
-        $today = date('Y-m-d');
-        $visitDate = date('Y-m-d', strtotime($visitor['visit_date']));
-
-        if ($visitDate !== $today) {
-            return $this->response->setJSON([
-                'status'  => 'invalid',
-                'message' => 'Your visit is not scheduled for today'
-            ]);
-        }
-        
-
+            
         if ($visitor['validity'] != 1) {
             return $this->response->setJSON([
                 'status' => 'invalid',
                 'message' => 'Visitor pass expired / not valid'
             ]);
         }
-
         
 
 
@@ -477,6 +464,20 @@ public function  todayVisitorListOfDashboard()
         ===================================================== */
         
         if($visitor['meeting_status'] == 0 && $visitor['securityCheckStatus'] == 0){
+
+
+            // Check visit date first
+            $today = date('Y-m-d');
+            $visitDate = date('Y-m-d', strtotime($visitor['visit_date']));
+
+            if ($visitDate !== $today) {
+                return $this->response->setJSON([
+                    'status'  => 'invalid',
+                    'message' => 'Your visit is not scheduled for today'
+                ]);
+            }
+
+
             $logModel->insert([
                 'visitor_request_id' => $visitorId,
                 'v_code'             => $v_code,
@@ -500,31 +501,26 @@ public function  todayVisitorListOfDashboard()
         if ($visitor['meeting_status'] == 1 && $visitor['securityCheckStatus'] == 1) {
 
             if ($activeLog) {
-
-
                 $entryTime = strtotime($activeLog['check_in_time']);
                 $exitTime  = time();
                 $diffSeconds = $exitTime - $entryTime;
                 $hours   = floor($diffSeconds / 3600);
                 $minutes = floor(($diffSeconds % 3600) / 60);
                 $seconds = $diffSeconds % 60;
-
                 $spendTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
 
-
-                // 🔹 Update log table
+                // Update log table
                 $logModel->update($activeLog['id'], [
                     'check_out_time' => date('Y-m-d H:i:s'),
                     'updated_at'     => date('Y-m-d H:i:s'),
                     'updated_by'     => session()->get('user_id')
                 ]);
 
-                // 🔹 Update visitor table
+                //  Update visitor table
                 $visitorModel->update($visitorId, [
                     'securityCheckStatus' => 2,
                     'spendTime'           => $spendTime
                 ]);
-
                
                  // Dalete Gate Passfiles Code Image
                 $this->deleteGatePassFiles($v_code);
@@ -541,12 +537,11 @@ public function  todayVisitorListOfDashboard()
 
          if($visitor['meeting_status'] == 0 && $visitor['securityCheckStatus'] == 1){
                
-              
-            // return $this->response->setJSON([
+                // return $this->response->setJSON([
                 //     'status' => 'meeting_not_completed'
                 // ]);
 
-                            // 🔹 Fetch host details
+                // Fetch host details
                 $requestHeaderModel = new \App\Models\VisitorRequestHeaderModel();
                 
                 $requestId = $visitor['request_header_id'];

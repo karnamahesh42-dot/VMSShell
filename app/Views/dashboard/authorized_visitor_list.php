@@ -1,10 +1,8 @@
 <?= $this->include('/dashboard/layouts/sidebar') ?>
   <?= $this->include('/dashboard/layouts/navbar') ?>
-     
-
 
    <main class="main-content" id="mainContent">
-        <div class="container-fluid">
+    <div class="container-fluid">
  
     <!-- view Pop-up Form start  -->
     <div class="modal fade" id="visitorModal">
@@ -120,7 +118,7 @@
                                         <div class="spinner-border text-primary" role="status"></div>
                                         <div class="mt-2">Uploading photo...</div>
                                         </div>
-                                            </div>
+                                        </div>
 
                                             <!-- VISITOR DETAILS (9 columns) -->
                                             <div class="col-md-9">
@@ -177,7 +175,6 @@
 
                                         </div>
                                     </div>
-    
                             </div>
                         </div>
                     </div>
@@ -275,8 +272,6 @@
                                         <button class="btn btn-secondary" onclick="resetFilters()" title="Reset Filters">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
-
-                                        
 
                                         <!-- Scan Button -->
                                         <!-- <button class="btn btn-success active" id="scanBtn" onclick="toggleScan()" title="Scan">

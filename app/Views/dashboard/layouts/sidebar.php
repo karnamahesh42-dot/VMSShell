@@ -12,7 +12,7 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
   <meta charset="utf-8" />
   <title>RFC Visitor Management System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <link rel="icon" type="image/png" href="<?= base_url('public/dist/ramoji-logo-3.png') ?>">
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -24,12 +24,12 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-body,.card-title {
-    font-family: 'Lato', sans-serif;
+body {
+    font-family: 'Nunito', sans-serif !important;
 }
-h1, h2, h3, h4, .card-title {
-    font-family: 'Playfair Display', serif; !important;
-}
+/* h1, h2, h3, h4, .card-title {
+    font-family: 'Playfair Display', serif !important;
+} */
 </style>
 
   <style>
@@ -93,6 +93,11 @@ h1, h2, h3, h4, .card-title {
              href="<?= base_url('userlist') ?>">
              <i class="bi bi-people-fill"></i> User Management
       </a></li>
+
+        <li><a class="nav-link <?= (uri_string()=='masterdata') ? 'active' : '' ?>" 
+             href="<?= base_url('masterdata') ?>">
+           <i class="bi bi-kanban-fill"></i>  Master Data
+      </a></li>
       <?php } ?>
 
       <?php if(in_array($_SESSION['role_id'], ['1','2','3'])){ ?>
@@ -128,7 +133,7 @@ h1, h2, h3, h4, .card-title {
       <?php } ?>
 
       
-    <?php if (in_array($_SESSION['role_id'], ['1'])) { ?>
+<?php if (in_array($_SESSION['role_id'], ['1'])) { ?>
 <li class="nav-item">
     <a class="nav-link <?= in_array(uri_string(), [
             'report/daily',

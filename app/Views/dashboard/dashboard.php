@@ -25,7 +25,6 @@
                     <div class="card-body visitor-card">
                        
                         <div class="row g-2">
-
                             <div class="col-md-3 col-sm-6 col-4">
                                 <label class="fw-semibold">Request ID:</label>
                                 <div id="h_code" class="text-primary" class="cardData"></div>
@@ -78,13 +77,40 @@
                             </div>
 
                             <div class="col-md-3 col-sm-6 col-6">
-                                <label class="fw-semibold">Actions</label>
-                                <?php if(session()->get('role_id') <= 2){ ?>
-                               
-                                <div id= "actionBtns"></div>
-                                <?php } ?>
-
+                            <label class="fw-semibold">Actions</label>
+                            <?php if(session()->get('role_id') <= 2){ ?>
+                            
+                            <div id= "actionBtns"></div>
+                            <?php } ?>
                             </div>
+
+                              <div class="row" id="recceData" style="display:none">
+                                    <h5 class="text-primary font-weight-bold m-2">Recce Details</h5>
+                                    <div class="col-md-3 col-sm-6 col-6">
+                                        <label class="fw-semibold">Type of Recce</label>
+                                        <div id="typeOfRecce" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-6">
+                                        <label class="fw-semibold">Art Director / Director</label>
+                                         <div id="director" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-6">
+                                        <label class="fw-semibold">Company / Production</label>
+                                        <div id="production" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-6">
+                                        <label class="fw-semibold">Contact Person</label>
+                                        <div id="contactPerson" class="cardData"></div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-6">
+                                        <label class="fw-semibold">Tentative Shooting Date</label>
+                                         <div id="shootingDate" class="cardData"></div>
+                                    </div>
+                                </div>
                         
                         </div>
                     </div>
@@ -103,7 +129,7 @@
     </div>
 </div>
 
-                <!-- End view Visitor Request Form Pop-Up  -->
+          <!-- End view Visitor Request Form Pop-Up  -->
 
           <!-- ROW 1: Small Cards -->
             <section class="dash-row">
@@ -383,6 +409,21 @@
             $("#h_date").text(h.requested_date +" & "+ h.requested_time);
             $("#h_description").text(h.description);
             $("#referred_by").text(h.referred_by_name);
+
+            $("#director").text(h.art_director);
+            $("#production").text(h.productio);
+            $("#contactPerson").text(h.contact_person);
+            $("#typeOfRecce").text(h.recce_type);
+            $("#shootingDate").text(h.shooting_date);
+
+            if (h.purpose === "Recce") {
+            $('#recceData').show();   // Recce Details
+            }
+
+
+
+
+
                            
             
             let cardsHtml = "";
