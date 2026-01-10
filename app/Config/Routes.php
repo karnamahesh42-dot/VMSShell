@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Dashboard::index');
 $routes->get('/home', 'Dashboard::index');
-
+$routes->get('about', 'Dashboard::about');
 $routes->get('/login', 'Login::index');
 $routes->get('/logout', 'Login::logout');
 
@@ -86,6 +86,7 @@ $routes->get('/request_to_checkout', 'ReportController::requestToCheckoutReport'
 ///////////////////////////////////// Reports  End /////////////////////////////////////////////////////////////
 $routes->get('/masterdata', 'MasterDataController::index');
 $routes->post('master/save', 'MasterDataController::save');
+
 
 // $routes->get('/', 'VisitorController::create');
 // $routes->get('/visitor/create','VisitorController::create');

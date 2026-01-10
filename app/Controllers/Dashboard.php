@@ -313,4 +313,10 @@ $todayVisitors = $todayQuery->countAllResults();
 
         return view('dashboard/dashboard', $data);
     }
+
+
+      public function about(){
+          return view('dashboard/about');
+      }
+    
 }

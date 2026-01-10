@@ -24,11 +24,20 @@ if (!$session->has('isLoggedIn') || !$session->has('user_id') || !$session->has(
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-body {
+ body {
     font-family: 'Nunito', sans-serif !important;
-}
+} 
 /* h1, h2, h3, h4, .card-title {
     font-family: 'Playfair Display', serif !important;
+} */
+/* 
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
 } */
 </style>
 
@@ -76,7 +85,7 @@ body {
 <nav class="sidebar" id="sidebar">
   
   <div class="brand-area">
-      <img src="<?= base_url('public/dist/RFC_GuestFlow_White.PNG') ?>" alt="Logo">
+      <img src="<?= base_url('public/dist/access360logo.png') ?>" alt="Logo">
   </div>
 
   <ul class="nav flex-column">
@@ -181,12 +190,19 @@ body {
 <?php } ?>
 
 
+        <li>
+            <a class="nav-link <?= (uri_string()=='about') ? 'active' : '' ?>"
+                href="<?= base_url('about') ?>">
+                <i class="bi bi-grid-1x2"></i>  About Access360
+            </a>
+        </li>
 
-      <li>
-        <a class="nav-link" href="<?= base_url('logout') ?>">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </a>
-      </li>
+
+        <li>
+            <a class="nav-link" href="<?= base_url('logout') ?>">
+            <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </li>
 
   </ul>
 

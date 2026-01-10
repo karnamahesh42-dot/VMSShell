@@ -121,9 +121,9 @@
 
                             <div class="card-body table-responsive">
 
-    <!-- 🔍 Filters Section -->
-    <form method="GET" class="mb-3">
-        <div class="row">
+        <!-- Filters Section -->
+        <form method="GET" class="mb-3">
+            <div class="row">
 
             <!-- Company Filter -->
             <div class="col-md-3 mb-2">
@@ -179,12 +179,11 @@
                             <i class="fa fa-rotate-left me-1"></i> Reset 
                         </a>
                     </div>
-
-        </div>
-    </form>
+            </div>
+        </form>
 
                                 <table class="table table-bordered table-hover" id="userTable">
-                                    <thead>
+                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Company</th>
@@ -209,7 +208,6 @@
                                                     <td><?= $user['username'] ?></td>
                                                     <td><?= $user['role_name'] ?></td>
                                                     <td><?= $user['priority'] ?></td>
-                                                    
                                                     <td>
 
                                                     <!-- Edit -->
@@ -230,12 +228,10 @@
                                                         <?php endif; ?>
                                                     </button>
                                                     </td>
-
                                                 </tr>
                                             <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-
+                                            <?php endif; ?>
+                                        </tbody>
                                 </table>
                             </div>
                         </div>

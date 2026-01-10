@@ -141,7 +141,7 @@
     </div>
     
     <div class="logo">
-        <img src="<?= base_url('public/dist/RFC_GuestFlow_White.PNG') ?>" alt="Logo">
+        <img src="<?= base_url('public/dist/access360logo.png') ?>" alt="Logo">
     </div>
 
     <hr>

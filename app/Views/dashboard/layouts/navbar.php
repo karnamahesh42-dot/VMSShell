@@ -4,7 +4,7 @@
   <button class="btn btn-outline-secondary d-none d-md-inline me-3" id="sidebarCollapse"><i class="bi bi-list"></i></button>
   <!-- <div class="brand">Visitor Management System <div class="brand-subtitle">Manage Every Visitor Digitally and Securely</div> </div> -->
  <div class="brand nav-logo">
-    <img src="<?= base_url('public/dist/RFC_GuestFlow_White.PNG') ?>" 
+    <img src="<?= base_url('public/dist/access360logo.png') ?>" 
          alt="Visitor Management System"
          class="brand-logo">
 </div>
