@@ -59,7 +59,7 @@ class MailController extends Controller
                     // Save new PDF
                     file_put_contents($pdfFile, $dompdf->output());
 
-                    // 2️⃣ Prepare Email
+                    // 2️ Prepare Email
                     $emailService->clear(true);
                     $emailService->setTo($email);
                     $emailService->setFrom(env('app.email.fromEmail'), env('app.email.fromName'));
@@ -67,7 +67,7 @@ class MailController extends Controller
                     $emailService->setMessage("Dear Visitor,<br><br>Please find your Gate Pass attached.<br><br>Regards,<br>Security Team");
                     $emailService->attach($pdfFile);
 
-                    // 3️⃣ Send Email
+                    // Send Email
                     if($emailService->send()){
                         $successCount++;
                     } else {
@@ -77,20 +77,96 @@ class MailController extends Controller
                         ];
                     }
                 }
+                
+                if ($data[0]['purpose'] == 'Recce') {
+                   $this->recceMail($data);
+                }
 
-                return $this->response->setJSON([
-                    "status" => "success",
-                    "sendType" => $mailType,
-                    "message" => "Mail process completed",
-                    "sent" => $successCount,
-                    "failed" => $failed
-                ]);
+
+                // return $this->response->setJSON([
+                //     "status" => "success",
+                //     "sendType" => $mailType,
+                //     "message" => "Mail process completed",
+                //     "sent" => $successCount,
+                //     "failed" => $failed
+                // ]);
 
             } catch (\Exception $e){
                 return $this->response->setJSON([
                     "status" => "error",
                     "message" => $e->getMessage()
                 ]);
+            }
+        }
+
+        /////////////////////////////Recce Mail////////////////////////////////
+
+        public function recceMail($data)
+        {
+            try {
+
+                $emailService = \Config\Services::email();
+
+                // UT email
+                $utEmail = 'karnamahesh42@gmail.com';
+                $row = $data[0];  
+                $message = "
+                    <p>Dear UT Team,</p>
+
+                    <p>
+                    This is a <strong>system-generated notification</strong> to inform you that a
+                    <strong>Recce Visit</strong> has been scheduled. Kindly review the details below
+                    and make the necessary arrangements.
+                    </p>
+
+                    <p>
+                    <strong>Request No:</strong> {$row['header_code']}<br>
+                    <strong>Company:</strong> {$row['company']}<br>
+                    <strong>Department:</strong> {$row['department_name']}<br>
+                    <strong>Total Visitors:</strong> {$row['total_visitors']}<br>
+                    <strong>Visit Date:</strong> {$row['visit_date']}<br>
+                    <strong>Recce Type:</strong> {$row['recce_type']}<br>
+                    <strong>Company / Production:</strong> {$row['productio']}<br>
+                    <strong>Art Director / Director:</strong> {$row['art_director']}<br>
+                    <strong>Tentative Date:</strong> {$row['shooting_date']}<br>
+                    <strong>Contact Person:</strong> {$row['contact_person']}
+                    </p>
+
+                    <p>
+                    Please note that this is an <strong>automated email</strong> sent for
+                    notification purposes. Replies to this email are not required.
+                    </p>
+
+                    <p>
+                    Regards,<br>
+                    <strong>Security Team</strong>
+                    </p>
+                ";
+
+
+
+
+                $emailService->clear(true);
+                $emailService->setTo($utEmail);
+                $emailService->setFrom(
+                    env('app.email.fromEmail'),
+                    env('app.email.fromName')
+                );
+                $emailService->setSubject("Recce Visit Scheduled on {$row['visit_date']} – {$row['recce_type']}");
+                $emailService->setMessage($message);
+
+                if (!$emailService->send()) {
+                    echo "<pre>";
+                    print_r($emailService->printDebugger());
+                    exit;
+                }
+
+                echo "UT Mail sent successfully";
+                exit;
+
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                exit;
             }
         }
 
@@ -101,6 +177,7 @@ class MailController extends Controller
 
         public function sendGroupQrMail()
         {
+
             try {
 
                 $head_id = $this->request->getPost('head_id');
@@ -114,7 +191,7 @@ class MailController extends Controller
                     ]);
                 }
 
-                // 📦 Fetch visitors under head_id
+                // Fetch visitors under head_id
                 $headerModel = new \App\Models\VisitorRequestHeaderModel();
                 $visitors = $headerModel->getHeaderWithVisitorsMailData($head_id);
 
@@ -125,7 +202,7 @@ class MailController extends Controller
                     ]);
                 }
 
-                // 📁 Directories
+                // Directories
                 $pdfDir = FCPATH . 'public/uploads/group_qr/';
                 if (!is_dir($pdfDir)) {
                     mkdir($pdfDir, 0755, true);
@@ -133,7 +210,7 @@ class MailController extends Controller
 
                 /**
                  * ==================================================
-                 * 1️⃣ LOAD GROUP QR HTML (MULTIPLE CARDS)
+                 * LOAD GROUP QR HTML (MULTIPLE CARDS)
                  * ==================================================
                  */
                 $html = view('emails/group_gatepass_layout', [
@@ -142,7 +219,7 @@ class MailController extends Controller
 
                 /**
                  * ==================================================
-                 * 2️⃣ GENERATE PDF
+                 * GENERATE PDF
                  * ==================================================
                  */
                 $options = new Options();
@@ -156,7 +233,7 @@ class MailController extends Controller
 
                 /**
                  * ==================================================
-                 * 3️⃣ SAVE PDF
+                 * SAVE PDF
                  * ==================================================
                  */
                 $pdfFile = $pdfDir . 'Group_QR_' .$visitors[0]['header_code']. '.pdf';
@@ -169,7 +246,7 @@ class MailController extends Controller
 
                 /**
                  * ==================================================
-                 * 4️⃣ SEND MAIL (SAME AS SINGLE QR STYLE)
+                 * SEND MAIL (SAME AS SINGLE QR STYLE)
                  * ==================================================
                  */
                 $emailService = \Config\Services::email();
@@ -180,7 +257,7 @@ class MailController extends Controller
                     env('app.email.fromName')
                 );
 
-                // 👉 Change TO if required
+                // Change TO if required
                 // $emailService->setTo($visitors[0]['visitor_email']);
                 $emailService->setTo($email);
 

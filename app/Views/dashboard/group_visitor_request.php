@@ -415,7 +415,7 @@ $("#visitorForm").submit(function(e){
                     sendMail(res.head_id);
                 }
 
-                setTimeout(() => location.reload(), 800);
+                //setTimeout(() => location.reload(), 800);
             }
         },
 

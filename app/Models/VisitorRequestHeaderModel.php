@@ -91,7 +91,12 @@ public function getHeaderWithVisitorsMailData($headerId)
             users.name AS created_by_name,
             users.email AS created_by_email,
             u2.name AS referred_by_name,
-            departments.department_name
+            departments.department_name,
+            recce_details.recce_type,
+            recce_details.art_director,
+            recce_details.company as productio,
+            recce_details.contact_person,
+            recce_details.shooting_date,
         ")
         ->join(
             'visitors',
@@ -112,7 +117,7 @@ public function getHeaderWithVisitorsMailData($headerId)
             'departments',
             'departments.id = users.department_id',
             'left'
-        )
+        )->join('recce_details', 'recce_details.header_id = visitor_request_header.id', 'left')
         ->where('visitor_request_header.id', $headerId)
         ->findAll();
 }
