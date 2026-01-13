@@ -44,7 +44,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-              </div>
+                </div>
                     <!-- Row 1 -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -121,66 +121,84 @@
 
                             <div class="card-body table-responsive">
 
-        <!-- Filters Section -->
-        <form method="GET" class="mb-3">
-            <div class="row">
+                        <!-- Filters Section -->
+                        <form method="GET" class="mb-3" id="filterform">
+                            <div class="row">
 
-            <!-- Company Filter -->
-            <div class="col-md-3 mb-2">
-                <!-- <select name="company" class="form-control" onchange="this.form.submit()">
-                    <option value="">All Companies</option>
-                    <option value="UKMPL" <?= (isset($_GET['company']) && $_GET['company']=="UKMPL")?'selected':'' ?>>UKMPL</option>
-                    <option value="DHPL" <?= (isset($_GET['company']) && $_GET['company']=="DHPL")?'selected':'' ?>>DHPL</option>
-                    <option value="ETPL" <?= (isset($_GET['company']) && $_GET['company']=="ETPL")?'selected':'' ?>>ETPL</option>
-                </select> -->
+                            <!-- Company Filter -->
+                            <div class="col-md-2 mb-2">
+                                <!-- <select name="company" class="form-control" onchange="this.form.submit()">
+                                    <option value="">All Companies</option>
+                                    <option value="UKMPL" <?= (isset($_GET['company']) && $_GET['company']=="UKMPL")?'selected':'' ?>>UKMPL</option>
+                                    <option value="DHPL" <?= (isset($_GET['company']) && $_GET['company']=="DHPL")?'selected':'' ?>>DHPL</option>
+                                    <option value="ETPL" <?= (isset($_GET['company']) && $_GET['company']=="ETPL")?'selected':'' ?>>ETPL</option>
+                                </select> -->
 
 
-            <select name="company" class="form-control" required>
-                    <option value="">All Companies</option>
-                    <?php foreach ($companies as $comp): ?>
-                            <option value="<?= $comp['company_name'] ?>" 
-                                <?= (isset($_GET['company_name']) && $_GET['company_name']==$comp['company_name'])?'selected':'' ?>>
-                                <?= $comp['company_name'] ?>
-                            </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+                            <select name="company" id='companyfilter' class="form-control select2" >
+                                    <option value="">All Companies</option>
+                                    <?php if(isset($_GET['company_name'])){
+                                        echo $_GET['company_name'];
+                                    } foreach ($companies as $comp): ?>
+                                            <option value="<?= $comp['company_name'] ?>" 
+                                                <?= (isset($_GET['company']) && $_GET['company']==$comp['company_name'])?'selected':'' ?>>
+                                                <?= $comp['company_name'] ?>
+                                            </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-            <!-- Department Filter -->
-            <div class="col-md-3 mb-2">
-                <select name="department" class="form-control" onchange="this.form.submit()">
-                    <option value="">All Departments</option>
-                    <?php foreach ($departments as $dept): ?>
-                        <option value="<?= $dept['id'] ?>" 
-                            <?= (isset($_GET['department']) && $_GET['department']==$dept['id'])?'selected':'' ?>>
-                            <?= $dept['department_name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+                            <!-- Department Filter -->
+                            <div class="col-md-2 mb-2">
+                                <select name="department" id='departmentfilter' class="form-control select2" >
+                                    <option value="">All Departments</option>
+                                    <?php foreach ($departments as $dept): ?>
+                                        <option value="<?= $dept['id'] ?>" 
+                                            <?= (isset($_GET['department']) && $_GET['department']==$dept['id'])?'selected':'' ?>>
+                                            <?= $dept['department_name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-            <!-- Role Filter -->
-            <div class="col-md-3 mb-2">
-                <select name="role" class="form-control" onchange="this.form.submit()">
-                    <option value="">All Roles</option>
+                            <!-- Role Filter -->
+                            <div class="col-md-2 mb-2">
+                                <select name="role" class="form-control" onchange="this.form.submit()">
+                                    <option value="">All Roles</option>
 
-                    <?php foreach ($roles as $role): ?>
-                        <option value="<?= $role['id'] ?>"
-                            <?= (isset($_GET['role']) && $_GET['role']==$role['id'])?'selected':'' ?>>
-                            <?= $role['role_name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+                                    <?php foreach ($roles as $role): ?>
+                                        <option value="<?= $role['id'] ?>"
+                                            <?= (isset($_GET['role']) && $_GET['role']==$role['id'])?'selected':'' ?>>
+                                            <?= $role['role_name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-            <!-- Reset Button -->
-                    <div class="col-md-2 mb-2">
-                        <a href="<?= base_url('userlist') ?>" class="btn btn-secondary w-100">
-                            <i class="fa fa-rotate-left me-1"></i> Reset 
-                        </a>
-                    </div>
-            </div>
-        </form>
+
+                            
+                            <!-- Role Filter -->
+                            <div class="col-md-2 mb-2">
+                                <select name="username" id="usernamefilter" class="form-control select2">
+                                    <option value="">All Usernames</option>
+
+                                    <?php foreach ($users as $user): ?>
+                                        <option value="<?= $user['username'] ?>"
+                                            <?= (isset($_GET['username']) && $_GET['username']==$user['username'])?'selected':'' ?>>
+                                            <?= $user['username']?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- Reset Button -->
+                                    <div class="col-md-1 mb-2">
+                                        <a href="<?= base_url('userlist') ?>" class="btn btn-secondary w-100">
+                                            <i class="fa fa-rotate-left me-1"></i> 
+                                        </a>
+                                    </div>
+                            </div>
+                        </form>
 
                                 <table class="table table-bordered table-hover" id="userTable">
                                      <thead>
@@ -192,6 +210,7 @@
                                             <th>Username</th>
                                             <th>Role</th>
                                             <th>Priority</th>
+                                            <th>Recent Login At</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -208,6 +227,7 @@
                                                     <td><?= $user['username'] ?></td>
                                                     <td><?= $user['role_name'] ?></td>
                                                     <td><?= $user['priority'] ?></td>
+                                                    <td><?= !empty($user['last_login_at']) ? $user['last_login_at'] : "<span class='text-danger'>Not Logged In </span>" ?></td>
                                                     <td>
 
                                                     <!-- Edit -->
@@ -360,5 +380,18 @@ function togglePassword() {
     }
 }
 
+
+$(document).ready(function () {
+
+    $('.select2').select2({
+        width: '100%',
+        allowClear: false
+    });
+
+    $('#companyfilter, #departmentfilter, #usernamefilter').on('change', function () {
+        $('#filterform').submit();
+    });
+
+});
 </script>
 

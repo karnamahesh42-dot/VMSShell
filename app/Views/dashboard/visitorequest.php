@@ -26,7 +26,7 @@
 
                                 <div class="col-md-3 mb-2">
                                     <label class="form-label">Purpose</label>
-                                    <select name="purpose" class="form-control" id="purpose" onchange="recceDetails()" required >
+                                    <select name="purpose" class="form-control select2" id="purpose" onchange="recceDetails()" required >
                                         <option value="">-- Select Purpose --</option>
                                         <?php foreach ($purposes as $p): ?>
                                             <option value="<?= esc($p['purpose_name']) ?>"
@@ -446,5 +446,14 @@ function sendMail(head_id) {
 //         }
 //     });
 // }
+
+ 
+$(document).ready(function () {
+
+    $('.select2').select2({
+        width: '100%',
+        allowClear: false
+    });
+});
 
 </script>

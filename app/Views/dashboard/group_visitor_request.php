@@ -28,7 +28,7 @@
 
                                 <div class="col-md-2 mb-2">
                                     <label class="form-label">Purpose</label>
-                                   <select name="purpose" id="purpose" class="form-control" onchange="recceDetails()" required >
+                                   <select name="purpose" id="purpose" class="form-control select2" onchange="recceDetails()" required >
                                             <option value="">-- Select Purpose --</option>
                                             <?php foreach ($purposes as $p): ?>
                                                 <option value="<?= esc($p['purpose_name']) ?>"
@@ -415,7 +415,7 @@ $("#visitorForm").submit(function(e){
                     sendMail(res.head_id);
                 }
 
-                //setTimeout(() => location.reload(), 800);
+                setTimeout(() => location.reload(), 800);
             }
         },
 
@@ -432,7 +432,7 @@ $("#visitorForm").submit(function(e){
         },
 
         complete: function(){
-            isGroupSubmitting = false;   // 🔓 unlock
+            isGroupSubmitting = false;   // unlock
             $btn.prop("disabled", false).text("Submit");
         }
     });
@@ -575,5 +575,14 @@ $("#excelUpload").change(function () {
           $('#recceData').hide();   // show section
         }
     }
+
+
+$(document).ready(function () {
+
+    $('.select2').select2({
+        width: '100%',
+        allowClear: false
+    });
+});
 
 </script>

@@ -549,18 +549,18 @@
     margin-bottom: 4px;
 }
 
-.card-body .form-control {
+.card-body .form-control .select2 {
     font-size: 0.8rem;
 }
-.card-body .form-select{
+.card-body .form-select .select2 {
     font-size: 0.8rem;
 }
 
 /* Input + Select + Textarea styling */
-.card-body .form-control {
+.card-body .form-control .select2 {
     padding: 7px 10px;
     height: auto;
-    border: 1px solid #cfcfcf;
+    border: 1px solid #727070;
     border-radius: 6px;
     transition: all .2s;
 }
@@ -1355,7 +1355,15 @@ input[type="file"] {
     70%  { transform: scale(1); }
 }
 
-
+.select2-container .select2-selection--single {
+    height: 36px  !important;
+}
+.select2-selection__rendered {
+    line-height: 36px !important;
+}
+.select2-selection__arrow {
+    height: 36px !important;
+}
 
 /* 
 /////////////////////////// Mobile View Responsive //////////////////////////////////////////// */

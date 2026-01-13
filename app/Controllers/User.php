@@ -24,116 +24,120 @@ class User extends BaseController
 
 
     public function create()
-{
-    if (!$this->request->isAJAX()) {
-        return redirect()->back();
-    }
+    {
+        if (!$this->request->isAJAX()) {
+            return redirect()->back();
+        }
 
-    $username = $this->request->getPost('username');
-    $email = $this->request->getPost('email');
-    $password = $this->request->getPost('password'); 
-    $userModel = new \App\Models\UserModel();
+        $username = $this->request->getPost('username');
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password'); 
+        $userModel = new \App\Models\UserModel();
 
-    // 🔍 Check if username already exists
-    if ($userModel->where('username', $username)->first()) {
+        //  Check if username already exists
+        if ($userModel->where('username', $username)->first()) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Username already exists. Please choose another.'
+            ]);
+        }
+
+        //  Optional: Check if email exists
+        if ($userModel->where('email', $email)->first()) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Email already registered.'
+            ]);
+        }
+
+        // Insert Data
+        $data = [
+            'name'           => $this->request->getPost('name'),
+            'priority'       => $this->request->getPost('priority'),
+            'company_name'   => $this->request->getPost('company_name'),
+            'department_id'  => $this->request->getPost('department_id'),
+            'email'          => $email,
+            'employee_code'  => $this->request->getPost('employee_code'),
+            'username'       => $username,
+            'password'       => md5($password . "HASHKEY123"),
+            'role_id'        => $this->request->getPost('role_id'),
+            'hash_key'       => "HASHKEY123",
+            'active'         => 1,
+            'created_by'     => session()->get('user_id')
+        ];
+
+        if (!$userModel->insert($data)) {
+        
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Failed to create user'
+            ]);
+        }
+
+        // Save encrypted password in vault table
+        $userId = $userModel->getInsertID();
+        $db = \Config\Database::connect();
+        $db->table('user_password_vault')->insert([
+            'user_id'      => $userId,
+            'password_enc' => $password
+        ]);
+
         return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Username already exists. Please choose another.'
+            'status'  => 'success',
+            'message' => 'User created successfully'
         ]);
     }
 
-    // 🔍 Optional: Check if email exists
-    if ($userModel->where('email', $email)->first()) {
-        return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Email already registered.'
-        ]);
+
+    public function userListData()
+    {
+        $session      = session();
+        $deptModel    = new DepartmentModel();
+        $roleModel    = new RoleModel();
+        $userModel    = new UserModel();
+        $companyModel = new CompanyModel();
+        
+        $userRole     = $session->get('role_id');          // 1 = Admin, 2 = Department Head
+        $userDept     = $session->get('department_id');    // Logged user's dept
+        $company      = $this->request->getGet('company');
+        $department   = $this->request->getGet('department');
+        $role         = $this->request->getGet('role');
+        $username         = $this->request->getGet('username');
+
+        // Base Query
+        $userModel
+            ->select('users.*, departments.department_name, roles.role_name')
+            ->join('departments', 'departments.id = users.department_id', 'left')
+            ->join('roles', 'roles.id = users.role_id', 'left');
+
+        // Restrict department for role_id = 2
+        if ($userRole == 2) {
+            $userModel->where('users.department_id', $userDept);
+        }
+
+        // Apply filters
+        if (!empty($company)) {
+            $userModel->where('users.company_name', $company);
+        }
+
+        if (!empty($department)) {
+            $userModel->where('users.department_id', $department);
+        }
+
+        if (!empty($role)) {
+            $userModel->where('users.role_id', $role);
+        }
+        if (!empty($username)) {
+            $userModel->where('users.username', $username);
+        }
+
+        // Fetch data
+        $data['users']       = $userModel->findAll();
+        $data['departments'] = $deptModel->findAll();
+        $data['roles']       = $roleModel->findAll();
+        $data['companies']   = $companyModel->findAll();
+        return view('dashboard/userlist', $data);
     }
-
-    // Insert Data
-    $data = [
-        'name'           => $this->request->getPost('name'),
-        'priority'       => $this->request->getPost('priority'),
-        'company_name'   => $this->request->getPost('company_name'),
-        'department_id'  => $this->request->getPost('department_id'),
-        'email'          => $email,
-        'employee_code'  => $this->request->getPost('employee_code'),
-        'username'       => $username,
-        'password'       => md5($password . "HASHKEY123"),
-        'role_id'        => $this->request->getPost('role_id'),
-        'hash_key'       => "HASHKEY123",
-        'active'         => 1,
-        'created_by'     => session()->get('user_id')
-    ];
-
-    if (!$userModel->insert($data)) {
-       
-        return $this->response->setJSON([
-            'status'  => 'error',
-            'message' => 'Failed to create user'
-        ]);
-    }
-
-    // Save encrypted password in vault table
-    $userId = $userModel->getInsertID();
-    $db = \Config\Database::connect();
-    $db->table('user_password_vault')->insert([
-        'user_id'      => $userId,
-        'password_enc' => $password
-    ]);
-
-    return $this->response->setJSON([
-        'status'  => 'success',
-        'message' => 'User created successfully'
-    ]);
-}
-
-
-public function userListData()
-{
-    $session      = session();
-    $deptModel    = new DepartmentModel();
-    $roleModel    = new RoleModel();
-    $userModel    = new UserModel();
-    $companyModel = new CompanyModel();
-    
-    $userRole     = $session->get('role_id');          // 1 = Admin, 2 = Department Head
-    $userDept     = $session->get('department_id');    // Logged user's dept
-    $company      = $this->request->getGet('company');
-    $department   = $this->request->getGet('department');
-    $role         = $this->request->getGet('role');
-
-    // Base Query
-    $userModel
-        ->select('users.*, departments.department_name, roles.role_name')
-        ->join('departments', 'departments.id = users.department_id', 'left')
-        ->join('roles', 'roles.id = users.role_id', 'left');
-
-    // Restrict department for role_id = 2
-    if ($userRole == 2) {
-        $userModel->where('users.department_id', $userDept);
-    }
-
-    // Apply filters
-    if (!empty($company)) {
-        $userModel->where('users.company_name', $company);
-    }
-
-    if (!empty($department)) {
-        $userModel->where('users.department_id', $department);
-    }
-
-    if (!empty($role)) {
-        $userModel->where('users.role_id', $role);
-    }
-
-    // Fetch data
-    $data['users']       = $userModel->findAll();
-    $data['departments'] = $deptModel->findAll();
-    $data['roles']       = $roleModel->findAll();
-    $data['companies']   = $companyModel->findAll();
-    return view('dashboard/userlist', $data);
-}
 
 
 
@@ -176,8 +180,6 @@ public function userListData()
                 'password_enc' => $new_password
             ]);
         }
-
-
         return $this->response->setJSON(['status'=>'success','message'=>'User Updated']);
     }
 
