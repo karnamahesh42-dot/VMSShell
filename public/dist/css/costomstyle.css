@@ -1368,37 +1368,26 @@ input[type="file"] {
 /* 
 /////////////////////////// Mobile View Responsive //////////////////////////////////////////// */
 @media (max-width: 768px) {
-
-/* FULLSCREEN QR SCANNER */
-.qr-fullscreen {
+#qrScannerOverlay {
     position: fixed;
     inset: 0;
     background: #000;
     z-index: 9999;
-
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    display: none; /* 🔥 hidden initially */
 }
 
-/* CAMERA VIEW */
-#reader {
-    width: 85vw;
-    max-width: 360px;
-    aspect-ratio: 1 / 1;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
+#qr-reader {
+    width: 100%;
+    height: 100%;
 }
 
-/* CANCEL BUTTON */
-.qr-cancel {
-    margin-top: 20px;
-    width: 90%;
-    max-width: 280px;
-    font-size: 16px;
+#closeScanner {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10000;
 }
+
 
 
 /*//////////////////// end Scan Style //////////// */

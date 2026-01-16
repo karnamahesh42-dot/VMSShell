@@ -4,6 +4,19 @@
    <main class="main-content" id="mainContent">
     <div class="container-fluid">
  
+
+  <!-- Full Screen QR Scanner -->
+<div id="qrScannerOverlay">
+    <div id="qr-reader"></div>
+
+    <button id="closeScanner" class="btn btn-danger">
+        ✕ Close
+    </button>
+</div>
+
+<!---- Camera PopUp Start --->
+
+
     <!-- view Pop-up Form start  -->
     <div class="modal fade" id="visitorModal">
         <div class="modal-dialog modal-lg">
@@ -293,7 +306,7 @@
                                             capture="environment" hidden> 
                                         <div id="temp-reader" hidden></div>
 
-                                        <div id="qr-reader" style="width:300px; margin:auto; display:none;"></div>
+                                     
                                         <!--////////// Hidden File Input /////////////-->
 
 
@@ -431,37 +444,43 @@ function processSecurity(vCode) {
 
 ////////////////////////////////Mobile Scane Start //////////////////////////////////////////////
 
+let html5QrCode = null;
 
-const scanBtn = document.getElementById("scanBtnMblPic");
-let html5QrCode;
+document.getElementById("scanBtnMblPic").addEventListener("click", () => {
 
-scanBtn.addEventListener("click", () => {
-
-    document.getElementById("qr-reader").style.display = "block";
+    // show scanner
+    document.getElementById("qrScannerOverlay").style.display = "block";
 
     html5QrCode = new Html5Qrcode("qr-reader");
 
     html5QrCode.start(
-        { facingMode: "environment" }, // Rear camera
+        { facingMode: "environment" }, // rear camera
         {
             fps: 10,
-            qrbox: { width: 250, height: 250 }
+            qrbox: { width: 280, height: 280 }
         },
         (decodedText) => {
-            html5QrCode.stop();
-            document.getElementById("qr-reader").style.display = "none";
 
-            processSecurity(decodedText); // your function
-        },
-        (errorMessage) => {
-            // ignore scan errors
+            // stop camera & hide
+            html5QrCode.stop().then(() => {
+                document.getElementById("qrScannerOverlay").style.display = "none";
+            });
+
+            processSecurity(decodedText); // your existing function
         }
     ).catch(err => {
         Swal.fire("Error", "Camera permission denied", "error");
     });
 });
 
-
+// close manually
+document.getElementById("closeScanner").addEventListener("click", () => {
+    if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+            document.getElementById("qrScannerOverlay").style.display = "none";
+        });
+    }
+});
 
    
 // const scanBtn = document.getElementById("scanBtnMblPic");

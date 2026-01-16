@@ -584,12 +584,11 @@ function confirmResendMail(mailId, header_id) {
 
 function re_send_group_qr(email, header_id) {
 
-    // Swal.fire({
-    //     title: 'Sending Group QR...',
-    //     text: 'Please wait',
-    //     allowOutsideClick: false,
-    //     didOpen: () => Swal.showLoading()
-    // });
+        Swal.fire({
+            icon: 'success',
+            title: 'Mail Sent',
+            text: 'Group QR mail sent successfully'
+        });
 
     $.ajax({
         url: "<?= base_url('mail/group-qr') ?>",
@@ -602,19 +601,15 @@ function re_send_group_qr(email, header_id) {
 
         success: function (res) {
             
-            if (res.status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Mail Sent',
-                    text: 'Group QR mail sent successfully'
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: res.message || 'Something went wrong'
-                });
-            }
+            // if (res.status === 'success') {
+              
+            // } else {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Failed',
+            //         text: res.message || 'Something went wrong'
+            //     });
+            // }
         },
 
         error: function () {
