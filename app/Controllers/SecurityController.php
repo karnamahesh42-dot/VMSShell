@@ -232,7 +232,15 @@ public function uploadPhoto()
 public function authorized_visitors_list_data()
 {
      $user_id  = session()->get('user_id');
+     
      $role_id  = session()->get('role_id');
+
+      // --- FILTERS ---
+    $company = $this->request->getGet('company');
+    $department = $this->request->getGet('department');
+    $security = $this->request->getGet('securityCheckStatus');
+    $requestcode = $this->request->getGet('requestcode');
+    $v_code = $this->request->getGet('v_code');
 
     $db = \Config\Database::connect();
     $builder = $db->table('visitors vr');
@@ -278,21 +286,18 @@ public function authorized_visitors_list_data()
     // Only approved
     $builder->where('vr.status', 'approved');
 
-    // --- FILTERS ---
-    $company = $this->request->getGet('company');
-    $department = $this->request->getGet('department');
-    $security = $this->request->getGet('securityCheckStatus');
-    $requestcode = $this->request->getGet('requestcode');
-    $v_code = $this->request->getGet('v_code');
+   
     
 
-    if($role_id == '4'){        /// Securuty Condition 
+    if($role_id == '4' || $role_id == '1' ){        /// Securuty Condition 
            
         if (!empty($company)) {
             $builder->where('hr.company', $company);
         }
 
         if (!empty($department)) {
+            // echo $department;
+            // exit;
             $builder->where('hr.department', $department);
         }
 

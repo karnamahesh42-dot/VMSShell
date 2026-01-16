@@ -292,6 +292,8 @@
                                             accept="image/*"
                                             capture="environment" hidden> 
                                         <div id="temp-reader" hidden></div>
+
+                                        <div id="qr-reader" style="width:300px; margin:auto; display:none;"></div>
                                         <!--////////// Hidden File Input /////////////-->
 
 
@@ -427,74 +429,74 @@ function processSecurity(vCode) {
     });
 }
 
-
-
 ////////////////////////////////Mobile Scane Start //////////////////////////////////////////////
 
-    // const scanBtn = document.getElementById("scanBtnMblPic");
-    // const fileInput = document.getElementById("qrImageInput");
-
-    // // Trigger file upload on button click
-    // scanBtn.addEventListener("click", () => {
-    //     fileInput.click();
-    // });
-
-    // // Scan QR when image selected
-    // fileInput.addEventListener("change", () => {
-    //     const file = fileInput.files[0];
-    //     if (!file) return;
-
-    //     const html5QrCode = new Html5Qrcode("temp-reader");
-
-    //     html5QrCode.scanFile(file, true)
-    //         .then(decodedText => {
-
-    //             processSecurity(decodedText)
-    //             // alert("Scanned Value: " + decodedText);
-    //         })
-    //         .catch(err => {
-    //              Swal.fire(
-    //                 "Warning",
-    //                 "No QR code found in image, Capture Proper QR",
-    //                 "warning"
-    //             );
-    //               // console.error(err);
-    //         });
-    // });
 
 const scanBtn = document.getElementById("scanBtnMblPic");
-const fileInput = document.getElementById("qrImageInput");
+let html5QrCode;
 
 scanBtn.addEventListener("click", () => {
-    fileInput.value = "";
-    fileInput.click();
+
+    document.getElementById("qr-reader").style.display = "block";
+
+    html5QrCode = new Html5Qrcode("qr-reader");
+
+    html5QrCode.start(
+        { facingMode: "environment" }, // Rear camera
+        {
+            fps: 10,
+            qrbox: { width: 250, height: 250 }
+        },
+        (decodedText) => {
+            html5QrCode.stop();
+            document.getElementById("qr-reader").style.display = "none";
+
+            processSecurity(decodedText); // your function
+        },
+        (errorMessage) => {
+            // ignore scan errors
+        }
+    ).catch(err => {
+        Swal.fire("Error", "Camera permission denied", "error");
+    });
 });
 
-fileInput.addEventListener("change", async () => {
-    const file = fileInput.files[0];
-    if (!file) return;
 
-    try {
-        const processedFile = await preprocessImage(file);
 
-        const html5QrCode = new Html5Qrcode("temp-reader");
+   
+// const scanBtn = document.getElementById("scanBtnMblPic");
+// const fileInput = document.getElementById("qrImageInput");
 
-        html5QrCode.scanFile(processedFile, true)
-            .then(decodedText => {
-                processSecurity(decodedText);
-            })
-            .catch(() => {
-                Swal.fire(
-                    "Warning",
-                    "No QR code found in image, Capture Proper QR",
-                    "warning"
-                );
-            });
+// scanBtn.addEventListener("click", () => {
+//     fileInput.value = "";
+//     fileInput.click();
+// });
 
-    } catch (err) {
-        Swal.fire("Error", "Image processing failed", "error");
-    }
-});
+// fileInput.addEventListener("change", async () => {
+//     const file = fileInput.files[0];
+//     if (!file) return;
+
+//     try {
+//         const processedFile = await preprocessImage(file);
+
+//         const html5QrCode = new Html5Qrcode("temp-reader");
+
+//         html5QrCode.scanFile(processedFile, true)
+//             .then(decodedText => {
+//                 processSecurity(decodedText);
+//             })
+//             .catch(() => {
+//                 Swal.fire(
+//                     "Warning",
+//                     "No QR code found in image, Capture Proper QR",
+//                     "warning"
+//                 );
+//             });
+
+//     } catch (err) {
+//         Swal.fire("Error", "Image processing failed", "error");
+//     }
+// });
 
 /*  FIX IMAGE FOR MOBILE CAMERA */
 
